@@ -1,0 +1,26 @@
+{
+    "name": "gpenverne/homatisation",
+    "description": "",
+    "require": {
+        "symfony/console": "*",
+        "symfony/yaml": "*",
+        "doctrine/inflector": "*"
+    },
+    "config": {
+        "bin-dir": "bin/"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "gpenverne"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Command\\": "src/Command/"
+        }
+    },
+
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
