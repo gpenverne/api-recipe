@@ -4,7 +4,7 @@ include sprintf('%s/../vendor/autoload.php', __DIR__);
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
-use Command\SampleCommand;
+use Homatisation\Command\SampleCommand;
 
 $commands = [
     SampleCommand::class,
