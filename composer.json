@@ -6,6 +6,9 @@
         "symfony/yaml": "*",
         "doctrine/inflector": "*"
     },
+    "require-dev": {
+        "phpspec/phpspec": "^3.0"
+    },
     "config": {
         "bin-dir": "bin/"
     },
@@ -16,8 +19,8 @@
         }
     ],
     "autoload": {
-        "psr-4": {
-            "Command\\": "src/Command/"
+        "psr-0": {
+            "": "src"
         }
     },
 
