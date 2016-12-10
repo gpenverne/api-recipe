@@ -1,0 +1,12 @@
+{
+  "name": "homatisation",
+  "dependencies": {
+    "bootstrap": "3.1.*",
+    "angular": "1.5.8",
+    "components-font-awesome": "^4.6.3",
+    "angular-ui-ace": "bower",
+    "angular-bootstrap": "^2.0.1",
+    "materialize": "^0.97.7",
+    "bootstrap-select": "^1.10.0"
+  }
+}

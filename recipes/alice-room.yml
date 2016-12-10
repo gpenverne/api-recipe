@@ -1,0 +1,17 @@
+# title of the recipe
+title: Alice room
+
+# description of the recipe
+description: Manage the light in the Alice's room
+
+# you can add a picture if you want to show this recipe on the front interface
+picture: alice-room.jpg
+
+# all actions of the recipe
+actions:
+    # Actions to do when passing to the on state
+    on:
+        - rm2pro:endPoint:Pr3On
+    # Actions to do when passing to the off state
+    off:
+        - rm2pro:endPoint:Pr3Off

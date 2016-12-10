@@ -1,0 +1,18 @@
+#!/usr/bin/env php
+<?php
+include sprintf('%s/../vendor/autoload.php', __DIR__);
+
+use Symfony\Component\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
+use Homatisation\Command\ExecRecipeCommand;
+
+$commands = [
+    ExecRecipeCommand::class,
+];
+$input = new ArgvInput();
+
+$console = new Application('homatisation', '0.1');
+foreach ($commands as $command) {
+    $console->add(new $command());
+}
+$console->run($input);
