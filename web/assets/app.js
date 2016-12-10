@@ -2,8 +2,9 @@ var app = angular.module('app', []);
 app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.recipes = [];
     $scope.getRecipes = function(){
-        $http.get('/?recipes').then(function(r){
-            $scope.recipes = r.data.recipes;
+        $http.get('/recipes?format=json').then(function(r){
+            $scope.recipes = r.data;
+            console.log($scope.recipes);
         });
 
         return $scope.recipes;
@@ -33,14 +34,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         }
     };
 
-    $scope.getMagicButtonAction = function() {
-
-        $http.get('/magic-button.php?format=json').then(function(r){
-            $scope.suggested_action = r.data;
-        });
-
-
-    }
     $scope.isLandscape = function() {
         return $(window).width() > $(window).height();
     }
@@ -54,10 +47,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     }
 
     $scope.getRecipes();
-    $scope.getMagicButtonAction();
     var countUp = function() {
         $scope.getRecipes();
-        $scope.getMagicButtonAction();
         $timeout(countUp, 60000);
     }
 

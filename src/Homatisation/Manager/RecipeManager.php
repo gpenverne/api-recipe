@@ -28,13 +28,39 @@ class RecipeManager implements ManagerInterface
     private $stateManager;
 
     /**
-     * @param string $recipeName
+     * @param null|string $recipeName
      */
-    public function __construct($recipeName)
+    public function __construct($recipeName = null)
     {
-        $this->recipeName = $recipeName;
-        $this->stateManager = new StateManager();
-        $this->loadConfig();
+        if (null !== $recipeName) {
+            $this->recipeName = $recipeName;
+            $this->infos = $this->loadConfig($recipeName);
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function list($recipeName = null)
+    {
+        $recipes = [];
+        $recipesFolder = sprintf('%s/../../../recipes', __DIR__);
+        $cursor = opendir($recipesFolder);
+
+        while ($f = readdir($cursor)) {
+            if ('.' !== $f && '..' != $f) {
+                $recipe = str_replace('.yml', '', $f);
+                $recipeInfos = $this->loadConfig($recipe);
+
+                if ($recipe === $recipeName) {
+                    return $recipeInfos;
+                }
+
+                $recipes[] = $recipeInfos;
+            }
+        }
+
+        return $recipes;
     }
 
     /**
@@ -47,7 +73,7 @@ class RecipeManager implements ManagerInterface
         $result = [];
 
         if ($state == null) {
-            if ($this->stateManager->isOn($this->recipeName)) {
+            if ($this->getStateManager()->isOn($this->recipeName)) {
                 $state = StateManager::STATE_ON;
             } else {
                 $state = StateManager::STATE_OFF;
@@ -67,7 +93,11 @@ class RecipeManager implements ManagerInterface
             }
         }
 
-        return $result;
+        $this->getStateManager()->toggleRecipeState($this->recipeName);
+
+        return [
+            'actions' => $result,
+        ];
     }
 
     /**
@@ -103,25 +133,43 @@ class RecipeManager implements ManagerInterface
     }
 
     /**
+     * @param string $recipeName
+     *
      * @return $this
      */
-    protected function loadConfig()
+    protected function loadConfig($recipeName)
     {
-        $expectedFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, $this->recipeName);
+        $expectedFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, $recipeName);
 
         $infos = array_merge($this->infos, $this->parseYmlFile($expectedFile));
-        $this->infos = ArrayToStdClassConverter::convert($infos);
+        $infos = ArrayToStdClassConverter::convert($infos);
 
-        if (!isset($this->infos->actions[StateManager::STATE_ON])) {
-            $this->infos->actions[StateManager::STATE_ON] = [];
+        if (!isset($infos->actions[StateManager::STATE_ON])) {
+            $infos->actions[StateManager::STATE_ON] = [];
         }
-        if (!isset($this->infos->actions[StateManager::STATE_OFF])) {
-            $this->infos->actions[StateManager::STATE_OFF] = [];
+        if (!isset($infos->actions[StateManager::STATE_OFF])) {
+            $infos->actions[StateManager::STATE_OFF] = [];
         }
-        if (!isset($this->infos->actions[StateManager::STATE_EACH_TIME])) {
-            $this->infos->actions[StateManager::STATE_EACH_TIME] = [];
+        if (!isset($infos->actions[StateManager::STATE_EACH_TIME])) {
+            $infos->actions[StateManager::STATE_EACH_TIME] = [];
         }
 
-        return $this;
+        $infos->state = $this->getStateManager()->getRecipeState($recipeName);
+        $infos->url = sprintf('/recipes/%s/exec', $recipeName);
+        $infos->visible = true;
+
+        return $infos;
+    }
+
+    /**
+     * @return StateManager
+     */
+    protected function getStateManager()
+    {
+        if (null === $this->stateManager) {
+            $this->stateManager = new StateManager();
+        }
+
+        return $this->stateManager;
     }
 }

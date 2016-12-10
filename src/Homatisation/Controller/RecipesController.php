@@ -8,13 +8,21 @@ class RecipesController implements ControllerInterface
 {
     public function indexAction()
     {
-        return 'list';
+        return $this->getRecipManager()->list();
+    }
+
+    public function showAction($recipeName = null)
+    {
+        return $this->getRecipManager()->list($recipeName);
     }
 
     public function execAction($recipeName)
     {
-        $recipeManager = new RecipeManager($recipeName);
+        return $this->getRecipManager($recipeName)->exec();
+    }
 
-        return $recipeManager->exec();
+    private function getRecipManager($recipeName = null)
+    {
+        return new RecipeManager($recipeName);
     }
 }

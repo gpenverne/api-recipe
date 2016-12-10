@@ -5,7 +5,7 @@ title: BfmTv on freebox
 description: Press home, ok, and 1 and 5,
 
 # you can add a picture if you want to show this recipe on the front interface
-# picture: a/picture/file.jpg
+picture: bfmtv.png
 
 # all actions of the recipe
 actions:

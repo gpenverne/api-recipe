@@ -35,13 +35,50 @@ class StateManager implements ManagerInterface
      *
      * @return string
      */
-    protected function getRecipeState($recipeName)
+    public function toggleRecipeState($recipeName)
     {
-        $stateFile = sprintf('%s/../../../var/states/%s.state', __DIR__, $recipeName);
+        $currentState = $this->getRecipeState($recipeName);
+
+        if (self::STATE_ON === $currentState) {
+            $newState = self::STATE_OFF;
+        } else {
+            $newState = self::STATE_ON;
+        }
+
+        $this->setRecipeState($recipeName, $newState);
+    }
+
+    /**
+     * @param string $recipeName
+     *
+     * @return string
+     */
+    public function getRecipeState($recipeName)
+    {
+        $stateFile = $this->getRecipeStateFile($recipeName);
         if (!is_file($stateFile)) {
-            file_put_contents($stateFile, self::STATE_OFF);
+            $this->setRecipeState($recipeName, self::STATE_OFF);
         }
 
         return trim(file_get_contents($stateFile));
+    }
+
+    /**
+     * @param string $recipeName
+     * @param string $newState
+     */
+    public function setRecipeState($recipeName, $newState)
+    {
+        return file_put_contents($this->getRecipeStateFile($recipeName), $newState);
+    }
+
+    /**
+     * @param string $recipeName
+     *
+     * @return string
+     */
+    private function getRecipeStateFile($recipeName)
+    {
+        return sprintf('%s/../../../var/states/%s.state', __DIR__, $recipeName);
     }
 }

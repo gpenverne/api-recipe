@@ -22,13 +22,6 @@
             </li>
         </ul>
 
-        <div id="suggestion" ng-if="suggested_action && suggested_action.recipe" ng-click="execRecipe(suggested_action.recipe)">
-            <img src="images/{{ suggested_action.recipe.picture }}" />
-            <span class="ambiance">
-                {{ suggested_action.recipe.ambiance }}
-            </span>
-
-        </div>
     </div>
     <script src='assets/vendor/angular/angular.min.js'></script>
     <script src='assets/vendor/jquery/dist/jquery.min.js'></script>
