@@ -11,14 +11,6 @@ $ composer install
 ```bash
 $ bower install
 ```
-## Create some dirs
-```bash
-$ mkdir var
-$ mkdir var/logs
-$ mkdir var/states
-$ chmod 755 var/logs
-$ chmod 755 var/states
-```
 ### WebServer configuration
 Using nginx:
 ```
