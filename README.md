@@ -11,6 +11,14 @@ $ composer install
 ```bash
 $ bower install
 ```
+## Create some dirs
+```bash
+$ mkdir var
+$ mkdir var/logs
+$ mkdir var/states
+$ chmod 755 var/logs
+$ chmod 755 var/states
+```
 ### WebServer configuration
 Using nginx:
 ```
@@ -22,6 +30,8 @@ Using nginx:
 ## Recipes
 Put your recipes files in the recipes folder.
 Check the test-recipe.yml file for sample configuration.
+Put your images in the web/images folder.
+
 ### Test a recipe yml syntax
 ```bash
 $ bin/yaml-lint recipes/[recipe-file-name].yml
@@ -41,7 +51,7 @@ A provider allows to make actions. Providers parameters are read from app/config
 Each provider should be configuread like this:
 ```
     my_provider_name:
-        provider: [logger|freebox|api|sleep|milight]
+        provider: [api|binary|freebox|logger|milight|sleep]
         ...
 ```
 
@@ -57,7 +67,7 @@ Sample commands: binary:command:arg ; binary:echo:arg
 #### Freebox
 Allows to control freebox using the hd1.freebox.fr api
 Parameters: remote_code , the remote code.
-Sample commands: freebox:key:home ; freebox:key:1 ; freebox:key:power
+Sample commands: freebox: key:home ; freebox: key:1 ; freebox: key:power
 #### Logger
 Simply write into logs (in var/logs folder) using monolog.
 Parameters: log_file the target log file
