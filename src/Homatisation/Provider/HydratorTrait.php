@@ -1,6 +1,10 @@
 <?php
 
-trait hydradtorTrait
+namespace Homatisation\Provider;
+
+use Doctrine\Common\Inflector\Inflector;
+
+trait HydratorTrait
 {
     /**
       * @param array $properties
@@ -16,6 +20,7 @@ trait hydradtorTrait
     protected function hydrate($properties = [])
     {
         foreach ($properties as $k => $v) {
+            $k = Inflector::Camelize($k);
             $this->$k = $v;
         }
 

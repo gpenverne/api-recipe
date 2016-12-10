@@ -6,7 +6,12 @@ use Homatisation\Lib\Milight;
 
 class MilightProvider implements ProviderInterface
 {
-    use hydratorTrait;
+    use HydratorTrait;
+
+    /**
+     * @var Milight;
+     */
+    protected $milight;
 
     /**
      * @return array
@@ -19,31 +24,32 @@ class MilightProvider implements ProviderInterface
     }
 
     /**
-     * @param string $host
+     * @param string $method
+     * @param array  $args
+     *
+     * @return bool
      */
-    public function setHost($host)
+    public function __call($method, $args)
     {
-        $this->host = $host;
+        $milight = $this->getMilight();
 
-        return $host;
+        return (bool) call_user_func_array([
+            $milight,
+            $method,
+        ], $args);
     }
 
+    /**
+     * @return MiLight
+     */
     private function getMilight()
     {
         if (null !== $this->milight) {
-            return $this->miLight;
+            return $this->milight;
         }
 
         $this->milight = new MiLight($this->host);
 
         return $this->milight;
-    }
-
-    /**
-     * @return bool
-     */
-    private function rgbwAllOn()
-    {
-        return $this->getMilight()->rgbwAllOn();
     }
 }

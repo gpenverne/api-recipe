@@ -1,1 +1,5 @@
-
+providers:
+    logger:
+        log_file: var/logs/logger.log
+    milight:
+        host: 192.168.0.34

@@ -1,0 +1,26 @@
+# title of the recipe
+title: A sample recipe
+
+# description of the recipe
+description: To test recipes, it uses the logger provider
+
+# you can add a picture if you want to show this recipe on the front interface
+# picture: a/picture/file.jpg
+
+# all actions of the recipe
+Actions:
+    # Actions to do when passing to the on state
+    on:
+        # Format of an action:
+        # Provider:method:argument
+        - Logger:info:on
+    # Actions to do when passing to the off state
+    on:
+        # Format of an action:
+        # Provider:method:argument
+        - Logger:info:off
+    # Actions to do each time (including on on and on off)
+    each_time:
+        # Format of an action:
+        # Provider:method:argument
+        - Logger:info:each_time
