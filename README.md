@@ -1,7 +1,63 @@
 # Homatisation
 
-Thanks to [yasharrashedi/LimitlessLED](https://github.com/yasharrashedi/LimitlessLED).
+The purpose of this repo is to generate a simple front interface
+
+## Install
+### Installing dependencies
+```bash
+$ composer install
+```
+### Installing assets
+```bash
+$ bower install
+```
+### WebServer configuration
+Using nginx:
+```
+    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+```
 
 ## Recipes
 Put your recipes files in the recipes folder.
-Check the test-recipe.yml file for sample configuration
+Check the test-recipe.yml file for sample configuration.
+
+## Exec a recipe using command line
+```bash
+$ bin/console recipes:exec [recipeName] [on|off|toggle]
+```
+
+## Exec a recipe using the front
+Just click on the picture to make a toggle execution.
+Your http server should target the web/ subfolder
+
+## Providers
+A provider allows to make actions. Providers parameters are read from app/config/config.yml.
+Each provider should be configuread like this:
+```
+    my_provider_name:
+        provider: [logger|freebox|api|sleep|milight]
+        ...
+```
+Each provider has dedicated parameters, see below.
+
+#### Freebox
+Allows to control freebox using the hd1.freebox.fr api
+Parameters: remote_code , the remote code.
+Sample commands: freebox:key:home ; freebox:key:1 ; freebox:key:power
+#### Milight
+Allows to control milight wifi controller, thanks to [yasharrashedi/LimitlessLED](https://github.com/yasharrashedi/LimitlessLED).
+Parameters: host, the milight host ip address.
+Sample commands: milight:rgbwAllOn ; milight:rgbwAllOff
+#### Sleep
+Make a pause between actions
+Sample commands: sleep:sleep:5
+#### Logger
+Simply write into logs (in var/logs folder) using monolog.
+Parameters: log_file the target log file
+Sample commands: logger:info:go-to-on
+#### Api
+Allows to make network calls.
+Parameters: base_url the base url to make the calls
+Sample commands: api:endPoint:a-endpoint

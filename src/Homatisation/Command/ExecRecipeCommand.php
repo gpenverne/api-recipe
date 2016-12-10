@@ -11,9 +11,7 @@ use Homatisation\Manager\RecipeManager;
 
 class ExecRecipeCommand extends Command
 {
-    const FORMAT_JSON = 'json';
-
-    const FORMAT_CONSOLE = 'console';
+    const STATE_TOGGLE = 'toggle';
 
     /**
      * @var RecipeManager
@@ -23,18 +21,25 @@ class ExecRecipeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('homatisation:recipes:exec')
+            ->setName('recipes:exec')
             ->setDescription('Exec a recipe')
             ->addArgument('recipe', InputArgument::REQUIRED, 'The recipe name to exec')
-            ->addArgument('state', InputArgument::OPTIONAL, 'Expected target state: On/Off')
-            ->addArgument('format', InputArgument::OPTIONAL, 'Format: json or console', self::FORMAT_CONSOLE)
+            ->addArgument('state', InputArgument::OPTIONAL, 'Expected target state: on/off/toggle')
         ;
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $recipe = $input->getArgument('recipe');
         $state = $input->getArgument('state');
+
+        if (self::STATE_TOGGLE === $state) {
+            $state = null;
+        }
 
         $recipeManager = $this->getRecipeManager($recipe);
 
