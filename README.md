@@ -44,12 +44,24 @@ Each provider should be configuread like this:
         provider: [logger|freebox|api|sleep|milight]
         ...
 ```
-Each provider has dedicated parameters, see below.
 
+Each provider has dedicated parameters, see below.
+#### Api
+Allows to make network calls.
+Parameters: base_url the base url to make the calls
+Sample commands: api:endPoint:a-endpoint
+### Binary
+Allows to call scripts (using php shell_exec command)
+Parameters: binary , the full path to binary
+Sample commands: binary:command:arg ; binary:echo:arg
 #### Freebox
 Allows to control freebox using the hd1.freebox.fr api
 Parameters: remote_code , the remote code.
 Sample commands: freebox:key:home ; freebox:key:1 ; freebox:key:power
+#### Logger
+Simply write into logs (in var/logs folder) using monolog.
+Parameters: log_file the target log file
+Sample commands: logger:info:go-to-on
 #### Milight
 Allows to control milight wifi controller, thanks to [yasharrashedi/LimitlessLED](https://github.com/yasharrashedi/LimitlessLED).
 Parameters: host, the milight host ip address.
@@ -57,11 +69,3 @@ Sample commands: milight:rgbwAllOn ; milight:rgbwAllOff
 #### Sleep
 Make a pause between actions
 Sample commands: sleep:sleep:5
-#### Logger
-Simply write into logs (in var/logs folder) using monolog.
-Parameters: log_file the target log file
-Sample commands: logger:info:go-to-on
-#### Api
-Allows to make network calls.
-Parameters: base_url the base url to make the calls
-Sample commands: api:endPoint:a-endpoint
