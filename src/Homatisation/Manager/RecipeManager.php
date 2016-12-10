@@ -41,7 +41,7 @@ class RecipeManager implements ManagerInterface
     /**
      * @return array
      */
-    public function list($recipeName = null)
+    public function getAll($recipeName = null)
     {
         $recipes = [];
         $recipesFolder = sprintf('%s/../../../recipes', __DIR__);
@@ -61,6 +61,16 @@ class RecipeManager implements ManagerInterface
         }
 
         return $recipes;
+    }
+
+    /**
+     * @param string $recipeName
+     *
+     * @return \stdClass
+     */
+    public function get($recipeName)
+    {
+        return $this->getAll($recipeName);
     }
 
     /**
