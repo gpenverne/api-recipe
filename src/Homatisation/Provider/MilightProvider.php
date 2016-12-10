@@ -14,16 +14,6 @@ class MilightProvider implements ProviderInterface
     protected $milight;
 
     /**
-     * @return array
-     */
-    public function getActions()
-    {
-        return [
-            'turn-light-on' => 'rgbwAllOn',
-        ];
-    }
-
-    /**
      * @param string $method
      * @param array  $args
      *

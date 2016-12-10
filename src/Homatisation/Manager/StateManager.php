@@ -37,7 +37,7 @@ class StateManager implements ManagerInterface
      */
     protected function getRecipeState($recipeName)
     {
-        $stateFile = sprintf('%s/../../var/states/%s.state', __DIR__, $recipeName);
+        $stateFile = sprintf('%s/../../../var/states/%s.state', __DIR__, $recipeName);
         if (!is_file($stateFile)) {
             file_put_contents($stateFile, self::STATE_OFF);
         }

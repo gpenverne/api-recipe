@@ -26,19 +26,6 @@ class LoggerProvider implements ProviderInterface
      */
     protected $logFile;
     /**
-     * @return array
-     */
-    public function getActions()
-    {
-        return [
-            'debug' => 'debug',
-            'error' => 'error',
-            'info' => 'info',
-            'warning' => 'warning',
-        ];
-    }
-
-    /**
      * @param string $string
      *
      * @return bool

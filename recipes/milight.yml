@@ -13,13 +13,13 @@ actions:
     on:
         # Format of an action:
         # Provider:method:argument
-        - Logger:info:MilightOn
-        - Milight:rgbwAllOn
-        - Milight:rgbwAllSetToWhite
-        - Milight:rgbwBrightnessPercent:50
+        - logger:info:MilightOn
+        - milight:rgbwAllOn
+        - milight:rgbwAllSetToWhite
+        - milight:rgbwBrightnessPercent:50
     # Actions to do when passing to the off state
     off:
         # Format of an action:
         # Provider:method:argument
-        - Logger:info:MilightOff
-        - Milight:rgbwAllOff
+        - logger:info:MilightOff
+        - milight:rgbwAllOff

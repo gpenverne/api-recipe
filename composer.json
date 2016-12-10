@@ -5,7 +5,9 @@
         "symfony/console": "*",
         "symfony/yaml": "*",
         "doctrine/inflector": "*",
-        "monolog/monolog": "^1.22"
+        "monolog/monolog": "^1.22",
+        "guzzlehttp/guzzle": "~6.0",
+        "symfony/http-foundation": "^3.2"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0",

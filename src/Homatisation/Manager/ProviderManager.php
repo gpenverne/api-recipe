@@ -17,8 +17,12 @@ class ProviderManager implements ManagerInterface
     public function getProvider($providerName)
     {
         $providerName = Inflector::Camelize($providerName);
-        $expectedClass = sprintf('Homatisation\\Provider\\%sProvider', ucfirst($providerName));
         $config = $this->getConfig($providerName);
+        if (empty($config)) {
+            throw new \Exception(sprintf('Provider %s not found.', $providerName));
+        }
+        $providerName = $config['provider'];
+        $expectedClass = sprintf('Homatisation\\Provider\\%sProvider', ucfirst($providerName));
 
         return new $expectedClass($config);
     }
