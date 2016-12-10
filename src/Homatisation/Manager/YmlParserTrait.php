@@ -2,6 +2,8 @@
 
 namespace Homatisation\Manager;
 
+use Symfony\Component\Yaml\Yaml;
+
 trait YmlParserTrait
 {
     /**
@@ -17,6 +19,8 @@ trait YmlParserTrait
 
         $fileContent = file_get_contents($file);
 
-        return Yml::parse($fileContent);
+        $array = Yaml::parse($fileContent);
+
+        return $array;
     }
 }

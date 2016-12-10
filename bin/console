@@ -4,10 +4,10 @@ include sprintf('%s/../vendor/autoload.php', __DIR__);
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
-use Homatisation\Command\SampleCommand;
+use Homatisation\Command\ExecRecipeCommand;
 
 $commands = [
-    SampleCommand::class,
+    ExecRecipeCommand::class,
 ];
 $input = new ArgvInput();
 

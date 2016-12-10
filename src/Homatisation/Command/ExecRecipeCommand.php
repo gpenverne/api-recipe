@@ -23,11 +23,11 @@ class ExecRecipeCommand extends Command
     protected function configure()
     {
         $this
-            ->setName('homatisation:recipe:exec')
+            ->setName('homatisation:recipes:exec')
             ->setDescription('Exec a recipe')
             ->addArgument('recipe', InputArgument::REQUIRED, 'The recipe name to exec')
             ->addArgument('state', InputArgument::OPTIONAL, 'Expected target state: On/Off')
-            ->addArgument('format', InputArgument::OPTIONAL, 'Format: json or console')
+            ->addArgument('format', InputArgument::OPTIONAL, 'Format: json or console', self::FORMAT_CONSOLE)
         ;
     }
 
@@ -40,6 +40,7 @@ class ExecRecipeCommand extends Command
 
         $io = new SymfonyStyle($input, $output);
         $io->text(sprintf('Exec recipe %s...', $recipe));
+        $recipeManager->exec($state);
         $io->success('Done.');
     }
 

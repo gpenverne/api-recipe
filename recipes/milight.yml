@@ -1,8 +1,8 @@
 # title of the recipe
-title: A sample recipe
+title: Toggle milight lights
 
 # description of the recipe
-description: To test recipes, it uses the logger provider
+description: Turn on/off, set brightness to 50% all milights
 
 # you can add a picture if you want to show this recipe on the front interface
 # picture: a/picture/file.jpg
@@ -13,14 +13,13 @@ actions:
     on:
         # Format of an action:
         # Provider:method:argument
-        - Logger:info:on
+        - Logger:info:MilightOn
+        - Milight:rgbwAllOn
+        - Milight:rgbwAllSetToWhite
+        - Milight:rgbwBrightnessPercent:50
     # Actions to do when passing to the off state
     off:
         # Format of an action:
         # Provider:method:argument
-        - Logger:info:off
-    # Actions to do each time (including on on and on off)
-    each_time:
-        # Format of an action:
-        # Provider:method:argument
-        - Logger:info:each_time
+        - Logger:info:MilightOff
+        - Milight:rgbwAllOff

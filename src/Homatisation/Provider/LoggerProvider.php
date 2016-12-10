@@ -22,6 +22,10 @@ class LoggerProvider implements ProviderInterface
     protected $streamHandler;
 
     /**
+     * @var string
+     */
+    protected $logFile;
+    /**
      * @return array
      */
     public function getActions()
@@ -98,7 +102,7 @@ class LoggerProvider implements ProviderInterface
             return $this->streamHandler;
         }
 
-        $logFile = sprintf('%s/../../%s', __DIR__, $this->logFile);
+        $logFile = sprintf('%s/../../../%s', __DIR__, $this->logFile);
         $this->streamHandler = new StreamHandler($logFile, Logger::DEBUG);
 
         return $this->streamHandler;

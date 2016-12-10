@@ -2,7 +2,7 @@
 
 namespace Homatisation\Manager;
 
-class ActionManager
+class ActionManager implements ManagerInterface
 {
     /**
      * @var string
