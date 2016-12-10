@@ -52,4 +52,4 @@
 var/states/*
 
 # Node modules
-cordova/node_modules
+cordova/node_modules/*
