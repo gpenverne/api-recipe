@@ -50,3 +50,6 @@
 
 # States
 var/states/*
+
+# Node modules
+cordova/node_modules
