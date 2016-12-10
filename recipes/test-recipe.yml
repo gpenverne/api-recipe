@@ -8,7 +8,7 @@ description: To test recipes, it uses the logger provider
 # picture: a/picture/file.jpg
 
 # all actions of the recipe
-Actions:
+actions:
     # Actions to do when passing to the on state
     on:
         # Format of an action:
