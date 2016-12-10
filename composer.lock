@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb1ee9d1ae8444c8d9e279cf9b703743",
-    "content-hash": "19e5903e28fc94e61c5ca3566c642592",
+    "hash": "7cd9f28b5bf5a2f19697e29d3937feef",
+    "content-hash": "60b85a97293e7613895f3889775dabbb",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -244,6 +244,50 @@
                 "uri"
             ],
             "time": "2016-06-24 23:00:38"
+        },
+        {
+            "name": "j13k/yaml-lint",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/j13k/yaml-lint.git",
+                "reference": "39b4b93e436c29d4ed67e010d76c587e0967c100"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/j13k/yaml-lint/zipball/39b4b93e436c29d4ed67e010d76c587e0967c100",
+                "reference": "39b4b93e436c29d4ed67e010d76c587e0967c100",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/yaml": "^2|^3"
+            },
+            "bin": [
+                "bin/yaml-lint"
+            ],
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "John Fitzpatrick",
+                    "homepage": "http://github.com/j13k"
+                }
+            ],
+            "description": "Command line utility for checking YAML file syntax",
+            "homepage": "https://github.com/j13k/yaml-lint",
+            "keywords": [
+                "cli",
+                "lint",
+                "symfony",
+                "syntax",
+                "utility",
+                "yaml",
+                "yml"
+            ],
+            "time": "2016-11-11 07:11:54"
         },
         {
             "name": "monolog/monolog",

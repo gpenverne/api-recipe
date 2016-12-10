@@ -10,6 +10,9 @@ providers:
         remote_code: 29143913
     rm2pro:
         provider: api
-        base_url: http://192.168.0.23:7474/code/
+        base_url: http://192.168.0.23:7474/code
     sleeper:
         provider: sleep
+    cec-client:
+        provider: binary
+        binary: /usr/bin/cec-client

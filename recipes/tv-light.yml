@@ -1,0 +1,17 @@
+# title of the recipe
+title: Tv light
+
+# description of the recipe
+description: Manage the light next to the tv
+
+# you can add a picture if you want to show this recipe on the front interface
+picture: tv-light.png
+
+# all actions of the recipe
+actions:
+    # Actions to do when passing to the on state
+    on:
+        - rm2pro:endPoint:Pr1ON
+    # Actions to do when passing to the off state
+    off:
+        - rm2pro:endPoint:Pr1OFF

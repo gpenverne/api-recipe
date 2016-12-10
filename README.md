@@ -22,6 +22,10 @@ Using nginx:
 ## Recipes
 Put your recipes files in the recipes folder.
 Check the test-recipe.yml file for sample configuration.
+### Test a recipe yml syntax
+```bash
+$ bin/yaml-lint recipes/[recipe-file-name].yml
+```
 
 ## Exec a recipe using command line
 ```bash

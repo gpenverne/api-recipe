@@ -5,7 +5,7 @@ title: Toggle milight lights
 description: Turn on/off, set brightness to 50% all milights
 
 # you can add a picture if you want to show this recipe on the front interface
-# picture: a/picture/file.jpg
+picture: Citycons_light-512.png
 
 # all actions of the recipe
 actions:
@@ -13,7 +13,6 @@ actions:
     on:
         # Format of an action:
         # Provider:method:argument
-        - logger:info:MilightOn
         - milight:rgbwAllOn
         - milight:rgbwAllSetToWhite
         - milight:rgbwBrightnessPercent:50
@@ -21,5 +20,4 @@ actions:
     off:
         # Format of an action:
         # Provider:method:argument
-        - logger:info:MilightOff
         - milight:rgbwAllOff

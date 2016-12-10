@@ -9,5 +9,6 @@ dependencies:
         - ~/.composer
 test:
     override:
+        - "bin/yaml-lint app/config/config.yml"
         - "bin/php-cs-fixer fix --dry-run --diff src/"
         - "bin/phpspec run src/"
