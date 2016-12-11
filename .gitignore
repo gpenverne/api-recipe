@@ -50,3 +50,7 @@
 
 # States
 var/states/*
+
+# Recipes
+recipes/*
+!recipes/test-recipe.yml

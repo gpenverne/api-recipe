@@ -36,7 +36,7 @@ class CreateRecipeCommand extends Command
         $recipe->title = $io->ask('Title of the recipe ?');
         $recipeFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, Inflector::camelize($recipe->title));
         $recipe->description = $io->ask('Description of the recipe ?');
-        $recipe->description = $io->ask('Picture of the recipe ?');
+        $recipe->picture = $io->ask('Picture of the recipe ?');
         $recipe->actions = [
             'on' => [],
             'off' => [],
@@ -49,14 +49,22 @@ class CreateRecipeCommand extends Command
             $io->section(sprintf('Actions "%s"', $section));
             while ($io->confirm('Add an action?')) {
                 $action = $this->generateAction($io);
-                $recipe->actions[$section][] = $action;
+                if (null !== $action) {
+                    $recipe->actions[$section][] = $action;
+                }
             }
         }
 
-        var_dump($recipe);
-        $io->success(sprintf('Recipe %s created', $recipe->title));
+        $recipe = $this->generateYaml((array) $recipe)."\n";
+        file_put_contents($recipeFile, $recipe);
+        $io->success(sprintf('Recipe created in %s', realpath($recipeFile)));
     }
 
+    /**
+     * @param SymfonyStyle $io
+     *
+     * @return string
+     */
     protected function generateAction($io)
     {
         $provider = $io->ask('Provider for this action ?');
@@ -69,5 +77,40 @@ class CreateRecipeCommand extends Command
         }
 
         return $action;
+    }
+
+    protected function generateYaml($array, $level = -1)
+    {
+        $return = '';
+        if (empty($array)) {
+            return;
+        }
+
+        foreach ($array as $k => $v) {
+            if (is_array($v)) {
+                $v = $this->generateYaml($v, $level + 1);
+            }
+            if (null === $v) {
+                continue;
+            }
+            $return .= "\n";
+            if (!is_numeric($k)) {
+                $return .= $this->getTabs($level).sprintf('%s: %s', $k, $v);
+            } else {
+                $return .= $this->getTabs($level).sprintf('- %s', $v);
+            }
+        }
+
+        return $return;
+    }
+
+    private function getTabs($level = 0)
+    {
+        $tabs = '';
+        for ($i = 0; $i <= $level; ++$i) {
+            $tabs .= '    ';
+        }
+
+        return $tabs;
     }
 }
