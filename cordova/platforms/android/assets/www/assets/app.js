@@ -23,8 +23,12 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     try {
         $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
         if (!$scope.$parent.recipes) {
-        }
             $scope.$parent.recipes = [];
+        }
+        $scope.tags = JSON.parse(window.localStorage.getItem("tags"));
+        if (!$scope.$parent.tags) {
+            $scope.$parent.tags = [];
+        }
     } catch(e) {
         $scope.$parent.recipes = [];
     }
@@ -50,6 +54,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
             try {
                 window.localStorage.setItem("recipes", JSON.stringify(r.data));
+                window.localStorage.setItem("tags", JSON.stringify(newTags));
             } catch(e) {}
         });
 
