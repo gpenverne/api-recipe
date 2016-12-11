@@ -22,13 +22,11 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
             recipe.runing = false;
             var actions = r.data.actions;
             for (var action in actions) {
-                if (actions.hasOwnProperty(action)) {
-                    if (!actions[action]) {
-                        recipe.error = true;
-                    }
+                    alert(action);
                     alert(device.platform);
                     if (device.platform == 'Android') {
-                        var actionsInfos = actions[action].split(':');
+                        alert(action);
+                        var actionsInfos = action.split(':');
                         var provider = actionInfos[0];
                         var method = actionInfos[1];
                         var arg = actionInfos[2];
@@ -40,7 +38,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
                                 "application": arg
                             }).start();
                         }
-                    }
                 }
             }
         }, function(){

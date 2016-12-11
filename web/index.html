@@ -17,7 +17,7 @@
 <body ng-app="app">
     <div ng-controller="appCtrl">
         <ul id="recipes-list" class="row">
-            <li ng-repeat="recipe in recipes" ng-if="recipe.picture && recipe.visible" ng-click="execRecipe(recipe)" ng-class="{'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url(/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
+            <li ng-repeat="recipe in recipes" ng-if="recipe.picture && recipe.visible" ng-click="execRecipe(recipe)" ng-class="{'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ hostApi }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
                 <div ng-if="!recipe.runing"></div>
                 <div ng-if="recipe.runing"><i class="recipe-icon fa fa-circle-o-notch  fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>
             </li>
