@@ -26,17 +26,16 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
                     if (!actions[action]) {
                         recipe.error = true;
                     }
-                    if (device.platform == 'android') {
+                    if (device.platform == 'Android') {
                         var actionsInfos = actions[action].split(':');
                         var provider = actionInfos[0];
                         var method = actionInfos[1];
                         var arg = actionInfos[2];
 
                         if ('openApp' == method) {
-                            var sApp = startApp.set({
+                            startApp.set({
                                 "application": arg
-                            });
-                            sApp.start(function(){}, function(){});
+                            }).start();
                         }
                     }
                 }
