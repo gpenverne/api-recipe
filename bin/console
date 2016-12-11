@@ -5,13 +5,13 @@ include sprintf('%s/../vendor/autoload.php', __DIR__);
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Homatisation\Command\ExecRecipeCommand;
-use Homatisation\Command\TestActionCommand;
+use Homatisation\Command\ExecActionCommand;
 use Homatisation\Command\CreateRecipeCommand;
 
 $commands = [
-    ExecRecipeCommand::class,
     CreateRecipeCommand::class,
-    TestActionCommand::class,
+    ExecActionCommand::class,
+    ExecRecipeCommand::class,
 ];
 $input = new ArgvInput();
 

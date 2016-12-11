@@ -9,8 +9,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Homatisation\Manager\RecipeManager;
 use Homatisation\Manager\ActionManager;
 use Homatisation\Manager\ProviderManager;
+use Symfony\Component\Console\Input\InputArgument;
 
-class TestActionCommand extends Command
+class ExecActionCommand extends Command
 {
     /**
      * @var RecipeManager
@@ -45,13 +46,17 @@ class TestActionCommand extends Command
         while ($askForAction) {
             if (!$actionFromCommandLine) {
                 $action = $this->askForAction($io);
+            } else {
+                $action = $actionFromCommandLine;
             }
 
             $io->text(sprintf('Exec action: %s', $action));
             $this->execAction($action);
 
             if (!$actionFromCommandLine) {
-                $io->confirm('Exec an other action?');
+                $askForAction = $io->confirm('Exec an other action?');
+            } else {
+                $askForAction = false;
             }
         }
 
