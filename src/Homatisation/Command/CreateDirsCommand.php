@@ -31,6 +31,7 @@ class CreateDirsCommand extends Command
             'var',
             'var/states',
             'var/logs',
+            'web/images',
         ];
 
         foreach ($dirs as $dir) {
