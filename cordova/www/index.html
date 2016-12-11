@@ -1,41 +1,70 @@
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="fr">
+<head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta charset="utf-8"/>
+    <title>Homatisation</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <link rel="stylesheet" href='assets/vendor/bootstrap/dist/css/bootstrap.min.css' />
+    <link rel="stylesheet" href='assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' />
+    <link rel="stylesheet" href='assets/vendor/materialize/dist/css/materialize.min.css' />
+    <link rel="stylesheet" href='assets/vendor/components-font-awesome/css/font-awesome.min.css' />
+    <link rel="stylesheet" href='assets/styles.css' />
+    <link rel="stylesheet" href='css/index.css' />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+</head>
+<body ng-app="app">
+    <div ng-controller="appCtrl" id="recipesContainer">
+        <ul id="recipes-list" class="row">
+            <li class="recipe col-md-4 .col-xs-6" ng-click="$parent.parametersVisible = 1" style="background-image: url(img/gear-512.png); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
+                <div ng-if="!recipe.runing"></div>
+            </li>
+            <li ng-repeat="recipe in recipes" ng-if="recipe.picture && recipe.visible" ng-click="execRecipe(recipe)" ng-class="{'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url(/img/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
+                <div ng-if="!recipe.runing"></div>
+                <div ng-if="recipe.runing"><i class="recipe-icon fa fa-circle-o-notch  fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i></div>
+            </li>
+        </ul>
+    </div>
+    <div id="parameters" ng-controller="parametersCtrl" ng-class="{visible: $parent.parametersVisible}">
+        <i class="fa fa-arrow-circle-left pull-right" style="color: #fff; font-size: 50px; padding-top:10px; padding-left: 15px; padding-right: 15px;" aria-hidden="true" ng-click="$parent.parametersVisible = 0"></i>
+        <div class="row" style="padding-left: 10px; padding-right: 10px; ">
+            <form class="col s12">
+                <div class="input-field">
+                    <label for="hostname_field">Host url or ip</label>
+                    <input id="hostname_field" type="text" ng-model="hostName" />
+                    <input type="submit" class="btn" value="Save" ng-click="setHost(hostName)" />
+                </div>
 
-    http://www.apache.org/licenses/LICENSE-2.0
-
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>Apache Cordova</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
+            </form>
         </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-    </body>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src='assets/vendor/angular/angular.min.js'></script>
+    <script src='assets/vendor/jquery/dist/jquery.min.js'></script>
+    <script src='assets/vendor/bootstrap/dist/js/bootstrap.min.js'></script>
+    <script src='assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
+    <script src='js/android/cordovaApp.js'></script>
+    <script src='assets/app.js'></script>
+    <script src='js/android/parametersController.js'></script>
+<script>
+    function requestFullScreen(element) {
+    // Supports most browsers and their versions.
+    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+    if (requestMethod) { // Native full screen.
+        requestMethod.call(element);
+    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+            wscript.SendKeys("{F11}");
+        }
+    }
+}
+document.addEventListener("DOMContentLoaded", function(event) {
+var elem = document.body; // Make the body go full screen.
+requestFullScreen(elem);});</script>
+</body>
 </html>

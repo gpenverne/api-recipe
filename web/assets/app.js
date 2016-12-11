@@ -1,8 +1,14 @@
 var app = angular.module('app', []);
+if (typeof hostApi == 'undefined') {
+    hostApi = 'http://127.0.0.1';
+}
+
 app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.recipes = [];
+    $scope.$parent.parametersVisible = 0;
+
     $scope.getRecipes = function(){
-        $http.get('/recipes?format=json').then(function(r){
+        $http.get(hostApi+'/recipes?format=json').then(function(r){
             $scope.recipes = r.data;
             console.log($scope.recipes);
         });
@@ -13,7 +19,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.execRecipe = function(recipe){
         recipe.runing = true;
         recipe.error = false;
-        $http.get(recipe.url).then(function(r){
+        $http.get(hostApi+recipe.url).then(function(r){
             recipe.runing = false;
             var actions = r.data.actions;
             for (var action in actions) {
@@ -51,6 +57,5 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         $scope.getRecipes();
         $timeout(countUp, 60000);
     }
-
-    $timeout(countUp, 60000);
+    $timeout(countUp, 1000);
 });
