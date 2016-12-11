@@ -6,6 +6,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
+    $scope.$parent.currentTag = 'all';
+    $scope.tags = [];
+
     try {
         $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
         if (!$scope.recipes) {
@@ -15,9 +18,40 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         $scope.recipes = [];
     }
 
-    $scope.getRecipes = function(){
+    $scope.$parent.getRecipes = function(tag){
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
-            $scope.recipes = r.data;
+            var newTags = ['all'];
+            for (var i=0; i < r.data.length; i++) {
+                for (var i=0; i < r.data.length; i++) {
+                    var recipe = r.data[i];
+                    if (typeof recipe.tags == 'undefined') {
+                        recipe.tags = [];
+                    }
+                    for (var j=0; j < recipe.tags.length; j++) {
+                        newTags.push(recipe.tags[j]);
+                    }
+                }
+            }
+            $scope.$parent.tags = newTags;
+
+            if ($scope.$parent.currentTag != 'all') {
+                var newRecipes = [];
+
+                for (var i=0; i < r.data.length; i++) {
+                    var recipe = r.data[i];
+                    for (var j=0; j < recipe.tags.length; j++) {
+                        if (recipe.tags[j] == $scope.$parent.currentTag) {
+                            newRecipes.push(recipe);
+                        }
+                    }
+                }
+
+                $scope.recipes = newRecipes;
+            }
+            else {
+                $scope.recipes = r.data;
+            }
+
             try {
                 window.localStorage.setItem("recipes", JSON.stringify(r.data));
             } catch(e) {}
@@ -69,9 +103,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         $scope.marginLeft = $scope.recipeWidth / 3;
     }
 
-    $scope.getRecipes();
+    $scope.$parent.getRecipes();
     var countUp = function() {
-        $scope.getRecipes();
+        $scope.$parent.getRecipes();
         $timeout(countUp, 60000);
     }
     $timeout(countUp, 1000);

@@ -5,8 +5,11 @@ title: A sample recipe
 description: To test recipes, it uses the logger provider
 
 # you can add a picture if you want to show this recipe on the front interface
-# picture: test.jpg
+picture: test.jpg
 
+tags:
+    - tv
+    - light
 # all actions of the recipe
 actions:
     # Actions to do when passing to the on state

@@ -29,14 +29,23 @@
     <div id="parameters" ng-controller="parametersCtrl" ng-class="{visible: $parent.parametersVisible}" ng-swipe-left="$parent.parametersVisible = 0">
         <i class="parametersBtnInside top fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"></i>
         <div class="row" style="padding-left: 10px; padding-right: 10px; ">
-            <form class="col s12">
-                <div class="input-field">
+            <form>
+
+                <div class="input-field col s6">
                     <label for="hostname_field">Host url or ip</label>
                     <input id="hostname_field" type="text" ng-model="hostName" />
-                    <input type="submit" class="btn" value="Save" ng-click="setHost(hostName)" />
+
+                </div>
+                <div class="col s6">
+                    <input type="submit" class="btn btnHost" value="Save" ng-click="setHost(hostName)" />
                 </div>
 
             </form>
+        </div>
+        <div class="row" style="padding-left: 10px; padding-right: 10px; ">
+            <ul>
+                <li class="tag" ng-repeat="tag in $parent.tags" ng-click="$parent.currentTag = tag; $parent.getRecipes()"><i class="fa fa-hashtag"></i>{{ tag }}</li>
+            </ul>
         </div>
         <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     </div>
