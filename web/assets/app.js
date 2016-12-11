@@ -6,9 +6,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
-
     try {
-        $scope.recipes = window.localStorage.getItem("recipes");
+        $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
         if (!$scope.recipes) {
             $scope.recipes = [];
         }
@@ -20,7 +19,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             $scope.recipes = r.data;
             try {
-                window.localStorage.setItem("recipes", r.data);
+                window.localStorage.setItem("recipes", JSON.stringify(r.data));
             } catch(e) {}
         });
 
