@@ -8,7 +8,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.hostApi = hostApi;
 
     try {
-        var permanentStorage = window.localStorage;
         $scope.recipes = window.localStorage.getItem("recipes");
         if (!$scope.recipes) {
             $scope.recipes = [];
@@ -20,8 +19,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.getRecipes = function(){
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             $scope.recipes = r.data;
-            var permanentStorage = window.localStorage;
-            $scope.recipes = window.localStorage.setItem("recipes", r.data);
+            try {
+                window.localStorage.setItem("recipes", r.data);
+            } catch(e) {}
         });
 
         return $scope.recipes;
