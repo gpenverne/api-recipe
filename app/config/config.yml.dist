@@ -10,6 +10,8 @@ providers:
         remote_code: 000000
     sleeper:
         provider: sleep
+    android:
+        provider: android
 
     # sample_api_provider:
     #     provider: api
