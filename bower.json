@@ -7,6 +7,7 @@
     "angular-ui-ace": "bower",
     "angular-bootstrap": "^2.0.1",
     "materialize": "^0.97.7",
-    "bootstrap-select": "^1.10.0"
+    "bootstrap-select": "^1.10.0",
+    "angular-touch": "^1.6.0"
   }
 }

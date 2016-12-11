@@ -1,4 +1,4 @@
-var app = angular.module('app', []);
+var app = angular.module('app', ['ngTouch']);
 if (typeof hostApi == 'undefined') {
     hostApi = 'http://127.0.0.1';
 }

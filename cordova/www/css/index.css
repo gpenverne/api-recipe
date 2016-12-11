@@ -37,11 +37,11 @@ body {
 #parameters {
     position: absolute;
     width: 80%;
-    left: -80%;
+    left: -79%;
     top: 0px;
     height: 100%;
     transition-property: left;
-    transition-duration: 0.5s;
+    transition-duration: 0.7s;
     background: #333;
     opacity: 0.9;
     font-size:15px;
@@ -54,4 +54,26 @@ body {
 #hostname_field {
     color: #fff;
     margin-top: 35px;
+}
+
+#parametersBtn{
+        padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: absolute;
+    bottom: 10px;
+    left: -18px;
+    font-size: 70px;
+    color: #333;
+}
+
+#parametersBtn.visible{
+    display: none;
+}
+.parametersBtnInside{
+    position: absolute;
+    bottom: 10px;
+    color: #000;
+    font-size: 70px;
+    right: -33px;
 }
