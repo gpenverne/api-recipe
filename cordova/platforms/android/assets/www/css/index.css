@@ -77,3 +77,23 @@ body {
     font-size: 70px;
     right: -33px;
 }
+
+.tag{
+    font-size: 20px;
+    font-weight: bold;
+    background-color: #ccc;
+    border-radius: 50px;
+    display: inline-block;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #333;
+    cursor: pointer;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+
+.btnHost{
+    margin-top: 60px;
+}

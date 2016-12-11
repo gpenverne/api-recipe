@@ -1,25 +1,60 @@
-var app = angular.module('app', ['ngTouch']);
+var app = angular.module('app', ['ngTouch']).service('currentTag', function(){
+    var currentTag = 'all';
+    return {
+        getCurrentTag: function() {
+            return currentTag;
+        },
+        setCurrentTag: function(tag){
+            currentTag = tag;
+        }
+    };
+});
+
 if (typeof hostApi == 'undefined') {
     hostApi = 'http://127.0.0.1';
 }
-app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
-    $scope.recipes = [];
+app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+    $scope.$parent.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
+    $scope.currentTag = currentTag;
+    $scope.tags = [];
+
     try {
         $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
-        if (!$scope.recipes) {
-            $scope.recipes = [];
+        if (!$scope.$parent.recipes) {
+            $scope.$parent.recipes = [];
+        }
+        $scope.tags = JSON.parse(window.localStorage.getItem("tags"));
+        if (!$scope.$parent.tags) {
+            $scope.$parent.tags = [];
         }
     } catch(e) {
-        $scope.recipes = [];
+        $scope.$parent.recipes = [];
     }
 
-    $scope.getRecipes = function(){
+    $scope.$parent.getRecipes = function(){
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
-            $scope.recipes = r.data;
+            var newTags = ['all'];
+            for (var i=0; i < r.data.length; i++) {
+                for (var i=0; i < r.data.length; i++) {
+                    var recipe = r.data[i];
+                    if (typeof recipe.tags == 'undefined') {
+                        recipe.tags = [];
+                    }
+                    for (var j=0; j < recipe.tags.length; j++) {
+                        if (newTags.indexOf(recipe.tags[j]) < 0) {
+                        newTags.push(recipe.tags[j]);
+                    }
+                    }
+                }
+            }
+            $scope.$parent.tags = newTags;
+            $scope.$parent.recipes = r.data;
+
             try {
                 window.localStorage.setItem("recipes", JSON.stringify(r.data));
+                window.localStorage.setItem("tags", JSON.stringify(newTags));
             } catch(e) {}
         });
 
@@ -69,9 +104,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
         $scope.marginLeft = $scope.recipeWidth / 3;
     }
 
-    $scope.getRecipes();
+    $scope.$parent.getRecipes();
     var countUp = function() {
-        $scope.getRecipes();
+        $scope.$parent.getRecipes();
         $timeout(countUp, 60000);
     }
     $timeout(countUp, 1000);
