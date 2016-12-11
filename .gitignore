@@ -33,6 +33,7 @@
 
 # Assets managed by Bower
 /web/assets/vendor/
+/cordova/www/assets/vendor/
 
 # PHPUnit
 /app/phpunit.xml
@@ -51,6 +52,9 @@
 # States
 var/states/*
 
+# Node modules
+cordova/node_modules/*
+
 # Recipes
 recipes/*
 !recipes/test-recipe.yml
@@ -60,3 +64,4 @@ app/config/config.yml
 
 # Recipes images
 web/images/*
+

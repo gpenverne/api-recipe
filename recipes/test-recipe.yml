@@ -5,7 +5,7 @@ title: A sample recipe
 description: To test recipes, it uses the logger provider
 
 # you can add a picture if you want to show this recipe on the front interface
-# picture: a/picture/file.jpg
+# picture: test.jpg
 
 # all actions of the recipe
 actions:

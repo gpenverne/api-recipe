@@ -18,7 +18,7 @@ class BinaryProvider implements ProviderInterface
     {
         return [
             'command',
-            'echo',
+            'echoUsingCommand',
         ];
     }
 
@@ -43,7 +43,7 @@ class BinaryProvider implements ProviderInterface
      *
      * @return bool
      */
-    public function echo($command)
+    public function echoUsingCommand($command)
     {
         $fullCommand = sprintf('echo "%s" | %s', $command, $this->binary);
 
