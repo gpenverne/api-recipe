@@ -57,6 +57,7 @@ class CreateRecipeCommand extends Command
 
         $recipe = $this->generateYaml((array) $recipe)."\n";
         file_put_contents($recipeFile, $recipe);
+
         $io->success(sprintf('Recipe created in %s', realpath($recipeFile)));
     }
 
@@ -67,7 +68,16 @@ class CreateRecipeCommand extends Command
      */
     protected function generateAction($io)
     {
-        $provider = $io->ask('Provider for this action ?');
+        $provider = $io->ask('Provider for this action ?', null, function ($providerName) {
+            $provider = Inflector::camelize($providerName);
+            $providerFile = sprintf('%s/../../../src/Homatisation/Provider/%sProvider.php', __DIR__, ucfirst($provider));
+            if (!is_file($providerFile)) {
+                throw new \RuntimeException('Provider not found!');
+            }
+
+            return $providerName;
+        });
+
         $method = $io->ask('Action call on this provider ?');
         $argument = $io->ask('Any argument ?');
 

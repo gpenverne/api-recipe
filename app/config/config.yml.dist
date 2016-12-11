@@ -1,0 +1,19 @@
+providers:
+    logger:
+        provider: logger
+        log_file: var/logs/logger.log
+    milight:
+        provider: milight
+        host: 127.0.0.1
+    freebox:
+        provider: freebox
+        remote_code: 000000
+    sleeper:
+        provider: sleep
+
+    # sample_api_provider:
+    #     provider: api
+    #     base_url: http://domain.tld/something
+    # sample_binary_provider:
+    #     provider: binary
+    #     binary: bin/echo

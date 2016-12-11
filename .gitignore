@@ -54,3 +54,7 @@ var/states/*
 # Recipes
 recipes/*
 !recipes/test-recipe.yml
+
+# Config file
+app/config/config.yml
+
