@@ -1,24 +1,35 @@
-var app = angular.module('app', ['ngTouch']);
+var app = angular.module('app', ['ngTouch']).service('currentTag', function(){
+    var currentTag = 'all';
+    return {
+        getCurrentTag: function() {
+            return currentTag;
+        },
+        setCurrentTag: function(tag){
+            currentTag = tag;
+        }
+    };
+});
+
 if (typeof hostApi == 'undefined') {
     hostApi = 'http://127.0.0.1';
 }
-app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
-    $scope.recipes = [];
+app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+    $scope.$parent.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
-    $scope.$parent.currentTag = 'all';
+    $scope.currentTag = currentTag;
     $scope.tags = [];
 
     try {
         $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
-        if (!$scope.recipes) {
-            $scope.recipes = [];
+        if (!$scope.$parent.recipes) {
         }
+            $scope.$parent.recipes = [];
     } catch(e) {
-        $scope.recipes = [];
+        $scope.$parent.recipes = [];
     }
 
-    $scope.$parent.getRecipes = function(tag){
+    $scope.$parent.getRecipes = function(){
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             var newTags = ['all'];
             for (var i=0; i < r.data.length; i++) {
@@ -33,24 +44,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
                 }
             }
             $scope.$parent.tags = newTags;
-
-            if ($scope.$parent.currentTag != 'all') {
-                var newRecipes = [];
-
-                for (var i=0; i < r.data.length; i++) {
-                    var recipe = r.data[i];
-                    for (var j=0; j < recipe.tags.length; j++) {
-                        if (recipe.tags[j] == $scope.$parent.currentTag) {
-                            newRecipes.push(recipe);
-                        }
-                    }
-                }
-
-                $scope.recipes = newRecipes;
-            }
-            else {
-                $scope.recipes = r.data;
-            }
+            $scope.$parent.recipes = r.data;
 
             try {
                 window.localStorage.setItem("recipes", JSON.stringify(r.data));

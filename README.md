@@ -47,6 +47,9 @@ $ bin/console recipes:exec [recipeName] [on|off|toggle]
 Just click on the picture to make a toggle execution.  
 Your http server should target the web/ subfolder.  
 
+### tags
+Each recipe can have one or more tags. These tags will be shown in the slide menu (android app).
+
 ## Actions
 An action is a string following this syntax: provider_name:provider_method:optional_argument .
 

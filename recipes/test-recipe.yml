@@ -8,8 +8,9 @@ description: To test recipes, it uses the logger provider
 picture: test.jpg
 
 tags:
-    - tv
-    - light
+    - sample tag
+    - tag2
+    
 # all actions of the recipe
 actions:
     # Actions to do when passing to the on state
