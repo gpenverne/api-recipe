@@ -44,7 +44,7 @@
         </div>
         <div class="row" style="padding-left: 10px; padding-right: 10px; " ng-if="$parent.tags.length > 1">
             <ul>
-                <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i>{{ tag }}</li>
+                <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i> {{ tag }}</li>
             </ul>
         </div>
         <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>

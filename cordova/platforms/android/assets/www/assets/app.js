@@ -39,7 +39,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                         recipe.tags = [];
                     }
                     for (var j=0; j < recipe.tags.length; j++) {
+                        if (newTags.indexOf(recipe.tags[j]) < 0) {
                         newTags.push(recipe.tags[j]);
+                    }
                     }
                 }
             }
