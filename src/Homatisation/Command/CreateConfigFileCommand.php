@@ -30,6 +30,8 @@ class CreateConfigFileCommand extends Command
         $distFile = sprintf('%s/../../../app/config/config.yml.dist', __DIR__);
         $localFile = sprintf('%s/../../../app/config/config.yml', __DIR__);
 
-        copy($distFile, $localFile);
+        if (!is_file($localFile)) {
+            copy($distFile, $localFile);
+        }
     }
 }

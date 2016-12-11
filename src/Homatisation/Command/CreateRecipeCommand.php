@@ -7,6 +7,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Homatisation\Manager\RecipeManager;
+use Homatisation\Manager\ProviderManager;
 use Doctrine\Common\Inflector\Inflector;
 
 class CreateRecipeCommand extends Command
@@ -15,6 +16,11 @@ class CreateRecipeCommand extends Command
      * @var RecipeManager
      */
     protected $recipeManager;
+
+    /**
+     * @var ProviderManager
+     */
+    protected $providerManager;
 
     protected function configure()
     {
@@ -68,17 +74,18 @@ class CreateRecipeCommand extends Command
      */
     protected function generateAction($io)
     {
-        $provider = $io->ask('Provider for this action ?', null, function ($providerName) {
-            $provider = Inflector::camelize($providerName);
-            $providerFile = sprintf('%s/../../../src/Homatisation/Provider/%sProvider.php', __DIR__, ucfirst($provider));
-            if (!is_file($providerFile)) {
-                throw new \RuntimeException('Provider not found!');
-            }
+        $providerManager = $this->getProviderManager();
+        $providers = $providerManager->listProviders();
+        $provider = $io->choice('Provider for this action ?', $providers);
 
-            return $providerName;
-        });
+        $methods = $providerManager->getActions($provider);
 
-        $method = $io->ask('Action call on this provider ?');
+        if (empty($methods)) {
+            $method = $io->ask('Action call on this provider ?');
+        } else {
+            $method = $io->choice('Action call on this provider ?', $methods);
+        }
+
         $argument = $io->ask('Any argument ?');
 
         $action = sprintf('%s:%s', $provider, $method);
@@ -114,6 +121,23 @@ class CreateRecipeCommand extends Command
         return $return;
     }
 
+    /**
+     * @return ProviderManager
+     */
+    protected function getProviderManager()
+    {
+        if (null === $this->providerManager) {
+            $this->providerManager = new ProviderManager();
+        }
+
+        return $this->providerManager;
+    }
+
+    /**
+     * @param int $level
+     *
+     * @return string
+     */
     private function getTabs($level = 0)
     {
         $tabs = '';
