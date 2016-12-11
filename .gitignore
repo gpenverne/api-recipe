@@ -53,3 +53,13 @@ var/states/*
 
 # Node modules
 cordova/node_modules/*
+
+# Recipes
+recipes/*
+!recipes/test-recipe.yml
+
+# Config file
+app/config/config.yml
+
+# Recipes images
+web/images/*

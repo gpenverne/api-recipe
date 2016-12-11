@@ -2,7 +2,7 @@
 
 namespace Homatisation\Provider;
 
-class CecClientProvider implements ProviderInterface
+class BinaryProvider implements ProviderInterface
 {
     use HydratorTrait;
 
@@ -10,6 +10,17 @@ class CecClientProvider implements ProviderInterface
      * @var string;
      */
     protected $binary;
+
+    /**
+     * @return array
+     */
+    public function getActions()
+    {
+        return [
+            'command',
+            'echo',
+        ];
+    }
 
     /**
      * @param string $command
