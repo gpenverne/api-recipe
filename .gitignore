@@ -33,6 +33,7 @@
 
 # Assets managed by Bower
 /web/assets/vendor/
+/cordova/www/assets/vendor/
 
 # PHPUnit
 /app/phpunit.xml
