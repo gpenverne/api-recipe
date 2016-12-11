@@ -7,9 +7,21 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
 
+    try {
+        var permanentStorage = window.localStorage;
+        $scope.recipes = window.localStorage.getItem("recipes");
+        if (!$scope.recipes) {
+            $scope.recipes = [];
+        }
+    } catch(e) {
+        $scope.recipes = [];
+    }
+
     $scope.getRecipes = function(){
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             $scope.recipes = r.data;
+            var permanentStorage = window.localStorage;
+            $scope.recipes = window.localStorage.setItem("recipes", r.data);
         });
 
         return $scope.recipes;
