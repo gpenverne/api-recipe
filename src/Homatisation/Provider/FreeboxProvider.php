@@ -14,6 +14,16 @@ class FreeboxProvider implements ProviderInterface
     protected $remoteCode;
 
     /**
+     * @return array
+     */
+    public function getActions()
+    {
+        return [
+            'key',
+        ];
+    }
+
+    /**
      * @param string $key
      *
      * @return bool
