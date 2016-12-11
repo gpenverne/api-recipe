@@ -26,12 +26,15 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
                     if (!actions[action]) {
                         recipe.error = true;
                     }
+                    alert(device.platform);
                     if (device.platform == 'Android') {
                         var actionsInfos = actions[action].split(':');
                         var provider = actionInfos[0];
                         var method = actionInfos[1];
                         var arg = actionInfos[2];
-
+                        alert(provider);
+                        alert(method);
+                        alert(arg);
                         if ('openApp' == method) {
                             startApp.set({
                                 "application": arg
