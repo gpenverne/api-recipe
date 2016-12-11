@@ -14,6 +14,16 @@ class ApiProvider implements ProviderInterface
     protected $baseUrl;
 
     /**
+     * @return array
+     */
+    public function getActions()
+    {
+        return [
+            'endPoint',
+        ];
+    }
+
+    /**
      * @param string $key
      *
      * @return bool

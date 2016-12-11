@@ -30,15 +30,47 @@ class ProviderManager implements ManagerInterface
     /**
      * @return $this
      */
-    protected function getConfig($providerName)
+    protected function getConfig($providerName = null)
     {
         $expectedFile = sprintf('%s/../../../app/config/config.yml', __DIR__);
         $config = $this->parseYmlFile($expectedFile);
+
+        if (null === $providerName) {
+            return $config['providers'];
+        }
 
         foreach ($config['providers'] as $key => $providerConfig) {
             if (Inflector::Camelize($key) === $providerName) {
                 return $providerConfig;
             }
+        }
+
+        return [];
+    }
+
+    /**
+     * @return array
+     */
+    public function listProviders()
+    {
+        $providers = $this->getConfig();
+        $providers = array_map(function ($provider) {
+            return $provider['provider'];
+        }, $providers);
+
+        return array_values($providers);
+    }
+
+    /**
+     * @param string $providerName
+     *
+     * @return array
+     */
+    public function getActions($providerName)
+    {
+        $provider = $this->getProvider($providerName);
+        if (method_exists($provider, 'getActions')) {
+            return $provider->getActions();
         }
 
         return [];

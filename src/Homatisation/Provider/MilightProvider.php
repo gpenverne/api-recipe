@@ -14,6 +14,20 @@ class MilightProvider implements ProviderInterface
     protected $milight;
 
     /**
+     * @return array
+     */
+    public function getActions()
+    {
+        $reflectedClass = new \ReflectionClass(Milight::class);
+
+        $methods = $reflectedClass->getMethods(\ReflectionMethod::IS_PUBLIC);
+
+        return array_map(function ($reflectionMethod) {
+            return $reflectionMethod->name;
+        }, $methods);
+    }
+
+    /**
      * @param string $method
      * @param array  $args
      *
