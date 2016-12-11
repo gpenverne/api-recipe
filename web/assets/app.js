@@ -23,16 +23,18 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
             recipe.runing = false;
             var actions = r.data.actions;
             for (var action in actions) {
-                    if (device.platform == 'Android') {
-                        var actionsInfos = action.split(':');
-                        var provider = actionsInfos[0];
-                        var method = actionsInfos[1];
-                        var arg = actionsInfos[2];
-                        if ('openApp' == method) {
+                if (device.platform == 'Android' || true) {
+                    var actionsInfos = action.split(':');
+                    var provider = actionsInfos[0];
+                    var method = actionsInfos[1];
+                    if ('android' == provider && 'openApp' == method) {
+                        try {
+                            var arg = actionsInfos[2];
                             startApp.set({
                                 "application": arg
                             }).start();
-                        }
+                        } catch (e) {}
+                    }
                 }
             }
         }, function(){
