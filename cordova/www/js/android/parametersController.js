@@ -8,7 +8,7 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window) {
     hostApi = $scope.hostName;
 
     if (!$scope.hostName) {
-        $scope.hostName = 'http://127.0.0.1';
+        $scope.hostName = 'http://'+window.location.hostname;
     }
 
     $scope.setHost = function(host) {

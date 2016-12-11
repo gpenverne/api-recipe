@@ -12,6 +12,7 @@
     <link rel="stylesheet" href='assets/vendor/components-font-awesome/css/font-awesome.min.css' />
     <link rel="stylesheet" href='assets/styles.css' />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script>var device = {'platform': 'web'};</script>
 </head>
 <body ng-app="app">
     <div ng-controller="appCtrl">
@@ -29,22 +30,5 @@
     <script src='assets/vendor/bootstrap/dist/js/bootstrap.min.js'></script>
     <script src='assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
     <script src='assets/app.js'></script>
-<script>
-    function requestFullScreen(element) {
-    // Supports most browsers and their versions.
-    var requestMethod = element.requestFullScreen || element.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
-
-    if (requestMethod) { // Native full screen.
-        requestMethod.call(element);
-    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
-        var wscript = new ActiveXObject("WScript.Shell");
-        if (wscript !== null) {
-            wscript.SendKeys("{F11}");
-        }
-    }
-}
-document.addEventListener("DOMContentLoaded", function(event) {
-var elem = document.body; // Make the body go full screen.
-requestFullScreen(elem);});</script>
 </body>
 </html>

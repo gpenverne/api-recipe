@@ -165,7 +165,7 @@ class RecipeManager implements ManagerInterface
         }
 
         $infos->state = $this->getStateManager()->getRecipeState($recipeName);
-        $infos->url = sprintf('/recipes/exec/%s?format=json', $recipeName);
+        $infos->url = sprintf('/recipes/exec/%s?format=json&origin=%s', $recipeName, $_GET['origin']);
         $infos->visible = true;
 
         return $infos;

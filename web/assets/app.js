@@ -1,14 +1,13 @@
 var app = angular.module('app', ['ngTouch']);
 if (typeof hostApi == 'undefined') {
-    hostApi = 'http://127.0.0.1';
+    hostApi = 'http://'+window.location.hostname;
 }
-
 app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
     $scope.recipes = [];
     $scope.$parent.parametersVisible = 0;
 
     $scope.getRecipes = function(){
-        $http.get(hostApi+'/recipes?format=json').then(function(r){
+        $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             $scope.recipes = r.data;
             console.log($scope.recipes);
         });
@@ -27,9 +26,21 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window) {
                     if (!actions[action]) {
                         recipe.error = true;
                     }
+                    if (device.platform == 'android') {
+                        var actionsInfos = actions[action].split(':');
+                        var provider = actionInfos[0];
+                        var method = actionInfos[1];
+                        var arg = actionInfos[2];
+
+                        if ('openApp' == method) {
+                            var sApp = startApp.set({
+                                "application": arg
+                            });
+                            sApp.start(function(){}, function(){});
+                        }
+                    }
                 }
             }
-
         }, function(){
             recipe.runing = false;
             recipe.error = true;
