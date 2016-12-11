@@ -6,11 +6,9 @@ var cordovaApp = {
         document.addEventListener('deviceready', this.onDeviceReady, false);
     },
     onDeviceReady: function() {
-        app.receivedEvent('deviceready');
+        $('#recipesContainer').height($(window).height());
     },
-    // Update DOM on a Received Event
-    receivedEvent: function(id) {
-    }
+
 };
 
 cordovaApp.initialize();

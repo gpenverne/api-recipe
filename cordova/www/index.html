@@ -17,8 +17,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
 </head>
 <body ng-app="app">
-    <div ng-controller="appCtrl" id="recipesContainer">
-        <ng-swipe-right ng-swipe-right="$parent.parametersVisible = 1"></ng-swipe-left>
+    <div ng-controller="appCtrl" id="recipesContainer" ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0">
         <ul id="recipes-list" class="row">
             <li ng-repeat="recipe in recipes" ng-if="recipe.picture && recipe.visible" ng-click="execRecipe(recipe)" ng-class="{'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ $parent.hostName }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
                 <div ng-if="!recipe.runing"></div>
@@ -26,8 +25,7 @@
             </li>
         </ul>
     </div>
-    <div id="parameters" ng-controller="parametersCtrl" ng-class="{visible: $parent.parametersVisible}">
-        <ng-swipe-left ng-swipe-left="$parent.parametersVisible = 0"></ng-swipe-left>
+    <div id="parameters" ng-controller="parametersCtrl" ng-class="{visible: $parent.parametersVisible}" ng-swipe-left="$parent.parametersVisible = 0">
         <i class="parametersBtnInside top fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"></i>
         <div class="row" style="padding-left: 10px; padding-right: 10px; ">
             <form class="col s12">
@@ -39,9 +37,9 @@
 
             </form>
         </div>
-        <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"></i>
+        <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     </div>
-    <i id="parametersBtn" class="fa fa-arrow-right pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-controller="parametersCtrl" ng-click="$parent.parametersVisible = 1"></i>
+    <i id="parametersBtn" class="fa fa-arrow-right pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-controller="parametersCtrl" ng-click="$parent.parametersVisible = 1"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     <script type="text/javascript" src="cordova.js"></script>
     <script src='assets/vendor/angular/angular.min.js'></script>
     <script src='assets/vendor/angular-touch/angular-touch.min.js'></script>

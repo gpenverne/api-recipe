@@ -1,7 +1,7 @@
 app.controller('parametersCtrl', function ($scope, $http, $timeout, $window) {
     var permanentStorage = window.localStorage;
 
-    $scope.hostName = window.localStorage.getItem("host");
+    $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
     if (!$scope.hostName) {
         $scope.$parent.parametersVisible = 1;
     }
@@ -17,6 +17,7 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window) {
         $scope.hostName = host;
         hostApi = $scope.hostName;
         $scope.close();
+        document.location.reload();
 
     };
 
