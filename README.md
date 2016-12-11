@@ -29,12 +29,17 @@ Put your images in the web/images folder.
 $ bin/yaml-lint recipes/[recipe-file-name].yml
 ```
 
-## Exec a recipe using command line
+### Create a recipe using command line
+```bash
+$ bin/console recipes:create
+```
+
+### Exec a recipe using command line
 ```bash
 $ bin/console recipes:exec [recipeName] [on|off|toggle]
 ```
 
-## Exec a recipe using the front
+### Exec a recipe using the front
 Just click on the picture to make a toggle execution.
 Your http server should target the web/ subfolder
 
