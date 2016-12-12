@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Homatisation by gpenverne</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Homatisation</h1>
+      <h2 class="project-tagline"></h2>
+      <a href="https://github.com/gpenverne/homatisation" class="btn">View on GitHub</a>
+      <a href="https://github.com/gpenverne/homatisation/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/gpenverne/homatisation/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="homatisation" class="anchor" href="#homatisation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Homatisation</h1>
+
+<p>The purpose of this repo is to generate a simple front interface to make api calls. This app has been designed for use with the
+<a href="http://amzn.to/2hiTWk5">broadlink rm-pro</a> and the <a href="https://play.google.com/store/apps/details?id=de.fun2code.android.rmbridge">rm-bridge android app</a></p>
+
+<p>An android version of the front is available in <a href="https://github.com/gpenverne/homatisation/tree/master/cordova/releases">cordova/releases folder</a></p>
+
+<h2>
+<a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install</h2>
+
+<h3>
+<a id="installing-dependencies" class="anchor" href="#installing-dependencies" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing dependencies</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ composer install</pre></div>
+
+<h3>
+<a id="installing-assets" class="anchor" href="#installing-assets" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installing assets</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ bower install</pre></div>
+
+<h3>
+<a id="webserver-configuration" class="anchor" href="#webserver-configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> WebServer configuration</h3>
+
+<p>Using nginx:</p>
+
+<pre><code>    location / {
+        try_files $uri /index.php$is_args$args;
+    }
+</code></pre>
+
+<h2>
+<a id="recipes" class="anchor" href="#recipes" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Recipes</h2>
+
+<p>A recipe contains actions.<br>
+Put your recipes files in the recipes folder.<br>
+Check the test-recipe.yml file for sample configuration.<br>
+Put your images in the web/images folder.  </p>
+
+<h3>
+<a id="test-a-recipe-yml-syntax" class="anchor" href="#test-a-recipe-yml-syntax" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test a recipe yml syntax</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ bin/yaml-lint recipes/[recipe-file-name].yml</pre></div>
+
+<h3>
+<a id="create-a-recipe-using-command-line" class="anchor" href="#create-a-recipe-using-command-line" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Create a recipe using command line</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ bin/console recipes:create</pre></div>
+
+<h3>
+<a id="exec-a-recipe-using-command-line" class="anchor" href="#exec-a-recipe-using-command-line" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Exec a recipe using command line</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ bin/console recipes:<span class="pl-c1">exec</span> [recipeName] [on<span class="pl-k">|</span>off<span class="pl-k">|</span>toggle]</pre></div>
+
+<h3>
+<a id="exec-a-recipe-using-the-front" class="anchor" href="#exec-a-recipe-using-the-front" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exec a recipe using the front</h3>
+
+<p>Just click on the picture to make a toggle execution.<br>
+Your http server should target the web/ subfolder.  </p>
+
+<h3>
+<a id="tags" class="anchor" href="#tags" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> tags</h3>
+
+<p>Each recipe can have one or more tags. These tags will be shown in the slide menu (android app).</p>
+
+<h2>
+<a id="actions" class="anchor" href="#actions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Actions</h2>
+
+<p>An action is a string following this syntax: provider_name:provider_method:optional_argument .</p>
+
+<h3>
+<a id="exec-an-action-using-command-line" class="anchor" href="#exec-an-action-using-command-line" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a> Exec an action using command line</h3>
+
+<div class="highlight highlight-source-shell"><pre>$ bin/console actions:<span class="pl-c1">exec</span>
+$ bin/console actions:<span class="pl-c1">exec</span> [provider_name:provider_method:optional_argument]</pre></div>
+
+<h2>
+<a id="providers" class="anchor" href="#providers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Providers</h2>
+
+<p>A provider allows to make actions. Providers parameters are read from app/config/config.yml.<br>
+Each provider should be configuread like this:  </p>
+
+<pre><code>    my_provider_name:
+        provider: [android|api|binary|freebox|logger|milight|sleep]
+        ...
+</code></pre>
+
+<p>Each provider has dedicated parameters, see below.</p>
+
+<h4>
+<a id="android" class="anchor" href="#android" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Android</h4>
+
+<p>Allows to launch apps (only in the android app).<br>
+Sample commands: android:openApp:com.google.android.music  </p>
+
+<h4>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Api</h4>
+
+<p>Allows to make network calls.<br>
+Parameters: base_url the base url to make the calls<br>
+Sample commands: api:endPoint:an-endpoint  </p>
+
+<h4>
+<a id="binary" class="anchor" href="#binary" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Binary</h4>
+
+<p>Allows to call scripts (using php shell_exec command)<br>
+Parameters: binary , the full path to binary<br>
+Sample commands: binary:command:arg ; binary:echo:arg  </p>
+
+<h4>
+<a id="freebox" class="anchor" href="#freebox" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Freebox</h4>
+
+<p>Allows to control freebox using the hd1.freebox.fr api<br>
+Parameters: remote_code , the remote code.<br>
+Sample commands: freebox: key:home ; freebox: key:1 ; freebox: key:power  </p>
+
+<h4>
+<a id="logger" class="anchor" href="#logger" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Logger</h4>
+
+<p>Simply write into logs (in var/logs folder) using monolog.<br>
+Parameters: log_file the target log file<br>
+Sample commands: logger:info:go-to-on  </p>
+
+<h4>
+<a id="milight" class="anchor" href="#milight" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Milight</h4>
+
+<p>Allows to control milight wifi controller, thanks to <a href="https://github.com/yasharrashedi/LimitlessLED">yasharrashedi/LimitlessLED</a>.<br>
+Parameters: host, the milight host ip address.<br>
+Sample commands: milight:rgbwAllOn ; milight:rgbwAllOff  </p>
+
+<h4>
+<a id="sleep" class="anchor" href="#sleep" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sleep</h4>
+
+<p>Make a pause between actions<br>
+Sample commands: sleep:sleep:5  </p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/gpenverne/homatisation">Homatisation</a> is maintained by <a href="https://github.com/gpenverne">gpenverne</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
