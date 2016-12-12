@@ -4,8 +4,8 @@ title: A sample recipe
 # description of the recipe
 description: To test recipes, it uses the logger provider
 
-# you can add a picture if you want to show this recipe on the front interface
-picture: test.jpg
+# you can add a picture if you want to show this recipe on the front/app interface
+# picture: test.jpg
 
 # you can add some tags, they will be shown in the left side part of the front/app
 #tags:
