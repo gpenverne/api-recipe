@@ -26,4 +26,7 @@
     <access origin="*" />
     <plugin name="com.plugins.shortcut" />
     <plugin name="WebIntent" value="com.borismus.webintent.WebIntent" />
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
 </widget>

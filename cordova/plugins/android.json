@@ -23,6 +23,10 @@
                         {
                             "xml": "<feature name=\"WebIntent\"><param name=\"android-package\" value=\"com.borismus.webintent.WebIntent\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -54,6 +58,9 @@
             "PACKAGE_NAME": "com.gkdv.homatisation"
         },
         "com.virtualartifacts.webintent": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },

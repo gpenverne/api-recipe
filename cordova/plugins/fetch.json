@@ -30,5 +30,11 @@
             "url": "https://github.com/florentvaldelievre/virtualartifacts-webIntent.git",
             "subdir": "."
         }
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        }
     }
 }

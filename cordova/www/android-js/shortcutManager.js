@@ -1,10 +1,23 @@
+var globTitle;
+var globBase64icon;
+var globDataUrl
+
 shortcutManager = {
     createShortcut: function(title, base64icon, dataUrl) {
-        window.plugins.Shortcut.CreateShortcut({
-        	text: title,
-            icon: base64icon,
-        	extraSubject: dataUrl
-        });
+        globTitle = title;
+        globBase64icon = base64icon;
+        globDataUrl = dataUrl;
+
+        navigator.notification.confirm('Create a shortcut on your launcher?', function(btnIndex){
+            if (1 === btnIndex) {
+                window.plugins.Shortcut.CreateShortcut({
+                	text: globTitle,
+                    icon: globBase64icon,
+                	extraSubject: globDataUrl
+                });
+            }
+        }, 'Confirmation', ['Yes', 'No']);
+
     },
     hasShortcutCalled: function() {
         window.plugins.webintent.getExtra(window.plugins.webintent.EXTRA_SUBJECT,
