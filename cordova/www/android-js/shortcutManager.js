@@ -1,9 +1,10 @@
 var globTitle;
 var globBase64icon;
-var globDataUrl
+var globDataUrl;
 
 shortcutManager = {
     createShortcut: function(title, base64icon, dataUrl) {
+        alert(dataUrl);
         globTitle = title;
         globBase64icon = base64icon;
         globDataUrl = dataUrl;

@@ -14,6 +14,9 @@
         <param name="android-package" value="com.borismus.webintent.WebIntent" />
         <param name="onload" value="true" />
     </feature>
+    <feature name="Notification">
+        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
+    </feature>
     <name>Homatisation</name>
     <icon src="icon.png" />
     <description>
@@ -26,7 +29,4 @@
     <access origin="*" />
     <plugin name="com.plugins.shortcut" />
     <plugin name="WebIntent" value="com.borismus.webintent.WebIntent" />
-    <feature name="Notification">
-        <param name="android-package" value="org.apache.cordova.dialogs.Notification" />
-    </feature>
 </widget>
