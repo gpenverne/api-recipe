@@ -2,7 +2,7 @@
 
 namespace spec\Homatisation\Provider;
 
-use Homatisation\Provider\MilightProvider;
+use Homatisation\Provider\ApiProvider;
 use PhpSpec\ObjectBehavior;
 use Homatisation\Provider\ProviderInterface;
 
@@ -17,7 +17,7 @@ class ApiProviderSpec extends ObjectBehavior
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(MilightProvider::class);
+        $this->shouldHaveType(ApiProvider::class);
     }
 
     public function it_is_a_provider()
