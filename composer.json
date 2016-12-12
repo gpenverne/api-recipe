@@ -1,6 +1,7 @@
 {
     "name": "gpenverne/homatisation",
     "description": "",
+    "homepage": "https://gpenverne.github.io/homatisation/",
     "require": {
         "symfony/console": "*",
         "symfony/yaml": "*",

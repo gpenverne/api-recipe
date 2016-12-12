@@ -5,9 +5,11 @@
     <description>
         App for Homatisation
     </description>
-    <author email="dev@cordova.apache.org" href="https://github.com/gpenverne/homatisation">
+    <author href="https://gpenverne.github.io/homatisation/">
         Gpenverne
     </author>
     <content src="index.html" />
     <access origin="*" />
+    <plugin name="com.plugins.shortcut" />
+    <plugin name="WebIntent" value="com.borismus.webintent.WebIntent" />
 </widget>

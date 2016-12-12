@@ -20,9 +20,8 @@
 <body ng-app="app">
     <div ng-controller="appCtrl" id="recipesContainer" ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0">
         <ul id="recipes-list" class="row">
-            <li ng-repeat="recipe in $parent.recipes" ng-if="(recipe.picture && recipe.visible) && (currentTag.getCurrentTag() == 'all' || recipe.tags.indexOf(currentTag.getCurrentTag()) >= 0)" ng-click="execRecipe(recipe)" ng-class="{'runing': recipe.runing, 'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ $parent.hostName }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
+            <li on-long-press="addShortcut(recipe.title, recipe.icon, recipe.url)" ng-repeat="recipe in $parent.recipes" ng-if="(recipe.picture && recipe.visible) && (currentTag.getCurrentTag() == 'all' || recipe.tags.indexOf(currentTag.getCurrentTag()) >= 0)" ng-click="execRecipe(recipe)" ng-class="{'runing': recipe.runing, 'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ $parent.hostName }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
                 <div></div>
-
             </li>
         </ul>
     </div>
@@ -58,5 +57,7 @@
     <script src='assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
     <script src='assets/app.js'></script>
     <script src='assets/parametersController.js'></script>
+    <script type="text/javascript" src="js/ShortcutPlugin.js"></script>
+    <script type="text/javascript" src="js/android-js/shortcutManager.js"></script>
 </body>
 </html>

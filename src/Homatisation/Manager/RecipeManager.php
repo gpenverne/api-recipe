@@ -48,7 +48,7 @@ class RecipeManager implements ManagerInterface
         $cursor = opendir($recipesFolder);
 
         while ($f = readdir($cursor)) {
-            if ('.' !== $f && '..' != $f) {
+            if ('.' !== $f && '..' !== $f) {
                 $recipe = str_replace('.yml', '', $f);
                 $recipeInfos = $this->loadConfig($recipe);
 
@@ -82,7 +82,7 @@ class RecipeManager implements ManagerInterface
     {
         $result = [];
 
-        if ($state == null) {
+        if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {
                 $state = StateManager::STATE_ON;
             } else {
@@ -167,8 +167,26 @@ class RecipeManager implements ManagerInterface
         $infos->state = $this->getStateManager()->getRecipeState($recipeName);
         $infos->url = sprintf('/recipes/exec/%s?format=json&origin=%s', $recipeName, $_GET['origin']);
         $infos->visible = true;
+        $infos->icon = isset($infos->picture) ? $this->getIconFromPicture($infos->picture) : null;
 
         return $infos;
+    }
+
+    /**
+     * @param string $picture
+     *
+     * @return string
+     */
+    protected function getIconFromPicture($picture = null)
+    {
+        $localPicturePath = sprintf('%s/../../../web/images/%s', __DIR__, $picture);
+        if (!is_file($localPicturePath)) {
+            return;
+        }
+
+        $rawData = file_get_contents($localPicturePath);
+
+        return base64_encode($rawData);
     }
 
     /**

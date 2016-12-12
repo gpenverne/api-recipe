@@ -16,5 +16,19 @@
             "type": "registry",
             "id": "com.lampa.startapp"
         }
+    },
+    "com.plugins.shortcut": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jorgecis/ShortcutPlugin.git",
+            "subdir": "."
+        }
+    },
+    "com.virtualartifacts.webintent": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/florentvaldelievre/virtualartifacts-webIntent.git",
+            "subdir": "."
+        }
     }
 }
