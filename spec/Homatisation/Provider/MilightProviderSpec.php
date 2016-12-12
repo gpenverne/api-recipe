@@ -26,6 +26,11 @@ class MilightProviderSpec extends ObjectBehavior
         $this->shouldImplement(ProviderInterface::class);
     }
 
+    public function it_returns_available_actions()
+    {
+        $this->getActions()->shouldBeArray();
+    }
+
     public function it_calls_milight_library($milight)
     {
         $milight->rgbwAllOn()->shouldBeCalled();

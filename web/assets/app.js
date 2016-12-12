@@ -10,8 +10,8 @@ var app = angular.module('app', ['ngTouch']).service('currentTag', function(){
     };
 });
 
-if (typeof hostApi == 'undefined') {
-    hostApi = 'http://127.0.0.1';
+if (typeof hostApi == 'undefined' || null == hostApi) {
+    hostApi = 'http://'+window.location.host;
 }
 app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
     $scope.$parent.recipes = [];
@@ -19,6 +19,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.hostApi = hostApi;
     $scope.currentTag = currentTag;
     $scope.tags = [];
+
 
     try {
         $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
@@ -34,6 +35,11 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     }
 
     $scope.$parent.getRecipes = function(){
+
+        if (typeof hostApi == 'undefined' || null == hostApi) {
+            hostApi = 'http://'+window.location.host;
+        }
+        
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             var newTags = ['all'];
             for (var i=0; i < r.data.length; i++) {
@@ -110,4 +116,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $timeout(countUp, 60000);
     }
     $timeout(countUp, 1000);
+});
+
+
+$(document).ready(function(){
+    $('#recipesContainer').height($(window).height());
 });

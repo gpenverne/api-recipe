@@ -59,7 +59,9 @@ class RoutingManager implements ManagerInterface
     protected function sendResponse($response)
     {
         $request = $this->request;
-
+        if (!isset($_SERVER ['HTTP_USER_AGENT'])) {
+            return;
+        }
         if (null === $request->query->get('format')) {
             $request->setRequestFormat(self::FORMAT_HTML);
         } else {
