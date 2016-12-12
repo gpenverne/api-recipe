@@ -26,4 +26,15 @@ trait HydratorTrait
 
         return $this;
     }
+
+    /**
+     * @param string $key
+     * @param mixed  $value
+     */
+    protected function set($key, $value)
+    {
+        $this->$key = $value;
+
+        return $this;
+    }
 }

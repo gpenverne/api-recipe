@@ -5,14 +5,13 @@ namespace spec\Homatisation\Provider;
 use Homatisation\Provider\MilightProvider;
 use PhpSpec\ObjectBehavior;
 use Homatisation\Provider\ProviderInterface;
-use Homatisation\Lib\Milight;
 
-class MilightProviderSpec extends ObjectBehavior
+class BinaryProviderSpec extends ObjectBehavior
 {
-    public function let(Milight $milight)
+    public function let()
     {
         $this->beConstructedWith([
-            'milight' => $milight,
+            'binary' => '/a_sample/binary',
         ]);
     }
 
@@ -29,11 +28,5 @@ class MilightProviderSpec extends ObjectBehavior
     public function it_returns_available_actions()
     {
         $this->getActions()->shouldBeArray();
-    }
-
-    public function it_calls_milight_library($milight)
-    {
-        $milight->rgbwAllOn()->shouldBeCalled();
-        $this->rgbwAllOn();
     }
 }
