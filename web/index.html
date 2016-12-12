@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
     <meta charset="utf-8"/>
     <title>Homatisation</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <link rel="stylesheet" href='assets/vendor/bootstrap/dist/css/bootstrap.min.css' />
     <link rel="stylesheet" href='assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css' />
@@ -12,22 +14,47 @@
     <link rel="stylesheet" href='assets/vendor/components-font-awesome/css/font-awesome.min.css' />
     <link rel="stylesheet" href='assets/styles.css' />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <script>var device = {'platform': 'web'};</script>
+    <script>var device = {'platform': 'web'}</script>
 </head>
 <body ng-app="app">
-    <div ng-controller="appCtrl">
+    <div ng-controller="appCtrl" id="recipesContainer" ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0">
         <ul id="recipes-list" class="row">
-            <li ng-repeat="recipe in recipes" ng-if="recipe.picture && recipe.visible" ng-click="execRecipe(recipe)" ng-class="{'runing': recipe.runing, 'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ hostApi }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
+            <li ng-repeat="recipe in $parent.recipes" ng-if="(recipe.picture && recipe.visible) && (currentTag.getCurrentTag() == 'all' || recipe.tags.indexOf(currentTag.getCurrentTag()) >= 0)" ng-click="execRecipe(recipe)" ng-class="{'runing': recipe.runing, 'error': recipe.error}" class="recipe col-md-4 .col-xs-6" style="background-image: url({{ $parent.hostName }}/images/{{ recipe.picture }}); height: {{ recipeWidth }}px; width: {{ recipeWidth }}px; margin-left: {{ marginLeft }}px; margin-bottom: {{ marginLeft }}px">
                 <div></div>
+
             </li>
         </ul>
-
     </div>
+    <div id="parameters" ng-controller="parametersCtrl" ng-class="{visible: $parent.parametersVisible}" ng-swipe-left="$parent.parametersVisible = 0">
+        <i class="parametersBtnInside top fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"></i>
+        <div class="row" style="padding-left: 10px; padding-right: 10px; ">
+            <form>
+
+                <div class="input-field col s6">
+                    <label for="hostname_field">Host url or ip</label>
+                    <input id="hostname_field" type="text" ng-model="hostName" />
+
+                </div>
+                <div class="col s6">
+                    <input type="submit" class="btn btnHost" value="Save" ng-click="setHost(hostName)" />
+                </div>
+
+            </form>
+        </div>
+        <div class="row" style="padding-left: 10px; padding-right: 10px; " ng-if="$parent.tags.length > 1">
+            <ul>
+                <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i> {{ tag }}</li>
+            </ul>
+        </div>
+        <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
+    </div>
+    <i id="parametersBtn" class="fa fa-arrow-right pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-controller="parametersCtrl" ng-click="$parent.parametersVisible = 1"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     <script src='assets/vendor/angular/angular.min.js'></script>
     <script src='assets/vendor/angular-touch/angular-touch.min.js'></script>
     <script src='assets/vendor/jquery/dist/jquery.min.js'></script>
     <script src='assets/vendor/bootstrap/dist/js/bootstrap.min.js'></script>
     <script src='assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
     <script src='assets/app.js'></script>
+    <script src='assets/parametersController.js'></script>
 </body>
 </html>

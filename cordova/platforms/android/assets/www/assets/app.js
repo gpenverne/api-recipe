@@ -11,7 +11,7 @@ var app = angular.module('app', ['ngTouch']).service('currentTag', function(){
 });
 
 if (typeof hostApi == 'undefined') {
-    hostApi = 'http://127.0.0.1';
+    hostApi = 'http://'+window.location.host;
 }
 app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
     $scope.$parent.recipes = [];
@@ -110,4 +110,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $timeout(countUp, 60000);
     }
     $timeout(countUp, 1000);
+});
+
+
+$(document).ready(function(){
+    $('#recipesContainer').height($(window).height());
 });
