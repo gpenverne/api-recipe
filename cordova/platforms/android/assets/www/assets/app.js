@@ -67,7 +67,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                 if (typeof recipe.picture == 'undefined' || !recipe.picture) {
                     continue;
                 }
-
                 if (typeof recipe.tags == 'undefined') {
                     recipe.tags = new Array;
                 }
@@ -77,7 +76,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                     }
                 }
                 recipe.androidApp = null;
-
                 if (device.platform == 'Android') {
                     var actions = new Array;
 
@@ -94,8 +92,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                         actions = actions.concat(recipe.actions.each_time);
                     }
 
-                    for (var i=0; i < actions.length; i++) {
-                        var action = actions[i];
+                    for (var j=0; j < actions.length; j++) {
+                        var action = actions[j];
                         var actionsInfos = action.split(':');
                         if (actionsInfos[0] == 'android' && actionsInfos[1] == 'openApp') {
                             recipe.androidApp = actionsInfos[2];
@@ -107,12 +105,14 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             }
             $scope.$parent.tags = newTags;
             $scope.$parent.recipes = recipes;
-
             try {
                 window.localStorage.setItem("recipes", JSON.stringify(recipes));
                 window.localStorage.setItem("tags", JSON.stringify(newTags));
             } catch(e) {}
+
+            $timeout(countUp, 60000);
         });
+
 
         return $scope.recipes;
     };
@@ -153,7 +153,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.$parent.getRecipes();
     var countUp = function() {
         $scope.$parent.getRecipes();
-        $timeout(countUp, 60000);
+
     }
     $timeout(countUp, 1000);
 });
