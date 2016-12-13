@@ -16,5 +16,25 @@
             "type": "registry",
             "id": "com.lampa.startapp"
         }
+    },
+    "com.plugins.shortcut": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/paul-em/ShortcutPlugin",
+            "subdir": "."
+        }
+    },
+    "com.virtualartifacts.webintent": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/florentvaldelievre/virtualartifacts-webIntent.git",
+            "subdir": "."
+        }
+    },
+    "cordova-plugin-dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-dialogs"
+        }
     }
 }

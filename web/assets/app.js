@@ -1,4 +1,14 @@
-var app = angular.module('app', ['ngTouch']).service('currentTag', function(){
+var shortcutManager = {
+    hadShortcut: false,
+    createShortcut: function(title, base64icon, dataUrl) {
+        return false;
+    },
+    hasShortcutCalled: function() {
+        return false;
+    }
+};
+
+var app = angular.module('app', ['ngTouch', 'pr.longpress']).service('currentTag', function(){
     var currentTag = 'all';
     return {
         getCurrentTag: function() {
@@ -14,6 +24,11 @@ if (typeof hostApi == 'undefined' || null == hostApi) {
     hostApi = 'http://'+window.location.host;
 }
 app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+
+    if (shortcutManager.hadShortcut) {
+        return;
+    }
+
     $scope.$parent.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
@@ -34,12 +49,16 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $scope.$parent.recipes = [];
     }
 
+    $scope.addShortcut = function(title, base64icon, dataUrl) {
+        shortcutManager.createShortcut(title, base64icon, dataUrl);
+    }
+
     $scope.$parent.getRecipes = function(){
 
         if (typeof hostApi == 'undefined' || null == hostApi) {
             hostApi = 'http://'+window.location.host;
         }
-        
+
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             var newTags = ['all'];
             for (var i=0; i < r.data.length; i++) {

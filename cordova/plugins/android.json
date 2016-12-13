@@ -15,6 +15,32 @@
                         {
                             "xml": "<feature name=\"startApp\"><param name=\"android-package\" value=\"com.lampa.startapp.startApp\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"WebIntent\"><param name=\"android-package\" value=\"com.borismus.webintent.WebIntent\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Notification\"><param name=\"android-package\" value=\"org.apache.cordova.dialogs.Notification\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ShortcutPlugin\"><param name=\"android-package\" value=\"com.plugins.shortcut.ShortcutPlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<uses-permission android:name=\"com.android.launcher.permission.INSTALL_SHORTCUT\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -26,6 +52,15 @@
             "PACKAGE_NAME": "com.gkdv.homatisation"
         },
         "com.lampa.startapp": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "com.virtualartifacts.webintent": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "com.plugins.shortcut": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },
