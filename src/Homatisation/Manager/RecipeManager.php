@@ -165,7 +165,7 @@ class RecipeManager implements ManagerInterface
         }
 
         $infos->state = $this->getStateManager()->getRecipeState($recipeName);
-        $infos->url = sprintf('/recipes/exec/%s?format=json&origin=%s', $recipeName, $_GET['origin']);
+        $infos->url = sprintf('/recipes/exec/%s?format=json&origin=%s', $recipeName, isset($_GET['origin']) ? $_GET['origin'] : 'unknown');
         $infos->visible = true;
         $infos->icon = isset($infos->picture) ? $this->getIconFromPicture($infos->picture) : null;
 
@@ -179,14 +179,50 @@ class RecipeManager implements ManagerInterface
      */
     protected function getIconFromPicture($picture = null)
     {
+        $localPicturePath = $this->getLocalCacheImage($picture);
+        $rawData = file_get_contents($localPicturePath);
+
+        return base64_encode($rawData);
+    }
+
+    /**
+     * @param string $picture
+     *
+     * @return string
+     */
+    protected function getLocalCacheImage($picture)
+    {
         $localPicturePath = sprintf('%s/../../../web/images/%s', __DIR__, $picture);
         if (!is_file($localPicturePath)) {
             return;
         }
+        $targetCacheFile = sprintf('%s/../../../var/cache/%s', __DIR__, $picture);
+        if (is_file($targetCacheFile)) {
+            return $targetCacheFile;
+        }
 
-        $rawData = file_get_contents($localPicturePath);
+        $format = mime_content_type($localPicturePath);
 
-        return base64_encode($rawData);
+        switch ($format) {
+            case 'image/png':
+                $image = imagecreatefrompng($localPicturePath);
+                break;
+            case 'image/jpg':
+                $image = imagecreatefromjpeg($localPicturePath);
+                break;
+            case 'image/jpeg':
+                $image = imagecreatefromjpeg($localPicturePath);
+                break;
+            default:
+                throw new \Exception('Supported picture formats: jpg & png. Please verify the file '.realpath($localPicturePath));
+                break;
+        }
+        $dst = imagecreatetruecolor(96, 96);
+        list($width, $height) = getimagesize($localPicturePath);
+        imagecopyresampled($dst, $image, 0, 0, 0, 0, 96, 96, $width, $height);
+        imagepng($dst, $targetCacheFile);
+
+        return $targetCacheFile;
     }
 
     /**

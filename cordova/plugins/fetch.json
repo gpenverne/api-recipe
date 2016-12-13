@@ -20,7 +20,7 @@
     "com.plugins.shortcut": {
         "source": {
             "type": "git",
-            "url": "https://github.com/jorgecis/ShortcutPlugin.git",
+            "url": "https://github.com/paul-em/ShortcutPlugin",
             "subdir": "."
         }
     },

@@ -1,6 +1,10 @@
 app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag) {
-    $scope.currentTag = currentTag;
+    if (shortcutManager.hadShortcut) {
+        return;
+    }
     
+    $scope.currentTag = currentTag;
+
     $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
     if (!$scope.hostName) {
         $scope.$parent.parametersVisible = 1;

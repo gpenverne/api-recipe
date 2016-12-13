@@ -31,6 +31,7 @@ class CreateDirsCommand extends Command
             'var',
             'var/states',
             'var/logs',
+            'var/cache',
             'web/images',
         ];
 

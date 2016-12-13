@@ -1,4 +1,5 @@
 var shortcutManager = {
+    hadShortcut: false,
     createShortcut: function(title, base64icon, dataUrl) {
         return false;
     },
@@ -7,7 +8,7 @@ var shortcutManager = {
     }
 };
 
-var app = angular.module('app', ['ngTouch, pr.longpress']).service('currentTag', function(){
+var app = angular.module('app', ['ngTouch', 'pr.longpress']).service('currentTag', function(){
     var currentTag = 'all';
     return {
         getCurrentTag: function() {
@@ -23,6 +24,11 @@ if (typeof hostApi == 'undefined' || null == hostApi) {
     hostApi = 'http://'+window.location.host;
 }
 app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+
+    if (shortcutManager.hadShortcut) {
+        return;
+    }
+
     $scope.$parent.recipes = [];
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
