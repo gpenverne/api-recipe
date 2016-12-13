@@ -171,3 +171,12 @@ function handleAndroidAppLaunch(appName)
         }).start();
     } catch (e) {}
 }
+
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+    document.addEventListener("resume", onResume, false);
+}
+
+function onResume() {
+    shortcutManager.execExtra();
+}

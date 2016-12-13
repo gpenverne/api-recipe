@@ -21,20 +21,18 @@ shortcutManager = {
         }, 'Confirmation', ['Yes', 'No']);
 
     },
-    hasShortcutCalled: function() {
-        shortcutManager.execExtra();
-    },
     execExtra: function() {
         try {
             window.plugins.webintent.getExtra(window.plugins.webintent.EXTRA_SUBJECT,
                 function(data) {
                     data = JSON.parse(data);
-                    $.get(window.localStorage.getItem("host") + data.url, function(){
-                        navigator.app.exitApp();
-                    });
                     if (data.app) {
                         handleAndroidAppLaunch(data.app);
                     }
+                    $.get(window.localStorage.getItem("host") + data.url, function(){
+                        navigator.app.exitApp();
+                    });
+
                 }, function() {
                     //no data
                 }
@@ -51,7 +49,3 @@ shortcutManager = {
             );
     }
 };
-document.addEventListener("deviceready", onDeviceReady, false);
-function onDeviceReady() {
-    document.addEventListener("resume", shortcutManager.hasShortcutCalled(), false);
-}
