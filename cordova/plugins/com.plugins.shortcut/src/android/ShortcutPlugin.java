@@ -84,10 +84,10 @@ public class ShortcutPlugin extends CordovaPlugin {
                             context, iconId);
                     shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
                 } else {
-                    Bitmap bmpIcon = decodeBase64(iconBase64);
-                    Bitmap scaledBitmap = Bitmap.createScaledBitmap(bmpIcon, 128, 128, true);
-                    shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, scaledBitmap);
-                    //shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, decodeBase64(iconBase64));
+                    //Bitmap bmpIcon = decodeBase64(iconBase64);
+                    //Bitmap scaledBitmap = Bitmap.createScaledBitmap(bmpIcon, 128, 128, true);
+                    //shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, scaledBitmap);
+                    shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_ICON, decodeBase64(iconBase64));
                 }
 
                 shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, i);
