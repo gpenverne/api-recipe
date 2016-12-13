@@ -4,16 +4,17 @@ var globDataUrl;
 
 shortcutManager = {
     hadShortcut: false,
-    createShortcut: function(title, base64icon, dataUrl) {
-        globTitle = title;
-        globBase64icon = base64icon;
-        globDataUrl = dataUrl;
+    createShortcut: function(recipe) {
+        globTitle = recipe.title;
+        globBase64icon = recipe.icon;
+        globDataUrl = {url: recipe.url, app: recipe.androidApp};
+
         navigator.notification.confirm('Create a shortcut on your launcher?', function(btnIndex){
             if (1 === btnIndex) {
                 var args = {
                 	text: globTitle,
                     icon: globBase64icon,
-                	extraSubject: globDataUrl
+                	extraSubject: JSON.stringify(globDataUrl)
                 };
                 window.plugins.Shortcut.CreateShortcut(args);
             }
@@ -27,10 +28,13 @@ shortcutManager = {
         try {
             window.plugins.webintent.getExtra(window.plugins.webintent.EXTRA_SUBJECT,
                 function(data) {
-                    $.get(window.localStorage.getItem("host") + data, function(){
+                    data = JSON.parse(data);
+                    $.get(window.localStorage.getItem("host") + data.url, function(){
                         navigator.app.exitApp();
                     });
-                    shortcutManager.clearExtra();
+                    if (data.app) {
+                        handleAndroidAppLaunch(data.app);
+                    }
                 }, function() {
                     //no data
                 }

@@ -196,33 +196,8 @@ class RecipeManager implements ManagerInterface
         if (!is_file($localPicturePath)) {
             return;
         }
-        $targetCacheFile = sprintf('%s/../../../var/cache/%s', __DIR__, $picture);
-        if (is_file($targetCacheFile)) {
-            return $targetCacheFile;
-        }
 
-        $format = mime_content_type($localPicturePath);
-
-        switch ($format) {
-            case 'image/png':
-                $image = imagecreatefrompng($localPicturePath);
-                break;
-            case 'image/jpg':
-                $image = imagecreatefromjpeg($localPicturePath);
-                break;
-            case 'image/jpeg':
-                $image = imagecreatefromjpeg($localPicturePath);
-                break;
-            default:
-                throw new \Exception('Supported picture formats: jpg & png. Please verify the file '.realpath($localPicturePath));
-                break;
-        }
-        $dst = imagecreatetruecolor(96, 96);
-        list($width, $height) = getimagesize($localPicturePath);
-        imagecopyresampled($dst, $image, 0, 0, 0, 0, 96, 96, $width, $height);
-        imagepng($dst, $targetCacheFile);
-
-        return $targetCacheFile;
+        return $localPicturePath;
     }
 
     /**

@@ -61,24 +61,55 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             var newTags = ['all'];
+            var recipes = new Array;
             for (var i=0; i < r.data.length; i++) {
-                for (var i=0; i < r.data.length; i++) {
-                    var recipe = r.data[i];
-                    if (typeof recipe.tags == 'undefined') {
-                        recipe.tags = [];
-                    }
-                    for (var j=0; j < recipe.tags.length; j++) {
-                        if (newTags.indexOf(recipe.tags[j]) < 0) {
+                var recipe = r.data[i];
+                if (typeof recipe.picture == 'undefined' || !recipe.picture) {
+                    continue;
+                }
+
+                if (typeof recipe.tags == 'undefined') {
+                    recipe.tags = new Array;
+                }
+                for (var j=0; j < recipe.tags.length; j++) {
+                    if (newTags.indexOf(recipe.tags[j]) < 0) {
                         newTags.push(recipe.tags[j]);
                     }
+                }
+                recipe.androidApp = null;
+
+                if (device.platform == 'Android') {
+                    var actions = new Array;
+
+                    if (recipe.state == 'on') {
+                        if (typeof recipe.actions.off != 'undefined') {
+                            actions = actions.concat(recipe.actions.off);
+                        }
+                    } else {
+                        if (typeof recipe.actions.on != 'undefined') {
+                            actions = actions.concat(recipe.actions.on);
+                        }
+                    }
+                    if (typeof recipe.actions.each_time != 'undefined') {
+                        actions = actions.concat(recipe.actions.each_time);
+                    }
+
+                    for (var i=0; i < actions.length; i++) {
+                        var action = actions[i];
+                        var actionsInfos = action.split(':');
+                        if (actionsInfos[0] == 'android' && actionsInfos[1] == 'openApp') {
+                            recipe.androidApp = actionsInfos[2];
+                        }
                     }
                 }
+
+                recipes.push(recipe);
             }
             $scope.$parent.tags = newTags;
-            $scope.$parent.recipes = r.data;
+            $scope.$parent.recipes = recipes;
 
             try {
-                window.localStorage.setItem("recipes", JSON.stringify(r.data));
+                window.localStorage.setItem("recipes", JSON.stringify(recipes));
                 window.localStorage.setItem("tags", JSON.stringify(newTags));
             } catch(e) {}
         });
@@ -98,33 +129,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             recipe.error = true;
         });
 
-
-        if (device.platform == 'Android') {
-            if (recipe.state == 'on') {
-                if (typeof recipe.actions.off != 'undefined') {
-                    actions = actions.concat(recipe.actions.off);
-                }
-            } else {
-                if (typeof recipe.actions.on != 'undefined') {
-                    actions = actions.concat(recipe.actions.on);
-                }
-            }
-            if (typeof recipe.actions.each_time != 'undefined') {
-                actions = actions.concat(recipe.actions.each_time);
-            }
-
-
-            for (var i=0; i < actions.length; i++) {
-                var action = actions[i];
-                var actionsInfos = action.split(':');
-                if (actionsInfos[0] == 'android' && actionsInfos[1] == 'openApp') {
-                    try {
-                        startApp.set({
-                            "package": actionsInfos[2]
-                        }).start();
-                    } catch (e) {}
-                }
-            }
+        if (recipe.androidApp) {
+            handleAndroidAppLaunch(recipe.androidApp);
         }
 
         if (typeof recipe.external != 'undefined') {
@@ -156,3 +162,12 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 $(document).ready(function(){
     $('#recipesContainer').height($(window).height());
 });
+
+function handleAndroidAppLaunch(appName)
+{
+    try {
+        startApp.set({
+            "package": appName
+        }).start();
+    } catch (e) {}
+}
