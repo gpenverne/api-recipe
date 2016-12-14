@@ -1,17 +1,19 @@
 providers:
+    android:
+        provider: android
+    confirm:
+        provider: confirm
+    freebox:
+        provider: freebox
+        remote_code: 000000
     logger:
         provider: logger
         log_file: var/logs/logger.log
     milight:
         provider: milight
         host: 127.0.0.1
-    freebox:
-        provider: freebox
-        remote_code: 000000
     sleeper:
         provider: sleep
-    android:
-        provider: android
 
     # sample_api_provider:
     #     provider: api
