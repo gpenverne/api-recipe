@@ -84,9 +84,9 @@ class RecipeManager implements ManagerInterface
 
         if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {
-                $state = StateManager::STATE_ON;
-            } else {
                 $state = StateManager::STATE_OFF;
+            } else {
+                $state = StateManager::STATE_ON;
             }
         }
 
