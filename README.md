@@ -64,7 +64,7 @@ A provider allows to make actions. Providers parameters are read from app/config
 Each provider should be configuread like this:  
 ```
     my_provider_name:
-        provider: [android|api|binary|freebox|logger|milight|sleep]
+        provider: [android|api|binary|confirm|freebox|logger|milight|sleep]
         ...
 ```
 
@@ -80,6 +80,9 @@ Sample commands: api:endPoint:an-endpoint
 Allows to call scripts (using php shell_exec command)  
 Parameters: binary , the full path to binary  
 Sample commands: binary:command:arg ; binary:echo:arg  
+#### Confirm
+It asks user to confirm the action launc   
+Sample commands: confirm:confirm:confirmation message  
 #### Freebox
 Allows to control freebox using the hd1.freebox.fr api  
 Parameters: remote_code , the remote code.  
