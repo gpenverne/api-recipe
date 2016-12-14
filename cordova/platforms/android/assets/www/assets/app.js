@@ -134,6 +134,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
         $http.get(hostApi+recipe.url).then(function(r){
             recipe.runing = false;
+            $scope.getRecipes();
         }, function(){
             recipe.runing = false;
             recipe.error = true;
