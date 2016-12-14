@@ -15,13 +15,26 @@ $ composer install
 $ bower install
 ```
 ### WebServer configuration
-Using nginx:
+#### Using nginx:
 ```
     location / {
         try_files $uri /index.php$is_args$args;
     }
 ```
-
+#### Using built-in webserver:  
+Use the app/config/config.yml file to customize port and address.  
+To start the built in webserver:
+```bash
+$ php bin/console homatisation:server start
+```
+To restart the built in webserver:
+```bash
+$ php bin/console homatisation:server restart
+```
+To stop the built in webserver:
+```bash
+$ php bin/console homatisation:server stop
+```
 ## Recipes
 A recipe contains actions.  
 Put your recipes files in the recipes folder.  

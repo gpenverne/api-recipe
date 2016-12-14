@@ -2,16 +2,18 @@
 <?php
 include sprintf('%s/../vendor/autoload.php', __DIR__);
 
+use Homatisation\Command\CreateRecipeCommand;
+use Homatisation\Command\ExecActionCommand;
+use Homatisation\Command\ExecRecipeCommand;
+use Homatisation\Command\WebServerCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
-use Homatisation\Command\ExecRecipeCommand;
-use Homatisation\Command\ExecActionCommand;
-use Homatisation\Command\CreateRecipeCommand;
 
 $commands = [
     CreateRecipeCommand::class,
     ExecActionCommand::class,
     ExecRecipeCommand::class,
+    WebServerCommand::class,
 ];
 $input = new ArgvInput();
 
