@@ -99,7 +99,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                     if (device.platform == 'Android' && actionsInfos[0] == 'android' && actionsInfos[1] == 'openApp') {
                         recipe.androidApp = actionsInfos[2];
                     }
-                    if (actionsInfos[0] == 'android' && actionsInfos[1] == 'confirm') {
+                    if (actionsInfos[0] == 'confirm' && actionsInfos[1] == 'confirm') {
                         recipe.confirm = actionsInfos[2];
                     }
                 }
@@ -125,6 +125,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         recipe.error = false;
         if (recipe.confirm) {
             if (!confirm(recipe.confirm)) {
+                recipe.runing = false;
                 return ;
             }
         }
