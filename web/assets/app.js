@@ -29,24 +29,25 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         return;
     }
 
-    $scope.$parent.recipes = [];
+    $scope.$parent.recipes = new Array;
+
     $scope.$parent.parametersVisible = 0;
     $scope.hostApi = hostApi;
     $scope.currentTag = currentTag;
-    $scope.tags = [];
+    $scope.tags =  new Array;
 
 
     try {
-        $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
+        $scope.$parent.recipes = JSON.parse(window.localStorage.getItem("recipes"));
         if (!$scope.$parent.recipes) {
-            $scope.$parent.recipes = [];
+            $scope.$parent.recipes = new Array;
         }
-        $scope.tags = JSON.parse(window.localStorage.getItem("tags"));
+        $scope.$parent.tags = JSON.parse(window.localStorage.getItem("tags"));
         if (!$scope.$parent.tags) {
-            $scope.$parent.tags = [];
+            $scope.$parent.tags = new Array;
         }
     } catch(e) {
-        $scope.$parent.recipes = [];
+        $scope.$parent.recipes = new Array;
     }
 
     $scope.addShortcut = function(title, base64icon, dataUrl) {
@@ -103,7 +104,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                         recipe.confirm = actionsInfos[2];
                     }
                 }
-
+                recipe.url = hostApi + recipe.url;
                 recipes.push(recipe);
             }
             $scope.$parent.tags = newTags;
