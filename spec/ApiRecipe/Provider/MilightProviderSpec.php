@@ -1,11 +1,11 @@
 <?php
 
-namespace spec\Homatisation\Provider;
+namespace spec\ApiRecipe\Provider;
 
-use Homatisation\Provider\MilightProvider;
+use ApiRecipe\Provider\MilightProvider;
 use PhpSpec\ObjectBehavior;
-use Homatisation\Provider\ProviderInterface;
-use Homatisation\Lib\Milight;
+use ApiRecipe\Provider\ProviderInterface;
+use ApiRecipe\Lib\Milight;
 
 class MilightProviderSpec extends ObjectBehavior
 {

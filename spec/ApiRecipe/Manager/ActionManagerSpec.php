@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Manager;
+namespace spec\ApiRecipe\Manager;
 
-use Homatisation\Manager\ActionManager;
+use ApiRecipe\Manager\ActionManager;
 use PhpSpec\ObjectBehavior;
 
 class ActionManagerSpec extends ObjectBehavior

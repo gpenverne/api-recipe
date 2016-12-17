@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Homatisation\Provider;
+namespace spec\ApiRecipe\Provider;
 
-use Homatisation\Provider\AndroidProvider;
+use ApiRecipe\Provider\AndroidProvider;
 use PhpSpec\ObjectBehavior;
-use Homatisation\Provider\ProviderInterface;
+use ApiRecipe\Provider\ProviderInterface;
 
 class AndroidProviderSpec extends ObjectBehavior
 {

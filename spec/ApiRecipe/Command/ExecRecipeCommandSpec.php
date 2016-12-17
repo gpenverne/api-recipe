@@ -1,6 +1,6 @@
 <?php
 
-namespace spec\Homatisation\Command;
+namespace spec\ApiRecipe\Command;
 
 use PhpSpec\ObjectBehavior;
 use Symfony\Component\Console\Command\Command;

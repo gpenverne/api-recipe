@@ -1,10 +1,10 @@
 <?php
 
-namespace spec\Homatisation\Provider;
+namespace spec\ApiRecipe\Provider;
 
-use Homatisation\Provider\LoggerProvider;
+use ApiRecipe\Provider\LoggerProvider;
 use PhpSpec\ObjectBehavior;
-use Homatisation\Provider\ProviderInterface;
+use ApiRecipe\Provider\ProviderInterface;
 
 class LoggerProviderSpec extends ObjectBehavior
 {

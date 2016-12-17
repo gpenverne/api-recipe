@@ -1,23 +1,23 @@
 <?php
 
-namespace spec\Homatisation\Provider;
+namespace spec\ApiRecipe\Provider;
 
-use Homatisation\Provider\BinaryProvider;
+use ApiRecipe\Provider\ApiProvider;
 use PhpSpec\ObjectBehavior;
-use Homatisation\Provider\ProviderInterface;
+use ApiRecipe\Provider\ProviderInterface;
 
-class BinaryProviderSpec extends ObjectBehavior
+class ApiProviderSpec extends ObjectBehavior
 {
     public function let()
     {
         $this->beConstructedWith([
-            'binary' => '/a_sample/binary',
+            'baseUrl' => 'http://an_host',
         ]);
     }
 
     public function it_is_initializable()
     {
-        $this->shouldHaveType(BinaryProvider::class);
+        $this->shouldHaveType(ApiProvider::class);
     }
 
     public function it_is_a_provider()

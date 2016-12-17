@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Converter;
+namespace spec\ApiRecipe\Converter;
 
-use Homatisation\Converter\ArrayToStdClassConverter;
+use ApiRecipe\Converter\ArrayToStdClassConverter;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

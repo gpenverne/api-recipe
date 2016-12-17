@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Controller;
+namespace spec\ApiRecipe\Controller;
 
-use Homatisation\Controller\ErrorController;
+use ApiRecipe\Controller\ErrorController;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

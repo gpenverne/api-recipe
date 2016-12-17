@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Manager;
+namespace spec\ApiRecipe\Manager;
 
-use Homatisation\Manager\RoutingManager;
+use ApiRecipe\Manager\RoutingManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

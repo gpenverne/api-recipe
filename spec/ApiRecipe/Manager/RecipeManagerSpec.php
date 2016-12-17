@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Manager;
+namespace spec\ApiRecipe\Manager;
 
-use Homatisation\Manager\RecipeManager;
+use ApiRecipe\Manager\RecipeManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

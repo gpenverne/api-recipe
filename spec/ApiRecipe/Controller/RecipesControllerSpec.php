@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Controller;
+namespace spec\ApiRecipe\Controller;
 
-use Homatisation\Controller\RecipesController;
+use ApiRecipe\Controller\RecipesController;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 

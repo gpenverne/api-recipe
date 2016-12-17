@@ -1,8 +1,8 @@
 <?php
 
-namespace spec\Homatisation\Manager;
+namespace spec\ApiRecipe\Manager;
 
-use Homatisation\Manager\ProviderManager;
+use ApiRecipe\Manager\ProviderManager;
 use PhpSpec\ObjectBehavior;
 use Prophecy\Argument;
 
