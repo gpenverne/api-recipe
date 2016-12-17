@@ -37,7 +37,8 @@ shortcutManager = {
                     //no data
                 }
             );
-        } catch(e){}
+        } catch(e){
+        }
     },
     clearExtra: function() {
         	window.plugins.webintent.removeExtra(window.plugins.webintent.EXTRA_SUBJECT,

@@ -184,8 +184,10 @@ function handleAndroidAppLaunch(appName)
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
+
 function onDeviceReady() {
     document.addEventListener("resume", onResume, false);
+    onResume();
 }
 
 function onResume() {
