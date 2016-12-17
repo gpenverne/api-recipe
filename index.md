@@ -1,27 +1,58 @@
-# Homatisation
+# Api Recipe
 
-The purpose of this repo is to generate a simple front interface to make api calls. This app has been designed for use with the
+With Api Recipe, you can exec recipes from command line or from a front interface.  
+Each recipe is a set of calls (which are related to "Providers", see below).  
+
+The purpose of this repo is to generate a simple front interface to make api calls.   
+This app has been designed for use with the
 [broadlink rm-pro](http://amzn.to/2hiTWk5) and the [rm-bridge android app](https://play.google.com/store/apps/details?id=de.fun2code.android.rmbridge)
 
-An android version of the front is available in [cordova/releases folder](https://github.com/gpenverne/homatisation/tree/master/cordova/releases)
+An android version of the front is available in [cordova/releases folder](https://github.com/gpenverne/api-recipe/tree/master/cordova/releases)
 
 ## Install
 ### Installing dependencies
 ```bash
 $ composer install
 ```
-### Installing assets
+### Installing assets for front
 ```bash
 $ bower install
 ```
-### WebServer configuration
-Using nginx:
+
+### WebServer configuration
+#### Using nginx:
 ```
+server {
+    root [FULL PATH TO API RECIPE]api-recipe/web;
+
     location / {
         try_files $uri /index.php$is_args$args;
     }
-```
 
+    # for use with php7 fpm for example
+    location ~ \.php(/|$) {
+        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+}
+```
+#### Using built-in webserver:  
+Use the app/config/config.yml file to customize port and address (default is localhost on port 80).  
+To start the built in webserver:
+```bash
+$ php bin/console api-recipe:server start
+```
+To restart the built in webserver:
+```bash
+$ php bin/console api-recipe:server restart
+```
+To stop the built in webserver:
+```bash
+$ php bin/console api-recipe:server stop
+```
 ## Recipes
 A recipe contains actions.  
 Put your recipes files in the recipes folder.  
@@ -33,12 +64,12 @@ Put your images in the web/images folder.
 $ bin/yaml-lint recipes/[recipe-file-name].yml
 ```
 
-### Create a recipe using command line
+### Create a recipe using command line
 ```bash
 $ bin/console recipes:create
 ```
 
-### Exec a recipe using command line
+### Exec a recipe using command line
 ```bash
 $ bin/console recipes:exec [recipeName] [on|off|toggle]
 ```
@@ -47,13 +78,13 @@ $ bin/console recipes:exec [recipeName] [on|off|toggle]
 Just click on the picture to make a toggle execution.  
 Your http server should target the web/ subfolder.  
 
-### tags
+### tags
 Each recipe can have one or more tags. These tags will be shown in the slide menu (android app).
 
 ## Actions
 An action is a string following this syntax: provider_name:provider_method:optional_argument .
 
-### Exec an action using command line
+### Exec an action using command line
 ```bash
 $ bin/console actions:exec
 $ bin/console actions:exec [provider_name:provider_method:optional_argument]
@@ -64,7 +95,7 @@ A provider allows to make actions. Providers parameters are read from app/config
 Each provider should be configuread like this:  
 ```
     my_provider_name:
-        provider: [android|api|binary|freebox|logger|milight|sleep]
+        provider: [android|api|binary|confirm|freebox|logger|milight|sleep]
         ...
 ```
 
@@ -80,6 +111,9 @@ Sample commands: api:endPoint:an-endpoint
 Allows to call scripts (using php shell_exec command)  
 Parameters: binary , the full path to binary  
 Sample commands: binary:command:arg ; binary:echo:arg  
+#### Confirm
+It asks user to confirm the action launc   
+Sample commands: confirm:confirm:confirmation message  
 #### Freebox
 Allows to control freebox using the hd1.freebox.fr api  
 Parameters: remote_code , the remote code.  
