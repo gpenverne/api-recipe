@@ -116,3 +116,8 @@ body {
 .btnHost{
     margin-top: 60px;
 }
+
+
+select{
+    display: block;
+}
