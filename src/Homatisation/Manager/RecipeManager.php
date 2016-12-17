@@ -192,12 +192,43 @@ class RecipeManager implements ManagerInterface
      */
     protected function getLocalCacheImage($picture)
     {
+        $width = 128;
+        $height = 128;
+
         $localPicturePath = sprintf('%s/../../../web/images/%s', __DIR__, $picture);
         if (!is_file($localPicturePath)) {
             return;
         }
+        $targetCacheFile = sprintf('%s/../../../var/cache/%s-%dx%d-png', __DIR__, $picture, $width, $height);
+        if (is_file($targetCacheFile)) {
+            return $targetCacheFile;
+        }
+        $extension = explode('.', $localPicturePath);
+        $extension = strtolower(end($extension));
+        $newImg = imagecreatetruecolor($width, $height);
+        imagealphablending($newImg, false);
+        imagesavealpha($newImg, true);
+        $transparent = imagecolorallocatealpha($newImg, 255, 255, 255, 127);
+        imagefilledrectangle($newImg, 0, 0, $width, $height, $transparent);
 
-        return $localPicturePath;
+        switch ($extension) {
+            case 'png':
+                $img = imagecreatefrompng($localPicturePath);
+            break;
+            case 'jpg':
+                $img = imagecreatefromjpeg($localPicturePath);
+                break;
+            case 'jpeg':
+                $img = imagecreatefromjpeg($localPicturePath);
+                break;
+        }
+        $imgInfo = getimagesize($localPicturePath);
+
+        imagecopyresampled($newImg, $img, 0, 0, 0, 0, $width, $height, $imgInfo[0], $imgInfo[1]);
+
+        imagepng($newImg, $targetCacheFile);
+
+        return $targetCacheFile;
     }
 
     /**

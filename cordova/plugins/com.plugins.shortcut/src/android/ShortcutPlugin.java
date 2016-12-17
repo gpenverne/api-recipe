@@ -73,8 +73,7 @@ public class ShortcutPlugin extends CordovaPlugin {
                 Intent shortcutintent = new Intent(
                         "com.android.launcher.action.INSTALL_SHORTCUT");
                 shortcutintent.putExtra("duplicate", false);
-                shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME,
-                        shortcuttext);
+                shortcutintent.putExtra(Intent.EXTRA_SHORTCUT_NAME, shortcuttext);
 
                 // Get Icon
                 if (iconBase64 == null) {
