@@ -6,6 +6,7 @@ use ApiRecipe\Command\CreateRecipeCommand;
 use ApiRecipe\Command\ExecActionCommand;
 use ApiRecipe\Command\ExecRecipeCommand;
 use ApiRecipe\Command\WebServerCommand;
+use ApiRecipe\Command\CreateDirsCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -14,6 +15,7 @@ $commands = [
     ExecActionCommand::class,
     ExecRecipeCommand::class,
     WebServerCommand::class,
+    CreateDirsCommand::class,
 ];
 $input = new ArgvInput();
 
