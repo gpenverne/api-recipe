@@ -52,4 +52,28 @@ class ActionManager implements ManagerInterface
 
         return (bool) $provider->$method($argument);
     }
+
+    /**
+     * @return string
+     */
+    public function getProviderName()
+    {
+        return $this->providerName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod()
+    {
+        return $this->method;
+    }
+
+    /**
+     * @return string
+     */
+    public function getArgument()
+    {
+        return $this->argument;
+    }
 }
