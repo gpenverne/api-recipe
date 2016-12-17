@@ -1,7 +1,7 @@
 {
-    "name": "gpenverne/homatisation",
-    "description": "",
-    "homepage": "https://gpenverne.github.io/homatisation/",
+    "name": "gpenverne/api-recipe",
+    "description": "ApiRecipe",
+    "homepage": "https://gpenverne.github.io/api-recipe/",
     "require": {
         "symfony/console": "*",
         "symfony/yaml": "*",
@@ -34,12 +34,12 @@
     "prefer-stable": true,
     "scripts": {
         "post-install-cmd": [
-            "Homatisation\\Command\\CreateDirsCommand::createDirs",
-            "Homatisation\\Command\\CreateConfigFileCommand::createConfigFile"
+            "ApiRecipe\\Command\\CreateDirsCommand::createDirs",
+            "ApiRecipe\\Command\\CreateConfigFileCommand::createConfigFile"
         ],
         "post-update-cmd": [
-            "Homatisation\\Command\\CreateDirsCommand::createDirs",
-            "Homatisation\\Command\\CreateConfigFileCommand::createConfigFile"
+            "ApiRecipe\\Command\\CreateDirsCommand::createDirs",
+            "ApiRecipe\\Command\\CreateConfigFileCommand::createConfigFile"
         ]
     }
 }

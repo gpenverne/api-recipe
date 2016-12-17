@@ -2,10 +2,10 @@
 <?php
 include sprintf('%s/../vendor/autoload.php', __DIR__);
 
-use Homatisation\Command\CreateRecipeCommand;
-use Homatisation\Command\ExecActionCommand;
-use Homatisation\Command\ExecRecipeCommand;
-use Homatisation\Command\WebServerCommand;
+use ApiRecipe\Command\CreateRecipeCommand;
+use ApiRecipe\Command\ExecActionCommand;
+use ApiRecipe\Command\ExecRecipeCommand;
+use ApiRecipe\Command\WebServerCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -17,7 +17,7 @@ $commands = [
 ];
 $input = new ArgvInput();
 
-$console = new Application('homatisation', '0.1');
+$console = new Application('ApiRecipe', '0.1');
 foreach ($commands as $command) {
     $console->add(new $command());
 }
