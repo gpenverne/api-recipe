@@ -37,7 +37,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
 
     try {
-        $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
+        $scope.$parent.recipes = JSON.parse(window.localStorage.getItem("recipes"));
         if (!$scope.$parent.recipes) {
             $scope.$parent.recipes = [];
         }
