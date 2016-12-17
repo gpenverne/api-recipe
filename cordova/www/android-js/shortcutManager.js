@@ -1,20 +1,25 @@
 var globTitle;
 var globBase64icon;
 var globDataUrl;
+var shortcutOpened;
 
 shortcutManager = {
     hadShortcut: false,
     createShortcut: function(recipe) {
+        if (shortcutOpened) {
+            return ;
+        }
+        shortcutOpened = true;
         globTitle = recipe.title;
         globBase64icon = recipe.icon;
-        globDataUrl = {url: recipe.url, app: recipe.androidApp};
-
+        globDataUrl = angular.toJson({url: recipe.url, app: recipe.androidApp});
         navigator.notification.confirm('Create a shortcut on your launcher?', function(btnIndex){
-            if (1 === btnIndex) {
+            shortcutOpened = false;
+            if (1 == btnIndex) {
                 var args = {
                 	text: globTitle,
                     icon: globBase64icon,
-                	extraSubject: JSON.stringify(globDataUrl)
+                	extraSubject: globDataUrl
                 };
                 window.plugins.Shortcut.CreateShortcut(args);
             }

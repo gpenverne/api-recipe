@@ -1,6 +1,6 @@
 var shortcutManager = {
     hadShortcut: false,
-    createShortcut: function(title, base64icon, dataUrl) {
+    createShortcut: function(recipe) {
         return false;
     },
     hasShortcutCalled: function() {
@@ -50,8 +50,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $scope.$parent.recipes = new Array;
     }
 
-    $scope.addShortcut = function(title, base64icon, dataUrl) {
-        shortcutManager.createShortcut(title, base64icon, dataUrl);
+    $scope.$parent.addShortcut = function(recipe) {
+        shortcutManager.createShortcut(JSON.parse(angular.toJson(recipe)));
     }
 
     $scope.$parent.getRecipes = function(){
@@ -115,6 +115,12 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             } catch(e) {}
 
             $timeout(countUp, 60000);
+        }, function(r){
+            try {
+                $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
+            } catch(e){
+                $scope.recipes = new Array;
+            }
         });
 
 
