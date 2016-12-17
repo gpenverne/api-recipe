@@ -37,13 +37,13 @@ class Neo4jCollector implements CollectorInterface
         $this->generateDays()
             ->generateHours()
             ->generateMinutes()
-        ;
+            ->generateProviders();
     }
 
     /**
      * @param ActionManager $action
      *
-     * @return $this
+     * @return ActionManager
      */
     public function onAction($action)
     {
@@ -55,8 +55,50 @@ class Neo4jCollector implements CollectorInterface
         $provider = $action->getProviderName();
         $method = $action->getMethod();
         $arg = $action->getArgument();
+
+        $query = '
+            MERGE (a:Action {command: %s}) ON CREATE SET
+                a.provider = %s,
+                a.method = %s,
+                a.argument = %s
+            MERGE (a)-[:ON]-(d:Day {number: %d}])
+            MERGE (a)-[:ON]-(h:Hour {number: %d}])
+            MERGE (a)-[:ON]-(m:MinutesInterval)
+                WHERE m.start <= %d AND m.end > %d
+            MERGE (a)-[:WITH]->(p:Provider {name: %s})
+        ';
+
+        $this->client->run(sprintf(
+            $query,
+            $action->getCommand(),
+            $day,
+            $hours,
+            $minutes,
+            $minutes,
+            $provider,
+            $action->getState()
+        ));
+
+        return $action;
     }
 
+    /**
+     * @return $this
+     */
+    protected function generateActions()
+    {
+        $queries = [
+            'CREATE CONSTRAINT ON (a:Action) ASSERT a.command IS UNIQUE',
+            'CREATE INDEX ON :Action(provider)',
+            'CREATE INDEX ON :Action(method)',
+        ];
+
+        foreach ($queries as $query) {
+            $this->client->run($query);
+        }
+
+        return $this;
+    }
     /**
      * @return $this
      */
@@ -151,6 +193,22 @@ class Neo4jCollector implements CollectorInterface
             ]);
 
             $start = $i;
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function generateProviders()
+    {
+        $queries = [
+            'CREATE CONSTRAINT ON (p:Provider) ASSERT p.name IS UNIQUE',
+        ];
+
+        foreach ($queries as $query) {
+            $this->client->run($query);
         }
 
         return $this;

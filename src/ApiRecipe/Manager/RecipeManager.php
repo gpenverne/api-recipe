@@ -96,10 +96,10 @@ class RecipeManager implements ManagerInterface
             $actionParameters = explode(':', $action);
             if (2 === count($actionParameters)) {
                 list($provider, $method) = $actionParameters;
-                $result[$action] = $this->execAction($provider, $method);
+                $result[$action] = $this->execAction($provider, $method, $state);
             } else {
                 list($provider, $method, $argument) = $actionParameters;
-                $result[$action] = $this->execAction($provider, $method, $argument);
+                $result[$action] = $this->execAction($provider, $method, $state, $argument);
             }
         }
 
@@ -117,9 +117,9 @@ class RecipeManager implements ManagerInterface
      *
      * @return bool
      */
-    protected function execAction($provider, $method, $argument = null)
+    protected function execAction($provider, $method, $state = null, $argument = null)
     {
-        $action = new ActionManager($provider, $method, $argument);
+        $action = new ActionManager($provider, $method, $state, $argument);
 
         return $action->exec();
     }

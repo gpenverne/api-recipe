@@ -29,14 +29,34 @@ class ActionManager implements ManagerInterface
      * @param string      $method
      * @param null|string $argument
      */
-    public function __construct($providerName, $method, $argument = null)
+    public function __construct($providerName, $method, $state = null, $argument = null)
     {
         $this->providerName = $providerName;
         $this->method = $method;
         $this->argument = $argument;
         $this->providerManager = new ProviderManager();
+        $this->state = $state;
     }
 
+    /**
+     * @return string
+     */
+    public function getState()
+    {
+        return $this->state;
+    }
+
+    /**
+     * @return string
+     */
+    public function getActionCommand()
+    {
+        if (null === $this->argument) {
+            return sprintf('%s:%s', $this->providerName, $this->method);
+        }
+
+        return sprintf('%s:%s:%s', $this->providerName, $this->method, $this->argument);
+    }
     /**
      * @return bool
      */

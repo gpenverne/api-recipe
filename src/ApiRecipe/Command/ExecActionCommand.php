@@ -97,12 +97,13 @@ class ExecActionCommand extends Command
      *
      * @return
      */
-    protected function execAction($action)
+    protected function execAction($action, $state = null)
     {
         $actionManagerArguments = explode(':', $action);
         $actionManager = $this->getActionManager(
             $actionManagerArguments[0],
             $actionManagerArguments[1],
+            $state,
             isset($actionManagerArguments[2]) ? $actionManagerArguments[2] : null
         );
         $actionManager->exec();
@@ -123,8 +124,8 @@ class ExecActionCommand extends Command
     /**
      * @return ActionManager
      */
-    protected function getActionManager($providerName, $method, $argument = null)
+    protected function getActionManager($providerName, $method, $state = null, $argument = null)
     {
-        return new ActionManager($providerName, $method, $argument);
+        return new ActionManager($providerName, $method, $state, $argument);
     }
 }
