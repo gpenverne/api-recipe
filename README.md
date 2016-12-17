@@ -1,39 +1,57 @@
-# Homatisation
+# Api Recipe
 
-The purpose of this repo is to generate a simple front interface to make api calls. This app has been designed for use with the
+With Api Recipe, you can exec recipes from command line or from a front interface.  
+Each recipe is a set of calls (which are related to "Providers", see below).  
+
+The purpose of this repo is to generate a simple front interface to make api calls.   
+This app has been designed for use with the
 [broadlink rm-pro](http://amzn.to/2hiTWk5) and the [rm-bridge android app](https://play.google.com/store/apps/details?id=de.fun2code.android.rmbridge)
 
-An android version of the front is available in [cordova/releases folder](https://github.com/gpenverne/homatisation/tree/master/cordova/releases)
+An android version of the front is available in [cordova/releases folder](https://github.com/gpenverne/api-recipe/tree/master/cordova/releases)
 
 ## Install
 ### Installing dependencies
 ```bash
 $ composer install
 ```
-### Installing assets
+### Installing assets for front
 ```bash
 $ bower install
 ```
+
 ### WebServer configuration
 #### Using nginx:
 ```
+server {
+    root [FULL PATH TO API RECIPE]api-recipe/web;
+
     location / {
         try_files $uri /index.php$is_args$args;
     }
+
+    # for use with php7 fpm for example
+    location ~ \.php(/|$) {
+        fastcgi_pass unix:/run/php/php7.0-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.*)$;
+        include fastcgi_params;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        fastcgi_param DOCUMENT_ROOT $realpath_root;
+    }
+}
 ```
 #### Using built-in webserver:  
-Use the app/config/config.yml file to customize port and address.  
+Use the app/config/config.yml file to customize port and address (default is localhost on port 80).  
 To start the built in webserver:
 ```bash
-$ php bin/console homatisation:server start
+$ php bin/console api-recipe:server start
 ```
 To restart the built in webserver:
 ```bash
-$ php bin/console homatisation:server restart
+$ php bin/console api-recipe:server restart
 ```
 To stop the built in webserver:
 ```bash
-$ php bin/console homatisation:server stop
+$ php bin/console api-recipe:server stop
 ```
 ## Recipes
 A recipe contains actions.  
