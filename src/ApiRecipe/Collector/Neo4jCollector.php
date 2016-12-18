@@ -256,11 +256,6 @@ class Neo4jCollector implements CollectorInterface
     {
         $recipeManager = new RecipeManager($recipe);
         $state = $this->stateManager->getRecipeState($recipe);
-        if (StateManager::STATE_ON === $state) {
-            $state = StateManager::STATE_OFF;
-        } else {
-            $state = StateManager::STATE_ON;
-        }
 
         return $recipeManager->getActions($state);
     }
