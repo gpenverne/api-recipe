@@ -6,6 +6,7 @@ use GraphAware\Neo4j\Client\ClientBuilder;
 use GraphAware\Neo4j\Client\Client;
 use ApiRecipe\Provider\HydratorTrait;
 use ApiRecipe\Manager\StateManager;
+use ApiRecipe\Manager\RecipeManager;
 
 class Neo4jCollector implements CollectorInterface
 {
@@ -49,7 +50,8 @@ class Neo4jCollector implements CollectorInterface
         $this->generateDays()
             ->generateHours()
             ->generateMinutes()
-            ->generateRecipes();
+            ->generateRecipes()
+            ->generateActions();
     }
 
     /**
@@ -67,6 +69,7 @@ class Neo4jCollector implements CollectorInterface
         $start = $minutes - ($minutes % 15);
         $end = $start + 15;
         $state = $this->stateManager->getRecipeState($recipe);
+        $actions = $this->getActions($recipe);
 
         $query =
             '
@@ -96,10 +99,40 @@ class Neo4jCollector implements CollectorInterface
             'hour' => $hours,
             'day' => $day,
         ];
+
         $this->client->run($query, $args);
+        $actions = $this->getActions($recipe);
+        $query = '
+            MERGE (a:Action {command: {command}})
+            MERGE (r:Recipe {title: {recipe}})
+            MERGE (r)-[:EXEC]->(a)
+        ';
+        foreach ($actions as $action) {
+            $this->client->run($query, [
+                'command' => $action,
+                'recipe' => $recipe,
+            ]);
+        }
 
         return $recipe;
     }
+
+    /**
+     * @return $this
+     */
+    protected function generateActions()
+    {
+        $queries = [
+            'CREATE CONSTRAINT ON (a:Action) ASSERT a.command IS UNIQUE',
+        ];
+
+        foreach ($queries as $query) {
+            $this->client->run($query);
+        }
+
+        return $this;
+    }
+
     /**
      * @return $this
      */
@@ -211,5 +244,23 @@ class Neo4jCollector implements CollectorInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $recipe
+     *
+     * @return string[]
+     */
+    protected function getActions($recipe)
+    {
+        $recipeManager = new RecipeManager($recipe);
+        $state = $this->stateManager->getRecipeState($recipe);
+        if (StateManager::STATE_ON === $state) {
+            $state = StateManager::STATE_OFF;
+        } else {
+            $state = StateManager::STATE_ON;
+        }
+
+        return $recipeManager->getActions($state);
     }
 }

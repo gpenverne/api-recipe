@@ -152,7 +152,7 @@ class RecipeManager implements ManagerInterface
      *
      * @return array
      */
-    protected function getActions($state = null)
+    public function getActions($state = null)
     {
         $actions = $this->infos->actions[StateManager::STATE_EACH_TIME];
 
@@ -173,8 +173,13 @@ class RecipeManager implements ManagerInterface
     protected function loadConfig($recipeName)
     {
         $expectedFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, $recipeName);
+        if (!is_file($expectedFile)) {
+            $infos = $this->loadConfigFromTitle($recipeName);
+        } else {
+            $infos = $this->parseYmlFile($expectedFile);
+        }
 
-        $infos = array_merge($this->infos, $this->parseYmlFile($expectedFile));
+        $infos = array_merge($this->infos, $infos);
         $infos = ArrayToStdClassConverter::convert($infos);
 
         if (!isset($infos->actions[StateManager::STATE_ON])) {
@@ -264,5 +269,27 @@ class RecipeManager implements ManagerInterface
         }
 
         return $this->stateManager;
+    }
+
+    /**
+     * @param string $title
+     *
+     * @return string
+     */
+    protected function loadConfigFromTitle($title)
+    {
+        $recipesDir = sprintf('%s/../../../recipes', __DIR__);
+        $d = opendir($recipesDir);
+        while ($f = readdir($d)) {
+            $expectedFile = sprintf('%s/%s', $recipesDir, $f);
+            if ('.' !== $f && '..' != $f && is_file($expectedFile)) {
+                $infos = $this->parseYmlFile($expectedFile);
+                if ($infos['title'] == $title) {
+                    return $infos;
+                }
+            }
+        }
+
+        return null;
     }
 }
