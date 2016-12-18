@@ -17,9 +17,6 @@ providers:
         host: 127.0.0.1
     sleeper:
         provider: sleep
-collectors:
-    neo4j:
-        class: ApiRecipe\Collector\Neo4jCollector
 
     # sample_api_provider:
     #     provider: api
@@ -27,3 +24,13 @@ collectors:
     # sample_binary_provider:
     #     provider: binary
     #     binary: bin/echo
+
+#collectors:
+#    neo4j:
+#        class: ApiRecipe\Collector\Neo4jCollector
+#        arguments:
+#            host: localhost
+#            login: neo4j
+#            password: neo4j
+#            port: 7474
+#            bolt: false

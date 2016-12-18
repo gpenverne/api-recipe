@@ -129,3 +129,14 @@ Sample commands: milight:rgbwAllOn ; milight:rgbwAllOff
 #### Sleep
 Make a pause between actions  
 Sample commands: sleep:sleep:5  
+
+## Collectors
+Each time a recipe is executed, the collector collect() method is called.
+In config.yml:
+```
+    collectors:
+        [collector name]:
+            class: [collector class name]
+            arguments:
+                ...
+```

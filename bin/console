@@ -9,6 +9,7 @@ use ApiRecipe\Command\WebServerCommand;
 use ApiRecipe\Command\CreateDirsCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
+use ApiRecipe\Command\SetupCollectorCommand;
 
 $commands = [
     CreateRecipeCommand::class,
@@ -16,6 +17,7 @@ $commands = [
     ExecRecipeCommand::class,
     WebServerCommand::class,
     CreateDirsCommand::class,
+    SetupCollectorCommand::class,
 ];
 $input = new ArgvInput();
 

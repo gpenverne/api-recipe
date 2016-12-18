@@ -74,6 +74,14 @@ class RecipeManager implements ManagerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->infos->title;
+    }
+
+    /**
      * @param string $state
      *
      * @return array
@@ -105,11 +113,26 @@ class RecipeManager implements ManagerInterface
 
         $this->getStateManager()->toggleRecipeState($this->recipeName);
 
+        $this->collect();
+
         return [
             'actions' => $result,
         ];
     }
 
+    public function collect()
+    {
+        $expectedFile = sprintf('%s/../../../app/config/config.yml', __DIR__);
+        $config = $this->parseYmlFile($expectedFile);
+        $collectors = isset($config['collectors']) ? $config['collectors'] : [];
+
+        foreach ($collectors as $collector) {
+            $collectorClass = $collector['class'];
+            $arguments = $collector['arguments'];
+            $collector = new $collectorClass($arguments);
+            $collector->collect($this->getTitle());
+        }
+    }
     /**
      * @param string $provider
      * @param string $method

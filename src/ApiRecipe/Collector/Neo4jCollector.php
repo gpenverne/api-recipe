@@ -4,29 +4,41 @@ namespace ApiRecipe\Collector;
 
 use GraphAware\Neo4j\Client\ClientBuilder;
 use GraphAware\Neo4j\Client\Client;
-use ApiRecipe\Manager\ActionManager;
+use ApiRecipe\Provider\HydratorTrait;
+use ApiRecipe\Manager\StateManager;
 
 class Neo4jCollector implements CollectorInterface
 {
+    use HydratorTrait;
     /**
      * @var Client
      */
     protected $client;
 
-    public function __construct($login = 'neo4j', $password = 'neo4j', $host = 'localhost', $port = 7474, $bolt = false)
+    protected $login = 'neo4j';
+    protected $password = 'neo4j';
+    protected $host = 'localhost';
+    protected $port = 7474;
+    protected $bolt = false;
+
+    public function __construct($args = [])
     {
+        $this->hydrate($args);
+
         $connectionAddress = sprintf(
             '%s://%s:%s@%s:%d',
-            $bolt ? 'bolt' : 'http',
-            $login,
-            $password,
-            $host,
-            $port == 7474 && $bolt ? 7687 : $port
+            $this->bolt ? 'bolt' : 'http',
+            $this->login,
+            $this->password,
+            $this->host,
+            $this->port == 7474 && $this->bolt ? 7687 : $this->port
         );
 
         $this->client = ClientBuilder::create()
-            ->addConnection($bolt ? 'bolt' : 'default', $connectionAddress)
+            ->addConnection($this->bolt ? 'bolt' : 'default', $connectionAddress)
             ->build();
+
+        $this->stateManager = new StateManager();
     }
 
     /**
@@ -37,60 +49,65 @@ class Neo4jCollector implements CollectorInterface
         $this->generateDays()
             ->generateHours()
             ->generateMinutes()
-            ->generateProviders();
+            ->generateRecipes();
     }
 
     /**
-     * @param ActionManager $action
+     * @param RecipeManager $recipe
      *
-     * @return ActionManager
+     * @return RecipeManager
      */
-    public function onAction($action)
+    public function collect($recipe)
     {
         $now = new \DateTime();
-        $minutes = $now->format('i');
-        $hours = $now->format('h');
-        $day = $now->format('w');
+        $minutes = (int) $now->format('i');
+        $hours = (int) $now->format('h');
+        $day = (int) $now->format('w');
+        $startInterval = $minutes / 15;
+        $start = $minutes - ($minutes % 15);
+        $end = $start + 15;
+        $state = $this->stateManager->getRecipeState($recipe);
 
-        $provider = $action->getProviderName();
-        $method = $action->getMethod();
-        $arg = $action->getArgument();
+        $query =
+            '
+                MERGE (r:Recipe {title: {title}, state: {state}})
+                MERGE (s:State {state: {state}})
+                MERGE (m:MinutesInterval {start: {start}, end: {end}})
+                MERGE (h:Hour {number: {hour}})
+                MERGE (d:Day {number: {day}})
+                MERGE (r)-[r1:ON]->(d)
+                    ON CREATE SET r1.iterations = 0
+                MERGE (r)-[r2:ON]->(h)
+                    ON CREATE SET r2.iterations = 0
+                MERGE (r)-[r3:ON]->(m)
+                    ON CREATE SET r3.iterations = 0
+                SET
+                    r1.iterations = r1.iterations + 1,
+                    r2.iterations = r2.iterations + 1,
+                    r3.iterations = r3.iterations + 1
+            '
+        ;
 
-        $query = '
-            MERGE (a:Action {command: %s}) ON CREATE SET
-                a.provider = %s,
-                a.method = %s,
-                a.argument = %s
-            MERGE (a)-[:ON]-(d:Day {number: %d}])
-            MERGE (a)-[:ON]-(h:Hour {number: %d}])
-            MERGE (a)-[:ON]-(m:MinutesInterval)
-                WHERE m.start <= %d AND m.end > %d
-            MERGE (a)-[:WITH]->(p:Provider {name: %s})
-        ';
+        $args = [
+            'title' => $recipe,
+            'start' => $start,
+            'state' => $state,
+            'end' => $end,
+            'hour' => $hours,
+            'day' => $day,
+        ];
+        $this->client->run($query, $args);
 
-        $this->client->run(sprintf(
-            $query,
-            $action->getCommand(),
-            $day,
-            $hours,
-            $minutes,
-            $minutes,
-            $provider,
-            $action->getState()
-        ));
-
-        return $action;
+        return $recipe;
     }
-
     /**
      * @return $this
      */
-    protected function generateActions()
+    protected function generateRecipes()
     {
         $queries = [
-            'CREATE CONSTRAINT ON (a:Action) ASSERT a.command IS UNIQUE',
-            'CREATE INDEX ON :Action(provider)',
-            'CREATE INDEX ON :Action(method)',
+            'CREATE INDEX ON :Recipe(title)',
+            'CREATE INDEX ON :Recipe(state)',
         ];
 
         foreach ($queries as $query) {
@@ -119,21 +136,20 @@ class Neo4jCollector implements CollectorInterface
         $i = 0;
         while ($i <= 7) {
             $dayName = $datetime->format('l');
-            $dayNumber = $dateTime->format('w');
-            $dateTime->modify('+1 day');
+            $dayNumber = (int) $datetime->format('w');
+            $datetime->modify('+1 day');
 
-            $query = sprintf(
-                'MERGE (d:Day {dayNumber: %d}) ON CREATE SET
-                    name = {dayName},
-                    number = {dayNumber}
-                ',
-                $dayNumber
-            );
+            $query =
+                'MERGE (d:Day {dayNumber: {dayNumber}}) ON CREATE SET
+                    d.name = {dayName},
+                    d.number = {dayNumber}
+                ';
 
             $this->client->run($query, [
                 'dayName' => $dayName,
-                'dayNumber' => $dateTime->format('w'),
+                'dayNumber' => (int) $datetime->format('w'),
             ]);
+            ++$i;
         }
 
         return $this;
@@ -177,38 +193,21 @@ class Neo4jCollector implements CollectorInterface
 
         $start = 0;
 
-        for ($i = 0; $i < 60; $i + 15) {
+        for ($i = 15; $i <= 60; $i += 15) {
             $query = sprintf(
-                'MERGE (m:MinutesInterval {start: %d, end %d}) ON CREATE SET
+                'MERGE (m:MinutesInterval {start: %d, end: %d}) ON CREATE SET
                     m.start = {start},
-                    m.end = {end},
+                    m.end = {end}
                 ',
                 $start,
                 $i
             );
-
             $this->client->run($query, [
                 'start' => $start,
                 'end' => $i,
             ]);
 
             $start = $i;
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return $this
-     */
-    protected function generateProviders()
-    {
-        $queries = [
-            'CREATE CONSTRAINT ON (p:Provider) ASSERT p.name IS UNIQUE',
-        ];
-
-        foreach ($queries as $query) {
-            $this->client->run($query);
         }
 
         return $this;
