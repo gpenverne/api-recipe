@@ -76,7 +76,6 @@ class Neo4jCollector implements CollectorInterface
         $query =
             '
                 MERGE (r:Recipe {title: {title}, state: {state}})
-                MERGE (s:State {state: {state}})
                 MERGE (m:MinutesInterval {start: {start}, end: {end}})
                 MERGE (h:Hour {number: {hour}})
                 MERGE (d:Day {number: {day}})
@@ -104,13 +103,14 @@ class Neo4jCollector implements CollectorInterface
 
         $this->client->run($query, $args);
         $query = '
-            MERGE (a:Action {command: {command}})
+            MERGE (a:Action {command: {command}, state: {state}})
             MERGE (r:Recipe {title: {recipe}})
             MERGE (r)-[:EXEC]->(a)
         ';
         foreach ($actions as $action) {
             $this->client->run($query, [
                 'command' => $action,
+                'state' => $state,
                 'recipe' => $recipe->getTitle(),
             ]);
         }
