@@ -61,6 +61,8 @@ class Neo4jCollector implements CollectorInterface
      */
     public function collect($recipe)
     {
+        $recipe = new RecipeManager($recipe);
+
         $now = new \DateTime();
         $minutes = (int) $now->format('i');
         $hours = (int) $now->format('H');
@@ -68,8 +70,8 @@ class Neo4jCollector implements CollectorInterface
         $startInterval = $minutes / 15;
         $start = $minutes - ($minutes % 15);
         $end = $start + 15;
-        $state = $this->stateManager->getRecipeState($recipe);
-        $actions = $this->getActions($recipe);
+        $state = $this->stateManager->getRecipeState($recipe->getFileName());
+        $actions = $this->getActions($recipe->getTitle());
 
         $query =
             '
@@ -92,7 +94,7 @@ class Neo4jCollector implements CollectorInterface
         ;
 
         $args = [
-            'title' => $recipe,
+            'title' => $recipe->getTitle(),
             'start' => $start,
             'state' => $state,
             'end' => $end,

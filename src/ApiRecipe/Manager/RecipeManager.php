@@ -8,6 +8,8 @@ class RecipeManager implements ManagerInterface
 {
     use YmlParserTrait;
 
+    private $fileName;
+
     /**
      * @var array
      */
@@ -166,6 +168,16 @@ class RecipeManager implements ManagerInterface
     }
 
     /**
+     * @return string
+     */
+    public function getFileName()
+    {
+        $f = explode('.', $this->fileName);
+
+        return $f[0];
+    }
+
+    /**
      * @param string $recipeName
      *
      * @return $this
@@ -176,6 +188,7 @@ class RecipeManager implements ManagerInterface
         if (!is_file($expectedFile)) {
             $infos = $this->loadConfigFromTitle($recipeName);
         } else {
+            $this->fileName = $recipeName;
             $infos = $this->parseYmlFile($expectedFile);
         }
 
@@ -285,6 +298,8 @@ class RecipeManager implements ManagerInterface
             if ('.' !== $f && '..' != $f && is_file($expectedFile)) {
                 $infos = $this->parseYmlFile($expectedFile);
                 if ($infos['title'] == $title) {
+                    $this->fileName = $f;
+
                     return $infos;
                 }
             }
