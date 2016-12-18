@@ -63,7 +63,7 @@ class Neo4jCollector implements CollectorInterface
     {
         $now = new \DateTime();
         $minutes = (int) $now->format('i');
-        $hours = (int) $now->format('h');
+        $hours = (int) $now->format('H');
         $day = (int) $now->format('w');
         $startInterval = $minutes / 15;
         $start = $minutes - ($minutes % 15);
