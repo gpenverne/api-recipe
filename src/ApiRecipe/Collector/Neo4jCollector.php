@@ -71,7 +71,7 @@ class Neo4jCollector implements CollectorInterface
         $start = $minutes - ($minutes % 15);
         $end = $start + 15;
         $state = $this->stateManager->getRecipeState($recipe->getFileName());
-        $actions = $this->getActions($recipe->getTitle());
+        $actions = $this->getActions($recipe->getFileName());
 
         $query =
             '
