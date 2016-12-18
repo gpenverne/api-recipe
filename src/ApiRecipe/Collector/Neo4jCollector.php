@@ -103,8 +103,8 @@ class Neo4jCollector implements CollectorInterface
 
         $this->client->run($query, $args);
         $query = '
-            MERGE (a:Action {command: {command}, state: {state}})
-            MERGE (r:Recipe {title: {recipe}})
+            MERGE (a:Action {command: {command}})
+            MERGE (r:Recipe {title: {recipe}, state: {state}})
             MERGE (r)-[:EXEC]->(a)
         ';
         foreach ($actions as $action) {
