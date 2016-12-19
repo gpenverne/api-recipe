@@ -43,9 +43,10 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.tags =  new Array;
 
     $scope.onListened = function(txt){
+
         $http.post(hostApi+'/voice/deduce', {text: txt}).then(function(r){
             if (r.data && r.data.recipe != null) {
-                $scope.exec(r.data.targetState);
+                $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
         });
     };
