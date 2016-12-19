@@ -37,6 +37,6 @@ class RecipesController extends Controller
 
         $state = $this->request->get('state');
 
-        return $this->getRecipManager($recipeName)->exec($state);
+        return $this->getRecipeManager($recipeName)->exec($state);
     }
 }
