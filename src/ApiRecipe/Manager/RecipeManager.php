@@ -214,7 +214,7 @@ class RecipeManager implements ManagerInterface
      *
      * @return $this
      */
-    protected function loadConfig($recipeName)
+    public function loadConfig($recipeName)
     {
         $expectedFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, $recipeName);
         if (!is_file($expectedFile)) {
@@ -361,5 +361,10 @@ class RecipeManager implements ManagerInterface
         }
 
         return $this->matches;
+    }
+
+    public function getInfos()
+    {
+        return $this->infos;
     }
 }
