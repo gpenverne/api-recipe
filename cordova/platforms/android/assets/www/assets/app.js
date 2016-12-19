@@ -41,13 +41,10 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.hostApi = hostApi;
     $scope.currentTag = currentTag;
     $scope.tags =  new Array;
-
     $scope.onListened = function(txt){
-        alert(txt);
-
-        $http.post(hostApi+'/voice/deduce', {text: txt}).then(function(r){
+        $http.get(hostApi+'/voice/deduce?text='+txt).then(function(r){
             if (r.data && r.data.recipe != null) {
-                $scope.exec(r.data.targetState);
+                $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
         });
     };
@@ -77,7 +74,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
             if (voiceManager.enabled && !voiceManager.listening) {
-                console.log('VoiceManager listn');
                 voiceManager.listen(function(){console.log('ok');});
                 voiceManager.say('Je suis prêt, comment puis je vous aider?', 'fr-FR');
             }

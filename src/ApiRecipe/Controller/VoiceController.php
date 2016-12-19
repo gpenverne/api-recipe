@@ -12,6 +12,7 @@ class VoiceController extends Controller
     public function deduceAction()
     {
         $this->setResponseFormat('json');
+        file_put_contents('/tmp/log', $this->request->get('text'));
         $texts = explode(',', $this->request->get('text'));
 
         $recipes = $this->getRecipeManager()->getAll();
