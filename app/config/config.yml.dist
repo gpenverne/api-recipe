@@ -34,3 +34,12 @@ providers:
 #            password: neo4j
 #            port: 7474
 #            bolt: false
+#suggesters:
+#    neo4j:
+#        class: ApiRecipe\Suggester\Neo4jSuggester
+#        arguments:
+#            host: localhost
+#            login: neo4j
+#            password: neo4j
+#            port: 7474
+#            bolt: false

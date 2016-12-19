@@ -11,15 +11,35 @@ use ApiRecipe\Manager\RecipeManager;
 class Neo4jCollector implements CollectorInterface
 {
     use HydratorTrait;
+
     /**
      * @var Client
      */
     protected $client;
 
+    /**
+     * @var string
+     */
     protected $login = 'neo4j';
+
+    /**
+     * @var string
+     */
     protected $password = 'neo4j';
+
+    /**
+     * @var string
+     */
     protected $host = 'localhost';
+
+    /**
+     * @var string
+     */
     protected $port = 7474;
+
+    /**
+     * @var string
+     */
     protected $bolt = false;
 
     public function __construct($args = [])
@@ -73,12 +93,21 @@ class Neo4jCollector implements CollectorInterface
         $state = $this->stateManager->getRecipeState($recipe->getFileName());
         $actions = $this->getActions($recipe->getFileName());
 
+        $this->client->run('
+                MATCH (r:Recipe {title: {recipe}})-[r4:IS]->(s:State) DELETE r4
+            ', [
+                'recipe' => $recipe->getTitle(),
+            ]
+        );
+
         $query =
             '
                 MERGE (r:Recipe {title: {title}, state: {state}})
                 MERGE (m:MinutesInterval {start: {start}, end: {end}})
                 MERGE (h:Hour {number: {hour}})
                 MERGE (d:Day {number: {day}})
+                MERGE (s:State {state: {state}})
+                MERGE (r)-[rIs:IS]->(s)
                 MERGE (r)-[r1:ON]->(d)
                     ON CREATE SET r1.iterations = 0
                 MERGE (r)-[r2:ON]->(h)
@@ -88,7 +117,8 @@ class Neo4jCollector implements CollectorInterface
                 SET
                     r1.iterations = r1.iterations + 1,
                     r2.iterations = r2.iterations + 1,
-                    r3.iterations = r3.iterations + 1
+                    r3.iterations = r3.iterations + 1,
+                    rIs.from = {now}
             '
         ;
 
@@ -99,6 +129,7 @@ class Neo4jCollector implements CollectorInterface
             'end' => $end,
             'hour' => $hours,
             'day' => $day,
+            'now' => time(),
         ];
 
         $this->client->run($query, $args);

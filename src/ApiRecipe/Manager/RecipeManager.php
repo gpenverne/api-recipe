@@ -11,6 +11,11 @@ class RecipeManager implements ManagerInterface
     private $fileName;
 
     /**
+     * @var int
+     */
+    private $probability = 0;
+
+    /**
      * @var array
      */
     private $infos = [
@@ -135,6 +140,25 @@ class RecipeManager implements ManagerInterface
             $collector->collect($this->getTitle());
         }
     }
+
+    /**
+     * @param int $probability
+     */
+    public function setProbability($probability)
+    {
+        $this->probability = $probability;
+
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getProbability()
+    {
+        return $this->probability;
+    }
+
     /**
      * @param string $provider
      * @param string $method
