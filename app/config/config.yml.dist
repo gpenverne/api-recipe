@@ -1,3 +1,6 @@
+voices:
+    locale: fr-FR
+    triggerPrefix: Jarvis
 server:
     address: localhost
     port: 80

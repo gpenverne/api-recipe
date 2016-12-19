@@ -12,4 +12,8 @@
     <access origin="*" />
     <plugin name="com.plugins.shortcut" />
     <plugin name="WebIntent" value="com.borismus.webintent.WebIntent" />
+    <plugin name="SpeechRecognition" value="org.apache.cordova.speech.speechrecognition" />
+    <plugin name="cordova-plugin-tts" value="cordova-plugin-tts" />
+
+
 </widget>

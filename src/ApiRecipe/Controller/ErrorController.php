@@ -2,8 +2,14 @@
 
 namespace ApiRecipe\Controller;
 
-class ErrorController implements ControllerInterface
+class ErrorController extends Controller
 {
+    /**
+     * @param string $method
+     * @param array  $args
+     *
+     * @return mixed
+     */
     public function __call($method, $args)
     {
         return call_user_func([$this, 'notFoundAction'], $args);

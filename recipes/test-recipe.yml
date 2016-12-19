@@ -12,6 +12,24 @@ description: To test recipes, it uses the logger provider
 #    - sample tag
 #    - tag2
 
+voices:
+    on:
+        triggers:
+            - 'test on'
+            - 'test roh'
+        onSuccess: 'Test on ok'
+        onError: 'Test on failed'
+    off:
+        triggers:
+            - 'test off'
+        onSuccess: 'Test on ok'
+        onError: 'Test on failed'
+    each_time:
+        triggers:
+            - 'test each'
+        onSuccess: 'Test on ok'
+        onError: 'Test on failed'
+
 # all actions of the recipe
 actions:
     # Actions to do when passing to the on state

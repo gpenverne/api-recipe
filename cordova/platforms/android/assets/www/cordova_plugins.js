@@ -41,6 +41,20 @@ module.exports = [
         "clobbers": [
             "ShortcutPlugin"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-tts/www/tts.js",
+        "id": "cordova-plugin-tts.tts",
+        "clobbers": [
+            "TTS"
+        ]
+    },
+    {
+        "file": "plugins/com.latin.continuoussr/www/continuoussr.js",
+        "id": "com.latin.continuoussr.continuoussr",
+        "clobbers": [
+            "continuoussr"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -50,7 +64,9 @@ module.exports.metadata =
     "com.lampa.startapp": "0.1.4",
     "com.virtualartifacts.webintent": "1.0.0",
     "cordova-plugin-dialogs": "1.3.0",
-    "com.plugins.shortcut": "0.0.2"
+    "com.plugins.shortcut": "0.0.2",
+    "cordova-plugin-tts": "0.2.3",
+    "com.latin.continuoussr": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

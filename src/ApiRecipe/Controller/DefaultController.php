@@ -2,8 +2,11 @@
 
 namespace ApiRecipe\Controller;
 
-class DefaultController implements ControllerInterface
+class DefaultController extends Controller
 {
+    /**
+     * @return string
+     */
     public function indexAction()
     {
         $indexHtmlFile = sprintf('%s/../../../web/index.html', __DIR__);

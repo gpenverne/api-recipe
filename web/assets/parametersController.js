@@ -21,6 +21,13 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
     if (!$scope.hostName) {
         $scope.hostName = 'http://'+window.location.hostname;
     }
+    $scope.voiceManagerEnabled = voiceManager.enabled;
+
+    $scope.toggleVoiceManager = function(voiceManagerEnabled){
+        $scope.voiceManagerEnabled = voiceManagerEnabled;
+        window.localStorage.setItem("voiceManagerEnabled", voiceManagerEnabled);
+    }
+
     $scope.setHost = function(host, name) {
 
         if (typeof name == 'undefined') {

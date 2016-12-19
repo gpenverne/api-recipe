@@ -2,9 +2,9 @@
 
 namespace ApiRecipe\Manager;
 
+use ApiRecipe\Controller\ErrorController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use ApiRecipe\Controller\ErrorController;
 
 class RoutingManager implements ManagerInterface
 {
@@ -39,7 +39,7 @@ class RoutingManager implements ManagerInterface
         }
 
         $method = sprintf('%sAction', $method);
-        $this->controller = $this->getController();
+        $this->controller = $this->getController($this->request);
 
         if (!method_exists($this->controller, $method)) {
             $this->controller = 'error';
@@ -86,7 +86,7 @@ class RoutingManager implements ManagerInterface
     /**
      * @return ControllerInterface
      */
-    protected function getController()
+    protected function getController(Request $request)
     {
         if (!$this->controller) {
             $this->controller = 'default';
@@ -97,6 +97,6 @@ class RoutingManager implements ManagerInterface
             $className = ErrorController::class;
         }
 
-        return new $className();
+        return new $className($request);
     }
 }

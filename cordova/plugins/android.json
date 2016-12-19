@@ -27,6 +27,10 @@
                         {
                             "xml": "<feature name=\"ShortcutPlugin\"><param name=\"android-package\" value=\"com.plugins.shortcut.ShortcutPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"ContinuousSpeechRecognizer\"><param name=\"android-package\" value=\"com.latin.continuoussr.ContinuousSpeechRecognizer\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -40,6 +44,16 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\" />",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"TTS\"><param name=\"android-package\" value=\"com.wordsbaking.cordova.tts.TTS\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -61,6 +75,12 @@
             "PACKAGE_NAME": "com.gkdv.homatisation"
         },
         "com.plugins.shortcut": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "com.latin.continuoussr": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },
