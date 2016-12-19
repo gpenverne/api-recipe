@@ -43,3 +43,9 @@ providers:
 #            password: neo4j
 #            port: 7474
 #            bolt: false
+#matchers:
+#    night:
+#        class ApiRecipe\Matcher\NightMatcher
+#        arguments:
+#            latitude: 47.1714936
+#            longitude: 1.5256136000000424

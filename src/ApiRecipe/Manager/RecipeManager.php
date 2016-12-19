@@ -8,12 +8,20 @@ class RecipeManager implements ManagerInterface
 {
     use YmlParserTrait;
 
+    /**
+     * @var string
+     */
     private $fileName;
 
     /**
      * @var int
      */
     private $probability = 0;
+
+    /**
+     * @var bool[]
+     */
+    private $matches = [];
 
     /**
      * @var array
@@ -119,11 +127,11 @@ class RecipeManager implements ManagerInterface
         }
 
         $this->getStateManager()->toggleRecipeState($this->recipeName);
-
         $this->collect();
 
         return [
             'actions' => $result,
+            'matches' => $this->getMatches(),
         ];
     }
 
@@ -137,7 +145,7 @@ class RecipeManager implements ManagerInterface
             $collectorClass = $collector['class'];
             $arguments = $collector['arguments'];
             $collector = new $collectorClass($arguments);
-            $collector->collect($this->getTitle());
+            $collector->collect($this);
         }
     }
 
@@ -330,5 +338,28 @@ class RecipeManager implements ManagerInterface
         }
 
         return null;
+    }
+
+    /**
+     * @return bool[]
+     */
+    public function getMatches()
+    {
+        if (0 !== count($this->matches)) {
+            return $this->matches;
+        }
+
+        $expectedFile = sprintf('%s/../../../app/config/config.yml', __DIR__);
+        $config = $this->parseYmlFile($expectedFile);
+        $matchers = isset($config['matchers']) ? $config['matchers'] : [];
+
+        foreach ($matchers as $matcherName => $matcher) {
+            $matcherClass = $matcher['class'];
+            $arguments = $matcher['arguments'];
+            $matcher = new $matcherClass($arguments);
+            $this->matches[$matcherName] = $matcher->match();
+        }
+
+        return $this->matches;
     }
 }

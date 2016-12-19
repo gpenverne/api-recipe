@@ -71,7 +71,8 @@ class Neo4jCollector implements CollectorInterface
             ->generateHours()
             ->generateMinutes()
             ->generateRecipes()
-            ->generateActions();
+            ->generateActions()
+            ->generateConditions();
     }
 
     /**
@@ -81,8 +82,6 @@ class Neo4jCollector implements CollectorInterface
      */
     public function collect($recipe)
     {
-        $recipe = new RecipeManager($recipe);
-
         $now = new \DateTime();
         $minutes = (int) $now->format('i');
         $hours = (int) $now->format('H');
@@ -146,7 +145,50 @@ class Neo4jCollector implements CollectorInterface
             ]);
         }
 
+        foreach ($recipe->getMatches() as $condition => $match) {
+            if (true === $match) {
+                $query = '
+                    MERGE (c:Condition {match: {match}})
+                    MERGE (r:Recipe {title: {recipe}, state: {state}})
+                    MERGE (r)-[:WHEN]->(c)
+                ';
+
+                $this->client->run($query, [
+                    'recipe' => $recipe->getTitle(),
+                    'state' => $state,
+                    'match' => $condition,
+                ]);
+            }
+        }
+
+        $query = '
+            MATCH (s:State {state: {state}}), (r:Recipe)
+            WHERE r.title = {recipe}
+            MERGE (r)-[:IS]->(s)
+        ';
+
+        $this->client->run($query, [
+            'state' => $state,
+            'recipe' => $recipe->getTitle(),
+        ]);
+
         return $recipe;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function generateConditions()
+    {
+        $queries = [
+            'CREATE CONSTRAINT ON (c:Condition) ASSERT c.matcher IS UNIQUE',
+        ];
+
+        foreach ($queries as $query) {
+            $this->client->run($query);
+        }
+
+        return $this;
     }
 
     /**
