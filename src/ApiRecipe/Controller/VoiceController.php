@@ -45,6 +45,8 @@ class VoiceController extends Controller
      */
     protected function voiceMatch($text, $recipeVoice)
     {
+        $text = strtolower($text);
+
         $texts = [];
         $states = [
             StateManager::STATE_ON,
@@ -55,7 +57,7 @@ class VoiceController extends Controller
         foreach ($states as $state) {
             if (isset($recipeVoice[$state]) && isset($recipeVoice[$state]['triggers'])) {
                 foreach ($recipeVoice[$state]['triggers'] as $trigger) {
-                    $texts[$trigger] = $state;
+                    $texts[strtolower($trigger)] = $state;
                 }
             }
         }
