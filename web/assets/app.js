@@ -45,6 +45,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
         $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
             if (r.data && r.data.recipe != null) {
+                window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
                 $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
         });

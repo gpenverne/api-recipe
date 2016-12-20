@@ -14,9 +14,10 @@ class VoiceController extends Controller
      */
     public function deduceAction()
     {
+        $rawText = strtolower($this->request->get('text'));
         $this->setResponseFormat('json');
-        $this->getProvider('logger')->info($this->request->get('text'));
-        $texts = explode(',', $this->request->get('text'));
+        $this->getProvider('logger')->info($rawText);
+        $texts = explode(',', $rawText);
         $voicesConfig = $this->getVoicesConfig();
         $activated = false;
 
