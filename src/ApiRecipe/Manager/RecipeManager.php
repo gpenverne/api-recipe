@@ -83,10 +83,12 @@ class RecipeManager implements ManagerInterface
      *
      * @return array
      */
-    public function exec($state = null)
+    public function exec($state = null, $loggerProvider = null)
     {
         $result = [];
-
+        if (null !== $loggerProvider) {
+            $loggerProvider->info(sprintf('Looking for %s recipe'), $this->recipeName);
+        }
         if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {
                 $state = StateManager::STATE_OFF;
