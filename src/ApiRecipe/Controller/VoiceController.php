@@ -74,7 +74,7 @@ class VoiceController extends Controller
      */
     protected function voiceMatch($text, $recipeVoice)
     {
-        $text = utf8_decode(trim(strtolower($text)));
+        $text = trim(strtolower($text));
 
         $texts = [];
         $states = [
