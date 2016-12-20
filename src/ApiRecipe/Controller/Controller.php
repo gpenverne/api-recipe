@@ -51,8 +51,7 @@ class Controller implements ControllerInterface
     protected function getProvider($providerName)
     {
         $providerManager = new ProviderManager();
-        $providerManager->getProvider($providerName);
 
-        return $providerManager;
+        return $providerManager->getProvider($providerName);
     }
 }
