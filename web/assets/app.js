@@ -42,7 +42,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.currentTag = currentTag;
     $scope.tags =  new Array;
     $scope.onListened = function(txt){
-        $http.get(hostApi+'/voice/deduce?text='+txt).then(function(r){
+
+        $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
             if (r.data && r.data.recipe != null) {
                 $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
@@ -73,11 +74,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         }
 
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
-            if (voiceManager.enabled && !voiceManager.listening) {
-                voiceManager.listen(function(){console.log('ok');});
-                voiceManager.say('Je suis prêt, comment puis je vous aider?', 'fr-FR');
-            }
-
             var newTags = ['all'];
             var recipes = new Array;
             for (var i=0; i < r.data.length; i++) {
@@ -145,7 +141,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     };
 
     $scope.execRecipe = function(recipe, forcedState){
-
         recipe.runing = true;
         recipe.error = false;
 
@@ -197,6 +192,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             return $timeout(countUp, 500);
         } else {
             if (!voiceManager.listening) {
+                voiceManager.listening = true;
                 window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
             }
         }

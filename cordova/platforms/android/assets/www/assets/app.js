@@ -42,7 +42,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.currentTag = currentTag;
     $scope.tags =  new Array;
     $scope.onListened = function(txt){
-        $http.get(hostApi+'/voice/deduce?text='+txt).then(function(r){
+
+        $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
             if (r.data && r.data.recipe != null) {
                 $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
@@ -73,11 +74,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         }
 
         $http.get(hostApi+'/recipes?format=json&origin='+device.platform).then(function(r){
-            if (voiceManager.enabled && !voiceManager.listening) {
-                voiceManager.listen(function(){console.log('ok');});
-                voiceManager.say('Je suis prêt, comment puis je vous aider?', 'fr-FR');
-            }
-
             var newTags = ['all'];
             var recipes = new Array;
             for (var i=0; i < r.data.length; i++) {
@@ -145,18 +141,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     };
 
     $scope.execRecipe = function(recipe, forcedState){
-        if (recipe.state == 'on' && typeof recipe.voices.off != 'undefined') {
-            var voiceSuccess = recipe.voices.off.onSuccess;
-            var voiceError = recipe.voices.off.onError;
-        } else if (typeof recipe.voices.on != 'undefined'){
-            var voiceSuccess = recipe.voices.on.onSuccess;
-            var voiceError = recipe.voices.on.onError;
-        } else if (typeof recipe.voices.each_time != 'undefined'){
-            var voiceSuccess = recipe.voices.each_time.onSuccess;
-            var voiceError = recipe.voices.each_time.onError;
-        }
         recipe.runing = true;
         recipe.error = false;
+
         if (recipe.confirm) {
             if (!confirm(recipe.confirm)) {
                 recipe.runing = false;
@@ -173,15 +160,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $http.get(url).then(function(r){
             recipe.runing = false;
             $scope.getRecipes();
-            if (typeof voiceSuccess != 'undefined') {
-                voiceManager.say(voiceSuccess);
-            }
         }, function(){
             recipe.runing = false;
             recipe.error = true;
-            if (typeof voiceError != 'undefined') {
-                voiceManager.say(voiceError);
-            }
         });
 
         if (recipe.androidApp) {
@@ -211,6 +192,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             return $timeout(countUp, 500);
         } else {
             if (!voiceManager.listening) {
+                voiceManager.listening = true;
                 window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
             }
         }

@@ -23,7 +23,9 @@ class VoiceController extends Controller
         if (isset($voicesConfig['keywords'])) {
             $clearedTexts = [];
             foreach ($voicesConfig['keywords'] as $keyword) {
+                $keyword = strtolower($keyword);
                 foreach ($texts as $text) {
+                    $text = strtolower($text);
                     if (false !== strpos($text, $keyword)) {
                         $activated = true;
                         $clearedTexts[] = trim(str_replace($keyword, '', $text));

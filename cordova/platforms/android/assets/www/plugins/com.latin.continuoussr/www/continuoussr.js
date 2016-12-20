@@ -35,7 +35,7 @@ ContinuousSpeechRecognizer.prototype.startRecognize = function(successCallback, 
 
 /**
  * Get the list of the supported languages in IETF BCP 47 format
- * 
+ *
  * @param successCallback
  * @param errorCallback
  *
@@ -49,6 +49,5 @@ ContinuousSpeechRecognizer.prototype.getSupportedLanguages = function(successCal
  * Export
  */
 module.exports = new ContinuousSpeechRecognizer();
-
 
 });
