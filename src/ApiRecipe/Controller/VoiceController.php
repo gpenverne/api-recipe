@@ -3,9 +3,12 @@
 namespace ApiRecipe\Controller;
 
 use ApiRecipe\Manager\StateManager;
+use ApiRecipe\Manager\YmlParserTrait;
 
 class VoiceController extends Controller
 {
+    use YmlParserTrait;
+
     /**
      * @return array
      */
@@ -14,6 +17,28 @@ class VoiceController extends Controller
         $this->setResponseFormat('json');
         file_put_contents('/tmp/log', $this->request->get('text'));
         $texts = explode(',', $this->request->get('text'));
+        $voicesConfig = $this->getVoicesConfig();
+        $activated = false;
+
+        if (isset($voicesConfig['keywords'])) {
+            $clearedTexts = [];
+            foreach ($voicesConfig['keywords'] as $keyword) {
+                foreach ($texts as $text) {
+                    if (false !== strpos($text, $keyword)) {
+                        $activated = true;
+                        $clearedTexts[] = trim(str_replace($keyword, '', $text));
+                    }
+                }
+                $texts = $clearedTexts;
+            }
+
+            if (false === $activated) {
+                return [
+                    'recipe' => null,
+                    'targetState' => null,
+                ];
+            }
+        }
 
         $recipes = $this->getRecipeManager()->getAll();
         foreach ($recipes as $recipe) {
@@ -46,7 +71,7 @@ class VoiceController extends Controller
      */
     protected function voiceMatch($text, $recipeVoice)
     {
-        $text = strtolower($text);
+        $text = trim(strtolower($text));
 
         $texts = [];
         $states = [
@@ -68,5 +93,16 @@ class VoiceController extends Controller
         }
 
         return false;
+    }
+
+    protected function getVoicesConfig()
+    {
+        $file = sprintf('%s/../../../app/config/config.yml', __DIR__);
+        $config = $this->parseYmlFile($file);
+        if (!isset($config['voices'])) {
+            return [];
+        }
+
+        return $config['voices'];
     }
 }

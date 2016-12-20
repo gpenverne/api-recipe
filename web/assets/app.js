@@ -145,18 +145,10 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     };
 
     $scope.execRecipe = function(recipe, forcedState){
-        if (recipe.state == 'on' && typeof recipe.voices.off != 'undefined') {
-            var voiceSuccess = recipe.voices.off.onSuccess;
-            var voiceError = recipe.voices.off.onError;
-        } else if (typeof recipe.voices.on != 'undefined'){
-            var voiceSuccess = recipe.voices.on.onSuccess;
-            var voiceError = recipe.voices.on.onError;
-        } else if (typeof recipe.voices.each_time != 'undefined'){
-            var voiceSuccess = recipe.voices.each_time.onSuccess;
-            var voiceError = recipe.voices.each_time.onError;
-        }
+
         recipe.runing = true;
         recipe.error = false;
+
         if (recipe.confirm) {
             if (!confirm(recipe.confirm)) {
                 recipe.runing = false;
@@ -173,15 +165,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $http.get(url).then(function(r){
             recipe.runing = false;
             $scope.getRecipes();
-            if (typeof voiceSuccess != 'undefined') {
-                voiceManager.say(voiceSuccess);
-            }
         }, function(){
             recipe.runing = false;
             recipe.error = true;
-            if (typeof voiceError != 'undefined') {
-                voiceManager.say(voiceError);
-            }
         });
 
         if (recipe.androidApp) {

@@ -1,6 +1,8 @@
 voices:
     locale: fr-FR
-    triggerPrefix: Jarvis
+    keywords:
+        - abracadabra
+        - hé gogol
 server:
     address: localhost
     port: 80
