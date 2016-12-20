@@ -87,7 +87,7 @@ class RecipeManager implements ManagerInterface
     {
         $result = [];
         if (null !== $loggerProvider) {
-            $loggerProvider->info(sprintf('Looking for %s recipe'), $this->recipeName);
+            $loggerProvider->info(sprintf('Looking for %s recipe', $this->recipeName));
         }
         if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {

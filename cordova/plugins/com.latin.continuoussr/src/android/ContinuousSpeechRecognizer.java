@@ -46,6 +46,8 @@ public class ContinuousSpeechRecognizer extends CordovaPlugin {
         this.callbackContext = callbackContext;
         if ("startRecognize".equals(action)) {
             startSpeechRecognitionActivity(args);
+        } else if("resumeRecognize".equals(action)) {
+            resumeSpeechRecognitionActivity(args);
         } else if ("getSupportedLanguages".equals(action)) {
             getSupportedLanguages();
         } else {
@@ -62,6 +64,15 @@ public class ContinuousSpeechRecognizer extends CordovaPlugin {
         Intent detailsIntent = new Intent(RecognizerIntent.ACTION_GET_LANGUAGE_DETAILS);
         cordova.getActivity().sendOrderedBroadcast(detailsIntent, null, languageDetailsChecker, null, Activity.RESULT_OK, null, null);
 
+    }
+
+    private void resumeSpeechRecognitionActivity(JSONArray args) {
+        try {
+            sr.stopListening();
+            sr.startListening(intent);
+        } catch(Exception e) {
+            startSpeechRecognitionActivity(args);
+        }
     }
 
     /**

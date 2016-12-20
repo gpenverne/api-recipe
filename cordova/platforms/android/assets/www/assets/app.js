@@ -45,7 +45,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
             console.log('Found recipe and executed recipe.');
         });
-        document.location.reload();
+        //window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
     };
 
     try {
@@ -188,23 +188,38 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
     $scope.$parent.getRecipes();
     var countUp = function() {
-        if (!isReady) {
-            return $timeout(countUp, 500);
-        } else {
-            voiceManager.listening = true;
-            try {
-                console.log('Reactivating voice');
-                window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
-            }
-            catch(e){
-
-            }
-        }
         $scope.$parent.getRecipes();
-        $timeout(countUp, 30000);
+        $timeout(countUp, 60000);
 
     }
+    var resetAudio = function() {
+        if (!isReady) {
+            return $timeout(resetAudio, 500);
+        }
+            voiceManager.listening = true;
+                if (device.platform == 'Android' || device.platform == 'android') {
+                    recognition = window.speechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition;
+                    alert('initiated');
+                    recognition.lang = "fr-FR";
+                    recognition.onend = function(){
+                        recognition.start();
+                    }
+                    recognition.onresult = function(event) {
+                        var interim_transcript = '';
+                        recognition.continuous = true;
+                        for (var i = event.resultIndex; i < event.results.length; ++i) {
+                            interim_transcript += event.results[i][0].transcript;
+                            alert(interim_transcript);
+                            $scope.onListened(interim_transcript);
+                        }
+                        recognition.stop();
+                    };
+
+                    recognition.start();
+            }
+    }
     $timeout(countUp, 500);
+    $timeout(resetAudio, 500);
 });
 
 
@@ -222,7 +237,7 @@ function handleAndroidAppLaunch(appName)
 }
 
 document.addEventListener("deviceready", onDeviceReady, false);
-var permissions = null;
+var voiceInitialized = null;
 var isReady = false;
 
 function onDeviceReady() {
