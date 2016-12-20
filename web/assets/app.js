@@ -212,7 +212,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                 recognition.continuous = true;
                 for (var i = event.resultIndex; i < event.results.length; ++i) {
                     interim_transcript += event.results[i][0].transcript;
-                    alert(interim_transcript);
                     $scope.onListened(interim_transcript);
                 }
                 recognition.stop();
