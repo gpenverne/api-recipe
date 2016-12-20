@@ -3,6 +3,8 @@ voices:
     keywords:
         - abracadabra
         - hé gogol
+        - et Google
+
 server:
     address: localhost
     port: 80

@@ -42,10 +42,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.currentTag = currentTag;
     $scope.tags =  new Array;
     $scope.onListened = function(txt){
-
         $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
             if (r.data && r.data.recipe != null) {
-                window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
                 $scope.execRecipe(r.data.recipe, r.data.targetState);
             }
         });
@@ -194,12 +192,17 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         if (!isReady) {
             return $timeout(countUp, 500);
         } else {
-            if (!voiceManager.listening) {
-                voiceManager.listening = true;
+            voiceManager.listening = true;
+            try {
+                console.log('Reactivating voice');
                 window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
+            }
+            catch(e){
+
             }
         }
         $scope.$parent.getRecipes();
+        $timeout(countUp, 30000);
 
     }
     $timeout(countUp, 500);
@@ -225,7 +228,6 @@ var isReady = false;
 
 function onDeviceReady() {
     isReady = true;
-
     document.addEventListener("resume", onResume, false);
     onResume();
 }

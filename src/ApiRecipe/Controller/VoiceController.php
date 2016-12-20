@@ -30,11 +30,10 @@ class VoiceController extends Controller
                     if (false !== strpos($text, $keyword)) {
                         $activated = true;
                     }
-                    $clearedTexts[] = trim(str_replace($keyword, '', $text));
+                    $clearedTexts[] = trim(str_replace(trim($keyword), '', $text));
                 }
                 $texts = $clearedTexts;
             }
-
             if (false === $activated) {
                 return [
                     'recipe' => null,
@@ -52,10 +51,11 @@ class VoiceController extends Controller
                 if (false !== $state = $this->voiceMatch($text, $recipe->voices)) {
                     $recipe->url = sprintf('%s&state=%s', $recipe->url, $state);
                     $this->getProvider('logger')->info('Exec '.$recipe->title);
+                    $this->getRecipeManager($recipe->title)->exec($state);
 
                     return [
-                        'recipe' => $recipe,
-                        'targetState' => $state,
+                        'recipe' => null,
+                        'targetState' => null,
                     ];
                 }
             }
@@ -76,7 +76,6 @@ class VoiceController extends Controller
     protected function voiceMatch($text, $recipeVoice)
     {
         $text = trim(strtolower($text));
-
         $texts = [];
         $states = [
             StateManager::STATE_ON,
