@@ -28,8 +28,8 @@ class VoiceController extends Controller
                     $text = strtolower($text);
                     if (false !== strpos($text, $keyword)) {
                         $activated = true;
-                        $clearedTexts[] = trim(str_replace($keyword, '', $text));
                     }
+                    $clearedTexts[] = trim(str_replace($keyword, '', $text));
                 }
                 $texts = $clearedTexts;
             }
