@@ -152,11 +152,13 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         }
 
         var actions = new Array;
-        var url = hostApi+recipe.url;
+        var url = recipe.url;
+        if (url.replace('http://') == url) {
+            var url = hostApi+recipe.url;
+        }
         if (typeof forcedState != 'undefined' && forcedState) {
             url += '&state=' + forcedState;
         }
-
         $http.get(url).then(function(r){
             recipe.runing = false;
             $scope.getRecipes();

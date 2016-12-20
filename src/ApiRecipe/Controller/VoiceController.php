@@ -15,7 +15,7 @@ class VoiceController extends Controller
     public function deduceAction()
     {
         $this->setResponseFormat('json');
-        file_put_contents('/tmp/log', $this->request->get('text'));
+        $this->getProvider('logger')->info($this->request->get('text'));
         $texts = explode(',', $this->request->get('text'));
         $voicesConfig = $this->getVoicesConfig();
         $activated = false;
@@ -50,11 +50,12 @@ class VoiceController extends Controller
             foreach ($texts as $text) {
                 if (false !== $state = $this->voiceMatch($text, $recipe->voices)) {
                     $recipe->url = sprintf('%s&state=%s', $recipe->url, $state);
+                    $this->getProvider('logger')->info('Exec '.$recipe->title);
 
                     return [
-                    'recipe' => $recipe,
-                    'targetState' => $state,
-                ];
+                        'recipe' => $recipe,
+                        'targetState' => $state,
+                    ];
                 }
             }
         }

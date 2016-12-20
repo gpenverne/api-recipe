@@ -2,6 +2,7 @@
 
 namespace ApiRecipe\Controller;
 
+use ApiRecipe\Manager\ProviderManager;
 use ApiRecipe\Manager\RecipeManager;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -40,5 +41,18 @@ class Controller implements ControllerInterface
         $this->request->query->set('format', $responseFormat);
 
         return $this;
+    }
+
+    /**
+     * @param string $providerName
+     *
+     * @return ProviderManager
+     */
+    protected function getProvider($providerName)
+    {
+        $providerManager = new ProviderManager();
+        $providerManager->getProvider($providerName);
+
+        return $providerManager;
     }
 }
