@@ -11,7 +11,7 @@ class RecipesController extends Controller
     {
         $this->setResponseFormat('json');
 
-        return $this->getRecipeManager()->getAll();
+        return array_values($this->getRecipeManager()->getAll());
     }
 
     /**
