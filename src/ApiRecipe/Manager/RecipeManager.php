@@ -61,7 +61,7 @@ class RecipeManager implements ManagerInterface
                     return $recipeInfos;
                 }
 
-                $recipes[] = $recipeInfos;
+                $recipes[str_replace('.yml', '', $f)] = $recipeInfos;
             }
         }
 
