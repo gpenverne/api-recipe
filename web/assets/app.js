@@ -43,10 +43,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.tags =  new Array;
     $scope.onListened = function(txt){
         $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
-            if (r.data && r.data.recipe != null) {
-                $scope.execRecipe(r.data.recipe, r.data.targetState);
-            }
+            console.log('Found recipe and executed recipe.');
         });
+        document.location.reload();
     };
 
     try {
@@ -194,8 +193,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         } else {
             voiceManager.listening = true;
             try {
-                console.log('Reactivating voice');
-                window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
+                if (device.platform == 'Android') {
+                    window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
+                }
             }
             catch(e){
 

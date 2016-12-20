@@ -43,10 +43,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     $scope.tags =  new Array;
     $scope.onListened = function(txt){
         $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
-            if (r.data && r.data.recipe != null) {
-                $scope.execRecipe(r.data.recipe, r.data.targetState);
-            }
+            console.log('Found recipe and executed recipe.');
         });
+        document.location.reload();
     };
 
     try {
