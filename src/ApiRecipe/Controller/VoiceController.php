@@ -50,11 +50,9 @@ class VoiceController extends Controller
             foreach ($texts as $text) {
                 if (false !== $state = $this->voiceMatch($text, $recipe->voices)) {
                     $recipe->url = sprintf('%s&state=%s', $recipe->url, $state);
-                    $fullUrl = sprintf('http://%s%s', $_SERVER['SERVER_NAME'], $recipe->url);
-                    file_get_contents($fullUrl);
-                    $this->getProvider('logger')->info($fullUrl);
+                    $this->getProvider('logger')->info($recipe->recipeName);
 
-                    //$this->getRecipeManager($recipe->title)->exec($state, $this->getProvider('logger'));
+                    $this->getRecipeManager($recipe->recipeName)->exec($state, $this->getProvider('logger'));
 
                     return [
                         'recipe' => null,
