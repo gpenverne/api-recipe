@@ -70,11 +70,11 @@ class RoutingManager implements ManagerInterface
 
         switch ($request->getRequestFormat()) {
             case self::FORMAT_HTML:
-                header('Content-type: text/html');
+                header('Content-type: text/html; charset=utf-8');
                 echo $response;
             break;
             case self::FORMAT_JSON:
-                header('Content-type: application/json');
+                header('Content-type: application/json; charset=utf-8');
                 echo json_encode($response);
             break;
             default:
