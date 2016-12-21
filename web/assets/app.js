@@ -79,11 +79,11 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
                 if (trueText == '') {
-                    voiceManager.tell('Je vous écoute, chef!');
+                    voiceManager.say('Je vous écoute, chef!');
 
                } else {
-                   voiceManager.tell('Tout de suite, chef!');
-                   
+                   voiceManager.say('Tout de suite, chef!');
+
                }
                 $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
                 return ;
