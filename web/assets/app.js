@@ -77,8 +77,8 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var keyword = apiRecipeConfig.voices.keywords[i].toLowerCase();
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
-                $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
                 voiceManager.say('Je m\'en occupe.');
+                $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
                 return ;
             }
         }
