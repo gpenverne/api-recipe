@@ -78,7 +78,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
                 $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
-                setTimeout("voiceManager.say('Je m\'en occupe.');", 500);
+                voiceManager.say('Je m\'en occupe.');
                 return ;
             }
         }
