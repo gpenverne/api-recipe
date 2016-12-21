@@ -14,7 +14,19 @@ var voiceManager = {
     enabled: false,
     listening: false,
     listen: function(callback){},
-    say: function(text){}
+    say: function(text){
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.voice = voices[10]; // Note: some voices don't support altering params
+        msg.voiceURI = 'native';
+        msg.volume = 1; // 0 to 1
+        msg.rate = 1; // 0.1 to 10
+        msg.pitch = 2; //0 to 2
+        msg.text = text;
+        msg.lang = 'fr-FR';
+
+        speechSynthesis.speak(msg);
+    }
 };
 
 var app = angular.module('app', ['ngTouch', 'pr.longpress']).service('currentTag', function(){
@@ -67,25 +79,11 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
                 if (trueText == '') {
-                    TTS.speak({
-                       text: 'Je vous écoute, chef!',
-                       locale: 'fr-FR',
-                       rate: 1.2
-                   }, function () {
-                       // Do Something after success
-                   }, function (reason) {
-                       // Handle the error case
-                   });
+                    voiceManager.tell('Je vous écoute, chef!');
+
                } else {
-                   TTS.speak({
-                      text: 'Tout de suite, chef!',
-                      locale: 'fr-FR',
-                      rate: 1.2
-                  }, function () {
-                      // Do Something after success
-                  }, function (reason) {
-                      // Handle the error case
-                  });
+                   voiceManager.tell('Tout de suite, chef!');
+                   
                }
                 $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
                 return ;
