@@ -22,7 +22,7 @@ var voiceManager = {
         msg.pitch = 2; //0 to 2
         msg.text = text;
         msg.lang = 'fr-FR';
-        console.log('say text');
+        console.log('say text: '+text);
         speechSynthesis.speak(msg);
     }
 };
