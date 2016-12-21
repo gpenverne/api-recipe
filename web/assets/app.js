@@ -77,14 +77,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var keyword = apiRecipeConfig.voices.keywords[i].toLowerCase();
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
-                if (trueText == '') {
-                    voiceManager.say('Je vous écoute, chef!');
-
-               } else {
-                   voiceManager.say('Tout de suite, chef!');
-
-               }
+                voiceManager.say('Je vous écoute, chef!');
                 $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
+                setTimeout("voiceManager.say('Tout de suite, chef!');", 1000);
                 return ;
             }
         }
