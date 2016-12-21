@@ -74,6 +74,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             return ;
         }
         txt = txt.toLowerCase();
+        console.log(txt);
         for (var i=0; i < apiRecipeConfig.voices.keywords.length; i++) {
             var keyword = apiRecipeConfig.voices.keywords[i].toLowerCase();
             var trueText = txt.replace(keyword, '');
