@@ -55,8 +55,8 @@ class VoiceController extends Controller
                     $this->getRecipeManager($recipeName)->exec($state, $this->getProvider('logger'));
 
                     return [
-                        'recipe' => null,
-                        'targetState' => null,
+                        'recipe' => $recipe,
+                        'targetState' => $state,
                     ];
                 }
             }
