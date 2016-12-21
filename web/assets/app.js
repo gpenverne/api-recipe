@@ -1,4 +1,5 @@
 var apiRecipeConfig = {};
+var waitingForWords = false;
 
 var shortcutManager = {
     hadShortcut: false,
@@ -57,7 +58,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     };
 
     $scope.onListened = function(txt){
-        console.log('You said '+txt+'?');
         if (typeof apiRecipeConfig.voices.keywords == 'undefined') {
             return ;
         }
@@ -66,13 +66,31 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             var keyword = apiRecipeConfig.voices.keywords[i].toLowerCase();
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
-                console.log('Keyword detected: '+keyword);
-                console.log('Text detected: '+trueText);
+                if (trueText == '') {
+                    TTS.speak({
+                       text: 'Je vous écoute, chef!',
+                       locale: 'fr-FR',
+                       rate: 1.2
+                   }, function () {
+                       // Do Something after success
+                   }, function (reason) {
+                       // Handle the error case
+                   });
+               } else {
+                   TTS.speak({
+                      text: 'Tout de suite, chef!',
+                      locale: 'fr-FR',
+                      rate: 1.2
+                  }, function () {
+                      // Do Something after success
+                  }, function (reason) {
+                      // Handle the error case
+                  });
+               }
                 $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
                 return ;
             }
         }
-        //window.continuoussr.startRecognize($scope.onListened, function(err){ alert(err); }, 5, 'fr-FR');
     };
 
     try {
@@ -228,7 +246,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             if (device.platform == 'Android') {
                 window.plugins.speechrecognizer.start(function(result){
                     try {
-                        $scope.onListened(result.results[0][0].transcript);
+                        if(result.results.length > 0) {
+                            $scope.onListened(result.results[0][0].transcript);
+                        }
                     } catch(e) {
                         window.plugins.speechrecognizer.stop(function(){}, function(){});
                         resetAudio();
@@ -236,6 +256,7 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                 }, function(e){
                     resetAudio();
                 }, 2, 'fr-FR');
+
                 return ;
             }
             recognition = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || speechRecognition;

@@ -1,7 +1,11 @@
 app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+    $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
+    hostApi = $scope.hostName;
+    
     if (shortcutManager.hadShortcut) {
         return;
     }
+
     $scope.hosts = window.localStorage.getItem("hosts");
     if ($scope.hosts) {
         $scope.hosts = JSON.parse($scope.hosts);
@@ -12,11 +16,11 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
 
     $scope.currentTag = currentTag;
 
-    $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
+
     if (!$scope.hostName) {
         $scope.$parent.parametersVisible = 1;
     }
-    hostApi = $scope.hostName;
+
 
     if (!$scope.hostName) {
         $scope.hostName = 'http://'+window.location.hostname;
