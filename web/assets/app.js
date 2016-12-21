@@ -46,8 +46,13 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
 
     $scope.loadConfig = function() {
+        if (!isReady) {
+            return $timeout($scope.loadConfig, 500);
+        }
         $http.get(hostApi+'/config').then(function(r){
             apiRecipeConfig = r.data;
+        }, function(){
+            return $timeout($scope.loadConfig, 250);
         });
     };
 
