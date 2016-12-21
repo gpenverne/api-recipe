@@ -5,9 +5,17 @@ namespace ApiRecipe\Controller;
 use ApiRecipe\Manager\ProviderManager;
 use ApiRecipe\Manager\RecipeManager;
 use Symfony\Component\HttpFoundation\Request;
+use ApiRecipe\Manager\YmlParserTrait;
 
 class Controller implements ControllerInterface
 {
+    use YmlParserTrait;
+
+    /**
+     * @var array
+     */
+    protected $config;
+
     /**
      * @var Request
      */
@@ -53,5 +61,27 @@ class Controller implements ControllerInterface
         $providerManager = new ProviderManager();
 
         return $providerManager->getProvider($providerName);
+    }
+
+    /**
+     * @param string $category
+     *
+     * @return array
+     */
+    protected function getConfig($category = null)
+    {
+        if (null === $this->config) {
+            $file = sprintf('%s/../../../app/config/config.yml', __DIR__);
+            $this->config = $this->parseYmlFile($file);
+        }
+        if (null !== $category) {
+            if (!isset($this->config[$category])) {
+                return [];
+            }
+
+            return $this->config[$category];
+        }
+
+        return $this->config;
     }
 }

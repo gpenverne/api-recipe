@@ -196,27 +196,42 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
         if (!isReady) {
             return $timeout(resetAudio, 500);
         }
-            voiceManager.listening = true;
-                if (device.platform == 'Android' || device.platform == 'android') {
-                    recognition = window.speechRecognition || window.webkitSpeechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition;
-                    alert('initiated');
-                    recognition.lang = "fr-FR";
-                    recognition.onend = function(){
-                        recognition.start();
-                    }
-                    recognition.onresult = function(event) {
-                        var interim_transcript = '';
-                        recognition.continuous = true;
-                        for (var i = event.resultIndex; i < event.results.length; ++i) {
-                            interim_transcript += event.results[i][0].transcript;
-                            alert(interim_transcript);
-                            $scope.onListened(interim_transcript);
-                        }
-                        recognition.stop();
-                    };
 
-                    recognition.start();
+            voiceManager.listening = true;
+            if (device.platform == 'Android') {
+                window.plugins.speechrecognizer.start(function(result){
+                    try {
+                        $scope.onListened(result.results[0][0].transcript);
+                    } catch(e) {
+                        window.plugins.speechrecognizer.stop(function(){}, function(){});
+                        resetAudio();
+                    }
+                }, function(e){
+                    resetAudio();
+                }, 2, 'fr-FR');
+                return ;
             }
+            recognition = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || speechRecognition;
+            if (!recognition) {
+                alert('unable to use HTML5 voice recognition');
+                return false;
+            }
+            recognition = new recognition();
+            recognition.lang = "fr-FR";
+            recognition.onend = function(){
+                recognition.start();
+            }
+            recognition.onresult = function(event) {
+                var interim_transcript = '';
+                recognition.continuous = true;
+                for (var i = event.resultIndex; i < event.results.length; ++i) {
+                    interim_transcript += event.results[i][0].transcript;
+                    $scope.onListened(interim_transcript);
+                }
+                recognition.stop();
+            };
+
+            recognition.start();
     }
     $timeout(countUp, 500);
     $timeout(resetAudio, 500);
@@ -238,7 +253,7 @@ function handleAndroidAppLaunch(appName)
 
 document.addEventListener("deviceready", onDeviceReady, false);
 var voiceInitialized = null;
-var isReady = false;
+var isReady = device.platform == 'Android' ? false : true;
 
 function onDeviceReady() {
     isReady = true;

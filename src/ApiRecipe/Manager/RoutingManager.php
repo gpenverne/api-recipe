@@ -12,6 +12,8 @@ class RoutingManager implements ManagerInterface
 
     const FORMAT_HTML = 'html';
 
+    const FORMAT_JS = 'javascript';
+
     /**
      * @var Request
      */
@@ -76,6 +78,10 @@ class RoutingManager implements ManagerInterface
             case self::FORMAT_JSON:
                 header('Content-type: application/json; charset=utf-8');
                 echo json_encode($response);
+            break;
+            case self::FORMAT_JAVASCRIPT:
+                header('Content-type: text/javascript; charset=utf-8');
+                echo $response;
             break;
             default:
                 die('This format is not supported. Supported formats are json, html.');

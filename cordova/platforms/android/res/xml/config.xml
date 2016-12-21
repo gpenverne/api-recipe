@@ -17,8 +17,8 @@
     <feature name="ShortcutPlugin">
         <param name="android-package" value="com.plugins.shortcut.ShortcutPlugin" />
     </feature>
-    <feature name="ContinuousSpeechRecognizer">
-        <param name="android-package" value="com.latin.continuoussr.ContinuousSpeechRecognizer" />
+    <feature name="XSpeechRecognizer">
+        <param name="android-package" value="com.phonegap.plugins.speech.XSpeechRecognizer" />
     </feature>
     <feature name="TTS">
         <param name="android-package" value="com.wordsbaking.cordova.tts.TTS" />

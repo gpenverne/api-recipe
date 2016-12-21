@@ -75,5 +75,12 @@
             "url": "https://github.com/gpenverne/ContinuousSpeechRecognizer",
             "subdir": "."
         }
+    },
+    "com.phonegap.plugins.speech": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jcsmesquita/cordova-speechrecognition",
+            "subdir": "."
+        }
     }
 }

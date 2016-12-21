@@ -29,7 +29,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"ContinuousSpeechRecognizer\"><param name=\"android-package\" value=\"com.latin.continuoussr.ContinuousSpeechRecognizer\" /></feature>",
+                            "xml": "<feature name=\"XSpeechRecognizer\"><param name=\"android-package\" value=\"com.phonegap.plugins.speech.XSpeechRecognizer\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -44,6 +44,16 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\" />",
+                            "count": 1
+                        }
+                    ],
+                    "/manifest": [
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
                             "count": 1
                         }
                     ]
@@ -80,7 +90,7 @@
         "cordova-plugin-tts": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         },
-        "com.latin.continuoussr": {
+        "com.phonegap.plugins.speech": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },

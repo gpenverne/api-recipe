@@ -50,10 +50,10 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.latin.continuoussr/www/continuoussr.js",
-        "id": "com.latin.continuoussr.continuoussr",
+        "file": "plugins/com.phonegap.plugins.speech/www/XSpeechRecognizer.js",
+        "id": "com.phonegap.plugins.speech.XSpeechRecognizer",
         "clobbers": [
-            "continuoussr"
+            "plugins.speechrecognizer"
         ]
     }
 ];
@@ -66,7 +66,7 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.0",
     "com.plugins.shortcut": "0.0.2",
     "cordova-plugin-tts": "0.2.3",
-    "com.latin.continuoussr": "1.0.0"
+    "com.phonegap.plugins.speech": "1.0.0"
 }
 // BOTTOM OF METADATA
 });

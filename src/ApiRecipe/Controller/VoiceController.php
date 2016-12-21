@@ -18,9 +18,9 @@ class VoiceController extends Controller
         $this->setResponseFormat('json');
         $this->getProvider('logger')->info($rawText);
         $texts = explode(',', $rawText);
-        $voicesConfig = $this->getVoicesConfig();
+        $voicesConfig = $this->getConfig('voices');
         $activated = false;
-
+        /*
         if (isset($voicesConfig['keywords'])) {
             $clearedTexts = [];
             foreach ($voicesConfig['keywords'] as $keyword) {
@@ -41,7 +41,7 @@ class VoiceController extends Controller
                 ];
             }
         }
-
+        */
         $recipes = $this->getRecipeManager()->getAll();
         foreach ($recipes as $recipeName => $recipe) {
             if (null === $recipe->voices) {
@@ -97,16 +97,5 @@ class VoiceController extends Controller
         }
 
         return false;
-    }
-
-    protected function getVoicesConfig()
-    {
-        $file = sprintf('%s/../../../app/config/config.yml', __DIR__);
-        $config = $this->parseYmlFile($file);
-        if (!isset($config['voices'])) {
-            return [];
-        }
-
-        return $config['voices'];
     }
 }
