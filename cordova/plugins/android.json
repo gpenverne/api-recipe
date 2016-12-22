@@ -29,7 +29,7 @@
                             "count": 1
                         },
                         {
-                            "xml": "<feature name=\"XSpeechRecognizer\"><param name=\"android-package\" value=\"com.phonegap.plugins.speech.XSpeechRecognizer\" /></feature>",
+                            "xml": "<feature name=\"SpeechRecognition\"><param name=\"android-package\" value=\"org.apache.cordova.speech.SpeechRecognition\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -45,18 +45,13 @@
                         {
                             "xml": "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\" />",
                             "count": 1
-                        }
-                    ],
-                    "/manifest": [
+                        },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
                             "count": 1
-                        },
-                        {
-                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
-                            "count": 1
                         }
-                    ]
+                    ],
+                    "/manifest": []
                 }
             },
             "config.xml": {
@@ -90,9 +85,13 @@
         "cordova-plugin-tts": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         },
-        "com.phonegap.plugins.speech": {
+        "org.apache.cordova.speech.speechrecognition": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        }
+    }
 }

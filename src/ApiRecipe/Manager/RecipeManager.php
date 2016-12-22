@@ -118,6 +118,34 @@ class RecipeManager implements ManagerInterface
     }
 
     /**
+     * @param string $state
+     *
+     * @return string|null
+     */
+    public function getVoiceMessage($state = null)
+    {
+        if (null === $state) {
+            $state = $this->getStateManager()->getRecipeState($this->recipeName);
+        }
+
+        if (isset($this->infos['voices'][$state]) && null != $this->infos['voices'][$state]) {
+            if (!isset($this->infos['voices'][$state]['message'])) {
+                return null;
+            }
+            $messages = $this->infos['voices'][$state]['message'];
+            if (!is_array($messages)) {
+                $messages = [$messages];
+            }
+
+            shuffle($messages);
+
+            return isset($messages[0]) ? $messages[0] : null;
+        }
+
+        return null;
+    }
+
+    /**
      * @param string $provider
      * @param string $method
      * @param string $argument

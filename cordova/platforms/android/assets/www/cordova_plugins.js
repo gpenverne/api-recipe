@@ -50,10 +50,59 @@ module.exports = [
         ]
     },
     {
-        "file": "plugins/com.phonegap.plugins.speech/www/XSpeechRecognizer.js",
-        "id": "com.phonegap.plugins.speech.XSpeechRecognizer",
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognition.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognition",
         "clobbers": [
-            "plugins.speechrecognizer"
+            "SpeechRecognition"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionError.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionError",
+        "clobbers": [
+            "SpeechRecognitionError"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionAlternative.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionAlternative",
+        "clobbers": [
+            "SpeechRecognitionAlternative"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionResult.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionResult",
+        "clobbers": [
+            "SpeechRecognitionResult"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionResultList.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionResultList",
+        "clobbers": [
+            "SpeechRecognitionResultList"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechRecognitionEvent.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechRecognitionEvent",
+        "clobbers": [
+            "SpeechRecognitionEvent"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechGrammar.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechGrammar",
+        "clobbers": [
+            "SpeechGrammar"
+        ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.speech.speechrecognition/www/SpeechGrammarList.js",
+        "id": "org.apache.cordova.speech.speechrecognition.SpeechGrammarList",
+        "clobbers": [
+            "SpeechGrammarList"
         ]
     }
 ];
@@ -66,7 +115,8 @@ module.exports.metadata =
     "cordova-plugin-dialogs": "1.3.0",
     "com.plugins.shortcut": "0.0.2",
     "cordova-plugin-tts": "0.2.3",
-    "com.phonegap.plugins.speech": "1.0.0"
+    "org.apache.cordova.speech.speechrecognition": "0.1.2",
+    "cordova-plugin-compat": "1.1.0"
 }
 // BOTTOM OF METADATA
 });

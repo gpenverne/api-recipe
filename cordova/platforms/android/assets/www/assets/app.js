@@ -1,4 +1,5 @@
-var apiRecipeConfig = {};
+var apiRecipeConfig = null;
+var waitingForWords = false;
 
 var shortcutManager = {
     hadShortcut: false,
@@ -10,10 +11,19 @@ var shortcutManager = {
     }
 };
 var voiceManager = {
-    enabled: false,
+    listener: null,
     listening: false,
-    listen: function(callback){},
-    say: function(text){}
+    say: function(text){
+        var msg = new SpeechSynthesisUtterance();
+        var voices = window.speechSynthesis.getVoices();
+        msg.volume = 1; // 0 to 1
+        msg.rate = 1; // 0.1 to 10
+        msg.pitch = 2; //0 to 2
+        msg.text = text;
+        msg.lang = 'fr-FR';
+        console.log('say text: '+text);
+        speechSynthesis.speak(msg);
+    }
 };
 
 var app = angular.module('app', ['ngTouch', 'pr.longpress']).service('currentTag', function(){
@@ -57,18 +67,20 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     };
 
     $scope.onListened = function(txt){
-        console.log('You said '+txt+'?');
         if (typeof apiRecipeConfig.voices.keywords == 'undefined') {
             return ;
         }
         txt = txt.toLowerCase();
+        console.log(txt);
         for (var i=0; i < apiRecipeConfig.voices.keywords.length; i++) {
             var keyword = apiRecipeConfig.voices.keywords[i].toLowerCase();
             var trueText = txt.replace(keyword, '');
             if (trueText != txt) {
-                console.log('Keyword detected: '+keyword);
-                console.log('Text detected: '+trueText);
-                $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){});
+                $http.get(hostApi+'/voice/deduce?text='+encodeURI(trueText)).then(function(r){
+                    if (r.data && r.data.recipe && r.data.voiceMessage) {
+                        voiceManager.say(r.data.voiceMessage);
+                    }
+                });
                 return ;
             }
         }
@@ -213,54 +225,49 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
     }
 
     $scope.$parent.getRecipes();
+
     var countUp = function() {
         $scope.$parent.getRecipes();
         $timeout(countUp, 60000);
 
     }
+
     var resetAudio = function() {
-        if (!isReady) {
+        if (!isReady || !apiRecipeConfig) {
             return $timeout(resetAudio, 500);
         }
 
-            voiceManager.listening = true;
-            if (device.platform == 'Android') {
-                window.plugins.speechrecognizer.start(function(result){
-                    try {
-                        if(result.results.length > 0) {
-                            $scope.onListened(result.results[0][0].transcript);
-                        }
-                    } catch(e) {
-                        window.plugins.speechrecognizer.stop(function(){}, function(){});
-                        resetAudio();
-                    }
-                }, function(e){
-                    resetAudio();
-                }, 2, 'fr-FR');
-
-                return ;
-            }
-            recognition = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || speechRecognition;
-            if (!recognition) {
-                alert('unable to use HTML5 voice recognition');
+        if (voiceManager.listening) {
+            return false;
+        }
+        try {
+            recognitionClass = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || SpeechRecognition;
+            if (!recognitionClass) {
+                alert('unable to use voice recognition');
                 return false;
             }
-            recognition = new recognition();
-            recognition.lang = "fr-FR";
-            recognition.onend = function(){
-                recognition.start();
-            }
-            recognition.onresult = function(event) {
+            voiceManager.listener = new recognitionClass();
+            voiceManager.listener.lang = apiRecipeConfig.voices.locale;
+            voiceManager.listener.continuous = true;
+            voiceManager.listener.interimResults = true;
+            voiceManager.listener.onresult = function(event) {
                 var interim_transcript = '';
-                recognition.continuous = true;
                 for (var i = event.resultIndex; i < event.results.length; ++i) {
-                    interim_transcript += event.results[i][0].transcript;
-                    $scope.onListened(interim_transcript);
+                    var result = event.results[i];
+                    if (result.isFinal) {
+                        $scope.onListened(result[0].transcript);
+                    }
                 }
-                recognition.stop();
             };
 
-            recognition.start();
+            voiceManager.listener.start();
+            voiceManager.listening = true;
+
+        } catch (e) {
+            voiceManager.listening = false;
+            voiceManager.listener = null;
+        }
+
     }
     $timeout(countUp, 500);
     $timeout(resetAudio, 500);
@@ -290,7 +297,19 @@ function onDeviceReady() {
     document.addEventListener("resume", onResume, false);
     onResume();
 }
+function onPause() {
+    voiceManager.listening = false;
+    if (!voiceListener) {
+        return;
+    }
+    voiceManager.listener.stop();
+}
 
 function onResume() {
+    try {
+        voiceManager.listener.start();
+    }catch(e){
+
+    }
     shortcutManager.execExtra();
 }

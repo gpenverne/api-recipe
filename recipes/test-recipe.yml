@@ -17,18 +17,15 @@ voices:
         triggers:
             - 'test on'
             - 'test roh'
-        onSuccess: 'Test on ok'
-        onError: 'Test on failed'
+        message: 'Test on ok'
     off:
         triggers:
             - 'test off'
-        onSuccess: 'Test on ok'
-        onError: 'Test on failed'
+        message: 'Test off ok'
     each_time:
         triggers:
             - 'test each'
-        onSuccess: 'Test on ok'
-        onError: 'Test on failed'
+        message: 'Test each ok'
 
 # all actions of the recipe
 actions:

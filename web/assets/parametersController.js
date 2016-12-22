@@ -1,7 +1,7 @@
-app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag) {
+app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag, $window) {
     $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
     hostApi = $scope.hostName;
-    
+
     if (shortcutManager.hadShortcut) {
         return;
     }
@@ -25,11 +25,17 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
     if (!$scope.hostName) {
         $scope.hostName = 'http://'+window.location.hostname;
     }
-    $scope.voiceManagerEnabled = voiceManager.enabled;
 
-    $scope.toggleVoiceManager = function(voiceManagerEnabled){
-        $scope.voiceManagerEnabled = voiceManagerEnabled;
-        window.localStorage.setItem("voiceManagerEnabled", voiceManagerEnabled);
+    $scope.voiceManager = $window.voiceManager;
+
+    $scope.toggleVoiceManager = function(){
+        if (voiceManager.listening) {
+            voiceManager.listener.stop();
+            voiceManager.listening = false;
+        } else {
+            voiceManager.listener.start();
+            voiceManager.listening = true;
+        }
     }
 
     $scope.setHost = function(host, name) {

@@ -1,14 +1,5 @@
 voiceManager = {
-    enabled: true,
     listening: false,
-    listen: function(callback){
-        if (this.listening) {
-            return;
-        }
-        this.listening = true;
-        return ;
-        window.continuoussr.startRecognize(callback, function(err){ alert(err); }, 5, 'fr-FR');
-    },
     say: function(text, locale){
         try {
             TTS.speak({
