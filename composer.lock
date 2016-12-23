@@ -4,9 +4,42 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "70d8a502d2dc1583ab8c2913edeb3952",
-    "content-hash": "60b85a97293e7613895f3889775dabbb",
+    "hash": "1e291014d8725f70f67d717f69c69dfc",
+    "content-hash": "96ba5253bc2911c9ba71f2a102ad6de7",
     "packages": [
+        {
+            "name": "benedya/api-ai-php-sdk",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/benedya/api-ai-php-sdk.git",
+                "reference": "2c81b0f4d8341c3ee5d8f2b0fca2117fc47c70b2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/benedya/api-ai-php-sdk/zipball/2c81b0f4d8341c3ee5d8f2b0fca2117fc47c70b2",
+                "reference": "2c81b0f4d8341c3ee5d8f2b0fca2117fc47c70b2",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ApiAi": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Bohdan Turyk",
+                    "email": "benedya@gmail.com"
+                }
+            ],
+            "description": "api.ai php-sdk",
+            "time": "2016-09-20 05:45:52"
+        },
         {
             "name": "doctrine/inflector",
             "version": "v1.1.0",
@@ -1880,7 +1913,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "benedya/api-ai-php-sdk": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": [],

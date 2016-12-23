@@ -4,7 +4,7 @@ namespace ApiRecipe\Provider;
 
 use ApiRecipe\Manager\RequestManager;
 
-class FreeboxProvider implements ProviderInterface
+class FreeboxProvider implements ProviderInterface, BotCompliantInterface
 {
     use HydratorTrait;
 
@@ -35,6 +35,12 @@ class FreeboxProvider implements ProviderInterface
         return $this->request($url);
     }
 
+    public function handleParameters($parameters)
+    {
+        if (isset($parameters['number'])) {
+            return $this->key($parameters['number']);
+        }
+    }
     /**
      * @param string $url
      *

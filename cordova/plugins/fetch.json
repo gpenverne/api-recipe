@@ -88,5 +88,11 @@
             "type": "registry",
             "id": "cordova-plugin-speechrecognition"
         }
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
+        }
     }
 }

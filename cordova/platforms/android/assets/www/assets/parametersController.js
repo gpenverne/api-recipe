@@ -1,65 +1,54 @@
-app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag, $window) {
-    $scope.hostName = $scope.$parent.hostName = window.localStorage.getItem("host");
-    hostApi = $scope.hostName;
-
-    if (shortcutManager.hadShortcut) {
-        return;
-    }
-
-    $scope.hosts = window.localStorage.getItem("hosts");
-    if ($scope.hosts) {
-        $scope.hosts = JSON.parse($scope.hosts);
-    } else {
-        $scope.hosts = {};
-    }
+app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, currentTag, $voice) {
+    $scope.hostName = hostApi = $scope.$parent.hostName = window.localStorage.getItem("host");
     $scope.changeHost = null;
-
     $scope.currentTag = currentTag;
-
 
     if (!$scope.hostName) {
         $scope.$parent.parametersVisible = 1;
+        if (typeof window.location.hostname != 'undefined' && window.location.hostname) {
+            $scope.hostName = 'http://'+window.location.hostname;
+        }
     }
 
-
-    if (!$scope.hostName) {
-        $scope.hostName = 'http://'+window.location.hostname;
-    }
-
-    $scope.voiceManager = $window.voiceManager;
+    $scope.$voice = $voice;
 
     $scope.toggleVoiceManager = function(){
-        if (voiceManager.listening) {
-            voiceManager.listener.stop();
-            voiceManager.listening = false;
+        var manager = $voice.getManager();
+
+        if (manager.listening) {
+            manager.listener.stop();
+            manager.listening = false;
         } else {
-            voiceManager.listener.start();
-            voiceManager.listening = true;
+            manager.listener.start();
+            manager.listening = true;
         }
     }
 
-    $scope.setHost = function(host, name) {
-
-        if (typeof name == 'undefined') {
-            name = host;
-        }
-
-        if (typeof host == 'object') {
-            name = host.name;
-            host = host.host;
-        }
-
+    $scope.setHost = function(host) {
         host = 'http://'+host.replace('http://', '');
         window.localStorage.setItem("host", host);
         $scope.hostName = host;
         hostApi = $scope.hostName;
-
-        $scope.hosts[host] = {'name': name, 'host': host};
-        window.localStorage.setItem("hosts", JSON.stringify($scope.hosts));
-
         $scope.close();
-        document.location.reload();
+        $scope.$parent.getRecipes();
+    };
 
+    $scope.$parent.loadConfig = function() {
+        if (!isReady) {
+            return $timeout($scope.loadConfig, 500);
+        }
+        apiRecipeConfigLoaded = true;
+
+        $http.get(hostApi+'/config').then(function(r){
+            apiRecipeConfig = r.data;
+            window.localStorage.setItem("config", JSON.stringify(r.data));
+            $voice.setup(apiRecipeConfig);
+        }, function(){
+            apiRecipeConfig = JSON.parse(window.localStorage.getItem("config"));
+            if (null != apiRecipeConfig) {
+                $voice.setup(apiRecipeConfig);
+            }
+        });
     };
 
 
@@ -72,5 +61,4 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         $scope.$parent.currentTag = tag;
         $scope.$parent.loadRecipes();
     };
-
 });

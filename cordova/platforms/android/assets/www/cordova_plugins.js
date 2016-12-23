@@ -104,6 +104,13 @@ module.exports = [
         "clobbers": [
             "SpeechGrammarList"
         ]
+    },
+    {
+        "file": "plugins/cordova-plugin-speechrecognition/www/speechRecognition.js",
+        "id": "cordova-plugin-speechrecognition.SpeechRecognition",
+        "merges": [
+            "window.plugins.speechRecognition"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -116,6 +123,8 @@ module.exports.metadata =
     "com.plugins.shortcut": "0.0.2",
     "cordova-plugin-tts": "0.2.3",
     "org.apache.cordova.speech.speechrecognition": "0.1.2",
+    "cordova-plugin-speechrecognition": "1.1.1",
+    "cordova-plugin-whitelist": "1.3.1",
     "cordova-plugin-compat": "1.1.0"
 }
 // BOTTOM OF METADATA

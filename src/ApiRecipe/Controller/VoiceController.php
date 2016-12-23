@@ -4,10 +4,31 @@ namespace ApiRecipe\Controller;
 
 use ApiRecipe\Manager\StateManager;
 use ApiRecipe\Manager\YmlParserTrait;
+use ApiAi\Client;
+use Symfony\Component\HttpFoundation\Request;
 
 class VoiceController extends Controller
 {
     use YmlParserTrait;
+
+    /**
+     * @var Client
+     */
+    protected $bot;
+
+    /**
+     * @return Client
+     */
+    protected function getBot()
+    {
+        $config = $this->loadConfig('bot');
+
+        if (null === $this->bot) {
+            $this->bot = new Client($config['bot']['access_token']);
+        }
+
+        return $this->bot;
+    }
 
     /**
      * @return array
