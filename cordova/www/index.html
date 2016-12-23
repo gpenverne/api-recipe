@@ -44,7 +44,7 @@
             </ul>
         </div>
         <div id="voiceManagerStatus" ng-click="toggleVoiceManager()" ng-if="$voice.isEnabled()">
-            <div ng-if="$voice && $voice.isListening()">
+            <div ng-if="$voice && $voice.listening">
                 <div class="google-microphone">
                     <div class="shadow listening">
                         <div class="gn">
@@ -55,7 +55,7 @@
                  <span>Listening ...<span>
                  <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
             </div>
-            <div ng-if="!$voice || !$voice.isListening()">
+            <div ng-if="!$voice || !$voice.listening">
                 <div class="google-microphone">
                     <div class="shadow ">
                         <div class="gn">

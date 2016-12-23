@@ -3,6 +3,7 @@ app.service('$voice', function($window, $http){
     var self = this;
 
     var methods = {
+        listening: false,
         getManager: function(){
             return voiceManager;
         },
@@ -21,7 +22,7 @@ app.service('$voice', function($window, $http){
                 return false;
             }
 
-            if (manager.listening || manager.setted) {
+            if (manager.listening || manager.setted || self.listening) {
                 self.disabled = false;
                 return true;
             }
@@ -43,11 +44,14 @@ app.service('$voice', function($window, $http){
 
                 manager.listener.start();
                 manager.listening = true;
+                self.listening = true;
                 return true;
             } catch (e) {
                 manager.listening = false;
+                self.listening = false;
                 manager.listener = null;
                 self.disabled = true;
+                console.log(e);
                 return false;
             }
         },
