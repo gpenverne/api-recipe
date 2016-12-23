@@ -36,9 +36,9 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
             }
             hostApi = 'http://'+window.location.host    ;
         }
-        $scope.loadConfig();
         var url = hostApi+'/recipes?format=json&origin='+device.platform;
         $http.get(url).then(function(r){
+            $scope.$parent.online = true;
             var newTags = ['all'];
             var recipes = new Array;
             for (var i=0; i < r.data.length; i++) {
@@ -94,12 +94,14 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
             $timeout(countUp, 60000);
         }, function(errors, status){
-            alert('Failed to retrieve recipes');
+            console.log('Failed to retrieve recipes');
+            $scope.$parent.online = false;
             try {
                 $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));
             } catch(e){
                 $scope.recipes = new Array;
             }
+            $timeout(countUp, 60000);
         });
 
 
@@ -156,7 +158,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
     var countUp = function() {
         $scope.$parent.getRecipes();
-        $timeout(countUp, 60000);
     }
 
 
@@ -188,17 +189,15 @@ function onDeviceReady() {
 }
 function onPause() {
     voiceManager.listening = false;
-    if (!voiceListener) {
-        return;
+    if (voiceManager.listener) {
+        voiceManager.listener.stop();
     }
-    voiceManager.listener.stop();
 }
 
 function onResume() {
-    try {
+    if (voiceManager.listener) {
         voiceManager.listener.start();
-    }catch(e){
-
+    } if (typeof shortcutManager != 'undefined') {
+        shortcutManager.execExtra();
     }
-    shortcutManager.execExtra();
 }

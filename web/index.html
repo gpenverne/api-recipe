@@ -47,7 +47,7 @@
                 <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i> {{ tag }}</li>
             </ul>
         </div>
-                <div id="voiceManagerStatus" ng-click="toggleVoiceManager()">
+                <div id="voiceManagerStatus" ng-click="toggleVoiceManager()"  ng-if="$voice.isEnabled()">
                     <div ng-if="voiceManager && voiceManager.listening">
                         <div class="google-microphone">
                             <div class="shadow listening">
@@ -66,6 +66,7 @@
                         </div>
                         <span>Not listening...</span>
                     </div>
+                    <div id="error-connexion" ng-if="!$parent.online">Unable to join host.</div>
                 </div>
         <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     </div>

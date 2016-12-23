@@ -16,10 +16,14 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         var manager = $voice.getManager();
 
         if (manager.listening) {
-            manager.listener.stop();
+            if (manager.listener) {
+                manager.listener.stop();
+            }
             manager.listening = false;
         } else {
-            manager.listener.start();
+            if (manager.listener) {
+                manager.listener.start();
+            }
             manager.listening = true;
         }
     }
@@ -33,20 +37,25 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         $scope.$parent.getRecipes();
     };
 
-    $scope.$parent.loadConfig = function() {
+    $scope.loadConfig = function() {
         if (!isReady) {
             return $timeout($scope.loadConfig, 500);
         }
         apiRecipeConfigLoaded = true;
-
+        $voice.disabled = true;
         $http.get(hostApi+'/config').then(function(r){
             apiRecipeConfig = r.data;
+            $scope.$parent.online = true;
             window.localStorage.setItem("config", JSON.stringify(r.data));
             $voice.setup(apiRecipeConfig);
+
         }, function(){
+            $scope.$parent.online = false;
             apiRecipeConfig = JSON.parse(window.localStorage.getItem("config"));
             if (null != apiRecipeConfig) {
                 $voice.setup(apiRecipeConfig);
+            } else {
+                console.log('Unable to setup voice manager from empty params');
             }
         });
     };
@@ -61,4 +70,6 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         $scope.$parent.currentTag = tag;
         $scope.$parent.loadRecipes();
     };
+
+    $scope.loadConfig();
 });

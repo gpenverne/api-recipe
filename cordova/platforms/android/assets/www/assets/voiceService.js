@@ -6,21 +6,31 @@ app.service('$voice', function($window, $http){
         getManager: function(){
             return voiceManager;
         },
+        isEnabled: function(){
+            return self.getManager().disabled == false;
+        },
         setup: function(recipesConfig){
+            console.log('Trying to setup voice Manager with settings ' + JSON.stringify(recipesConfig));
+
             var manager = self.getManager();
             if (typeof recipesConfig.voices != 'undefined' && recipesConfig.voices){
                 config = recipesConfig.voices;
             } else {
+                console.log('Config not found');
+                self.disabled = true;
                 return false;
             }
 
             if (manager.listening || manager.setted) {
+                self.disabled = false;
                 return true;
             }
             manager.setted = true;
+            self.disabled = false;
             try {
                 recognitionClass = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || window.androidSpeechRecognition;
                 if (!recognitionClass) {
+                    self.disabled = true;
                     alert('unable to use voice recognition');
                     return false;
                 }
@@ -37,6 +47,7 @@ app.service('$voice', function($window, $http){
             } catch (e) {
                 manager.listening = false;
                 manager.listener = null;
+                self.disabled = true;
                 return false;
             }
         },
@@ -73,14 +84,4 @@ app.service('$voice', function($window, $http){
             return true;
         }
     };
-});
-
-app.controller('voiceCtrl', function ($scope, $http, $timeout, $window) {
-    $scope.$parent.resetAudio = function() {
-        $scope.$parent.voiceManager = $window.voiceManager;
-
-
-
-
-    }
 });

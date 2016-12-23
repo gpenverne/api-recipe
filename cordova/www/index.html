@@ -43,7 +43,7 @@
                 <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i> {{ tag }}</li>
             </ul>
         </div>
-        <div id="voiceManagerStatus" ng-click="toggleVoiceManager()">
+        <div id="voiceManagerStatus" ng-click="toggleVoiceManager()" ng-if="$voice.isEnabled()">
             <div ng-if="voiceManager && voiceManager.listening">
                 <div class="google-microphone">
                     <div class="shadow listening">
@@ -65,17 +65,18 @@
                 </div>
                 <span>Not listening</span>
             </div>
+            <div id="error-connexion" ng-if="!$parent.online">Unable to join host.</div>
         </div>
         <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     </div>
     <i id="parametersBtn" class="fa fa-arrow-right pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-controller="parametersCtrl" ng-click="$parent.parametersVisible = 1"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     <script type="text/javascript" src="cordova.js"></script>
-    <script src='assets/vars.js'></script>
     <script src='assets/vendor/angular/angular.min.js'></script>
     <script src='assets/vendor/angular-touch/angular-touch.min.js'></script>
     <script src='assets/vendor/angular-long-press/dist/angular-long-press.min.js'></script>
     <script src='assets/vars.js'></script>
-    <script type="text/javascript" src="android-js/voiceManager.js"></script>
+    <script src='android-js/shortcutManager.js'></script>
+    <script src="android-js/voiceManager.js"></script>
     <script src='assets/voiceService.js'></script>
     <script src='assets/vendor/jquery/dist/jquery.min.js'></script>
     <script src='assets/vendor/bootstrap/dist/js/bootstrap.min.js'></script>

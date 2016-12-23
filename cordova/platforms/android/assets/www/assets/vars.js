@@ -9,6 +9,9 @@ var shortcutManager = {
     },
     hasShortcutCalled: function() {
         return false;
+    },
+    execExtra: function() {
+        return false;
     }
 };
 
@@ -16,6 +19,7 @@ var voiceManager = {
     listener: null,
     listening: false,
     setted: false,
+    disabled: false,
     say: function(text){
         var msg = new SpeechSynthesisUtterance();
         msg.volume = 1; // 0 to 1
