@@ -46,14 +46,12 @@ app.service('$voice', function($window, $http){
 
                 manager.listener.start();
                 manager.listening = true;
-                $scope.$apply();
                 return true;
             } catch (e) {
                 manager.listening = false;
                 manager.listener = null;
                 self.disabled = true;
                 console.log(e);
-                $scope.$apply();
                 return false;
             }
         },
