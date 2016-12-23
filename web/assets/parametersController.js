@@ -19,12 +19,12 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
             if (manager.listener) {
                 manager.listener.stop();
             }
-            manager.listening = false;
+            manager.listening = $voice.listening = false;
         } else {
             if (manager.listener) {
                 manager.listener.start();
             }
-            manager.listening = true;
+            manager.listening = $voice.listening =  true;
         }
     }
 
