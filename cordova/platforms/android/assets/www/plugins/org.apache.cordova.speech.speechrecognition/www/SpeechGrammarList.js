@@ -1,4 +1,5 @@
-cordova.define("org.apache.cordova.speech.speechrecognition.SpeechGrammarList", function(require, exports, module) { var SpeechGrammarList = function(data) {
+cordova.define("org.apache.cordova.speech.speechrecognition.SpeechGrammarList", function(require, exports, module) {
+var SpeechGrammarList = function(data) {
   this._list = data;
   this.length = this._list.length;
 };

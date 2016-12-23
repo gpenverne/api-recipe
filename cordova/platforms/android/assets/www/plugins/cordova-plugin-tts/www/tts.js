@@ -1,4 +1,5 @@
-cordova.define("cordova-plugin-tts.tts", function(require, exports, module) { /*
+cordova.define("cordova-plugin-tts.tts", function(require, exports, module) {
+/*
 
     Cordova Text-to-Speech Plugin
     https://github.com/vilic/cordova-plugin-tts

@@ -60,7 +60,6 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         });
     };
 
-
     $scope.close = function()
     {
         $scope.$parent.parametersVisible = 0;

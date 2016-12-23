@@ -1,4 +1,5 @@
-cordova.define("com.plugins.shortcut.ShortcutPlugin", function(require, exports, module) { //Copyright 2013 Jorge Cisneros jorgecis@gmail.com
+cordova.define("com.plugins.shortcut.ShortcutPlugin", function(require, exports, module) {
+//Copyright 2013 Jorge Cisneros jorgecis@gmail.com
 
 var ShortcutPlugin = function () {
 };

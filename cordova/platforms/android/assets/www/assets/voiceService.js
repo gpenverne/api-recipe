@@ -2,7 +2,7 @@ app.service('$voice', function($window, $http){
     var config = null;
     var self = this;
 
-    return {
+    var methods = {
         getManager: function(){
             return voiceManager;
         },
@@ -84,4 +84,7 @@ app.service('$voice', function($window, $http){
             return true;
         }
     };
+
+    var self = methods;
+    return methods;
 });

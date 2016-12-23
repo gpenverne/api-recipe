@@ -115,17 +115,6 @@ module.exports = [
 ];
 module.exports.metadata = 
 // TOP OF METADATA
-{
-    "cordova-plugin-device": "1.1.3",
-    "com.lampa.startapp": "0.1.4",
-    "com.virtualartifacts.webintent": "1.0.0",
-    "cordova-plugin-dialogs": "1.3.0",
-    "com.plugins.shortcut": "0.0.2",
-    "cordova-plugin-tts": "0.2.3",
-    "org.apache.cordova.speech.speechrecognition": "0.1.2",
-    "cordova-plugin-speechrecognition": "1.1.1",
-    "cordova-plugin-whitelist": "1.3.1",
-    "cordova-plugin-compat": "1.1.0"
-}
+{}
 // BOTTOM OF METADATA
 });

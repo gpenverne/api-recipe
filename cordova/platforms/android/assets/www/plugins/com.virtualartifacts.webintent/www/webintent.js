@@ -1,4 +1,5 @@
-cordova.define("com.virtualartifacts.webintent.WebIntent", function(require, exports, module) { /**
+cordova.define("com.virtualartifacts.webintent.WebIntent", function(require, exports, module) {
+/**
  * cordova Web Intent plugin
  * Copyright (c) Boris Smus 2010
  *

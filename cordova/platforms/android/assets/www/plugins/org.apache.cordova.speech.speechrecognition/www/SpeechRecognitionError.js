@@ -1,4 +1,5 @@
-cordova.define("org.apache.cordova.speech.speechrecognition.SpeechRecognitionError", function(require, exports, module) { var SpeechRecognitionError = function() {
+cordova.define("org.apache.cordova.speech.speechrecognition.SpeechRecognitionError", function(require, exports, module) {
+var SpeechRecognitionError = function() {
     this.error = null;
     this.message = null;
 };

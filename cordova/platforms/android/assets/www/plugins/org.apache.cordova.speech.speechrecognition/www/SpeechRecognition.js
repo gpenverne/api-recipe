@@ -1,4 +1,5 @@
-cordova.define("org.apache.cordova.speech.speechrecognition.SpeechRecognition", function(require, exports, module) { var exec = require("cordova/exec");
+cordova.define("org.apache.cordova.speech.speechrecognition.SpeechRecognition", function(require, exports, module) {
+var exec = require("cordova/exec");
 
 /** 
     attribute SpeechGrammarList grammars;
