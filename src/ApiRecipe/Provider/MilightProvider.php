@@ -43,6 +43,22 @@ class MilightProvider implements ProviderInterface
         ], $args);
     }
 
+    public function actionOnRGBW($string)
+    {
+        // milight:actionOnRGBW:1|setAllOn|optionalParams
+
+        $params = explode('|', $string);
+        $milight = $this->getMilight();
+        $milight->setRgbwActiveGroup($params[0]);
+
+        $method = $params[1];
+        if (isset($params[2])) {
+            return $milight->$method($params[2]);
+        }
+
+        return $milight->$method();
+    }
+
     /**
      * @return MiLight
      */
