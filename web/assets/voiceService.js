@@ -11,13 +11,11 @@ app.service('$voice', function($window, $http){
             return self.getManager().disabled == false;
         },
         setup: function(recipesConfig){
-            console.log('Trying to setup voice Manager with settings ' + JSON.stringify(recipesConfig));
 
             var manager = self.getManager();
             if (typeof recipesConfig.voices != 'undefined' && recipesConfig.voices){
                 config = recipesConfig.voices;
             } else {
-                console.log('Config not found');
                 self.disabled = true;
                 return false;
             }
@@ -29,10 +27,9 @@ app.service('$voice', function($window, $http){
             manager.setted = true;
             self.disabled = false;
             try {
-                recognitionClass = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || window.androidSpeechRecognition;
+                recognitionClass = window.webkitSpeechRecognition || window.speechRecognition || window.mozSpeechRecognition || window.webkitSpeechRecognition || SpeechRecognition;
                 if (!recognitionClass) {
                     self.disabled = true;
-                    alert('unable to use voice recognition');
                     return false;
                 }
                 manager.listener = new recognitionClass();
@@ -40,8 +37,7 @@ app.service('$voice', function($window, $http){
                 manager.listener.continuous = true;
                 manager.listener.interimResults = true;
 
-                manager.listener.onresult = this.onResult;
-
+                manager.listener.onresult = self.onResult;
                 manager.listener.start();
                 manager.listening = true;
                 self.listening = true;
@@ -51,39 +47,46 @@ app.service('$voice', function($window, $http){
                 self.listening = false;
                 manager.listener = null;
                 self.disabled = true;
-                console.log(e);
                 return false;
             }
         },
         onResult: function(event){
+            var customResults = new Array;
             var interim_transcript = '';
-            for (var i = event.resultIndex; i < event.results.length; ++i) {
+            for (var i = 0; i < event.results.length; ++i) {
                 var result = event.results[i];
-                if (result.isFinal) {
-                    self.onListened(result[0].transcript);
-                }
+                customResults.push(result[0].transcript);
             }
+            self.onListened(customResults);
         },
-        onListened: function(){
+        onListened: function(arr){
+            var manager = self.getManager();
+            manager.listener.stop();
             if (typeof config.keywords == 'undefined') {
                 return false;
             }
 
-            txt = txt.toLowerCase();
-            for (var i=0; i < config.keywords.length; i++) {
-                var keyword = config.keywords[i].toLowerCase();
-                var trueText = txt.replace(keyword, '');
-                if (trueText != txt) {
-                    return self.execVoice(trueText);
+            for (var i = 0; i < arr.length; i++) {
+                var txt = arr[i];
+                txt = txt.toLowerCase();
+
+                for (var i=0; i < config.keywords.length; i++) {
+                    var keyword = config.keywords[i].toLowerCase();
+                    var trueText = txt.replace(keyword, '');
+                    if (trueText != txt) {
+                        return self.execVoice(trueText);
+                    }
                 }
             }
             return false;
         },
         execVoice: function(txt) {
+            var manager = self.getManager();
             $http.get(hostApi+'/voice/deduce?text='+encodeURI(txt)).then(function(r){
                 if (r.data && r.data.recipe && r.data.voiceMessage) {
                     self.getManager().say(r.data.voiceMessage);
                 }
+                manager.listener.start();
             });
             return true;
         }

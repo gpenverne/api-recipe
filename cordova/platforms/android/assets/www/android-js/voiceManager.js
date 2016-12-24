@@ -14,8 +14,7 @@ voiceManager.say =  function(text, locale){
     }
 };
 
-
-window.androidSpeechRecognition = {
+var customAndroidSpeechRecognition = {
     lang: 'en-US',
     continuous: true,
     interimResults: true,
@@ -27,13 +26,16 @@ window.androidSpeechRecognition = {
         };
     },
     start: function(){
-        console.log('attempt to start');
-        //return window.plugins.speechRecognition.startListening(this.handleOnResult, this.onerror, this.getOptions());
+        alert('attempt to start');
+        alert(this.onresult);
+        return window.plugins.speechRecognition.startListening(this.handleOnResult, this.onerror, this.getOptions());
     },
     stop: function(){},
-    onerror: function(e) {},
+    onerror: function(e) {
+
+    },
     onresult: function(e) {
-        console.log(e);
+        alert(e);
     },
     handleOnResult: function(arrayItems){
         var customEvent = {
@@ -52,6 +54,9 @@ window.androidSpeechRecognition = {
         }
 
         this.onresult(customEvent);
-        this.start();
     }
 };
+
+window.androidSpeechRecognition = function(){
+    return customAndroidSpeechRecognition;
+}
