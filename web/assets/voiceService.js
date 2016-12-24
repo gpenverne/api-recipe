@@ -35,7 +35,7 @@ app.service('$voice', function($window, $http){
                 manager.listener = new recognitionClass();
                 manager.listener.lang = apiRecipeConfig.voices.locale;
                 manager.listener.continuous = true;
-                manager.listener.interimResults = true;
+                //manager.listener.interimResults = true;
 
                 manager.listener.onresult = self.onResult;
                 manager.listener.start();
