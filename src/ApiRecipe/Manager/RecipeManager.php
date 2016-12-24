@@ -128,11 +128,11 @@ class RecipeManager implements ManagerInterface
             $state = $this->getStateManager()->getRecipeState($this->recipeName);
         }
 
-        if (isset($this->infos['voices'][$state]) && null != $this->infos['voices'][$state]) {
-            if (!isset($this->infos['voices'][$state]['message'])) {
+        if (isset($this->infos->voices[$state]) && null != $this->infos->voices[$state]) {
+            if (!isset($this->infos->voices[$state]['message'])) {
                 return null;
             }
-            $messages = $this->infos['voices'][$state]['message'];
+            $messages = $this->infos->voices[$state]['message'];
             if (!is_array($messages)) {
                 $messages = [$messages];
             }
