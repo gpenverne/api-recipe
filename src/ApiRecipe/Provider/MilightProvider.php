@@ -59,6 +59,22 @@ class MilightProvider implements ProviderInterface
         return $milight->$method();
     }
 
+    public function actionOnWhite($string)
+    {
+        // milight:actionOnWhite:1|setAllOn|optionalParams
+
+        $params = explode('|', $string);
+        $milight = $this->getMilight();
+        $milight->setWhiteActiveGroup($params[0]);
+
+        $method = $params[1];
+        if (isset($params[2])) {
+            return $milight->$method($params[2]);
+        }
+
+        return $milight->$method();
+    }
+
     /**
      * @return MiLight
      */
