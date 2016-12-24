@@ -111,6 +111,13 @@ module.exports = [
         "merges": [
             "window.plugins.speechRecognition"
         ]
+    },
+    {
+        "file": "plugins/com.latin.continuoussr/www/continuoussr.js",
+        "id": "com.latin.continuoussr.continuoussr",
+        "clobbers": [
+            "continuoussr"
+        ]
     }
 ];
 module.exports.metadata = 

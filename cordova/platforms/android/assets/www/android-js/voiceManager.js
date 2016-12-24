@@ -26,11 +26,11 @@ var customAndroidSpeechRecognition = {
         };
     },
     start: function(){
-        alert('attempt to start');
-        alert(this.onresult);
-        return window.plugins.speechRecognition.startListening(this.handleOnResult, this.onerror, this.getOptions());
+        return window.continuoussr.startRecognize(this.handleOnResult, this.onerrir, this.getOptions().matches, this.getOptions().language);
     },
-    stop: function(){},
+    stop: function(){
+
+    },
     onerror: function(e) {
 
     },
@@ -42,18 +42,18 @@ var customAndroidSpeechRecognition = {
             resultIndex: 0,
             results: new Array,
         }
+        var txt = arrayItems[0].toLowerCase();
+        var config = voicesConfig.voices;
 
-        for (i =0; i < arrayItems.length; i++) {
-            item = arrayItems[i];
-            itemArray = new Array;
-            itemArray.push({
-                transcript: item
-            });
-
-            customEvent.results.push(itemArray);
+        for (var i=0; i < config.keywords.length; i++) {
+            var keyword = config.keywords[i].toLowerCase();
+            var trueText = txt.replace(keyword, '');
+            if (trueText != txt) {
+                var url = hostApi+'/voice/deduce?text='+encodeURI(trueText);
+                $.get(url);
+            }
         }
-
-        this.onresult(customEvent);
+            return false;
     }
 };
 

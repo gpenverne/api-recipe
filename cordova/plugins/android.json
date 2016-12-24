@@ -101,6 +101,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "com.latin.continuoussr": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },
     "dependent_plugins": {

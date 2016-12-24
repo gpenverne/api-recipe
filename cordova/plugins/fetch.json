@@ -76,7 +76,9 @@
             "type": "git",
             "url": "https://github.com/daao87/ContinuousSpeechRecognizer.git",
             "subdir": "."
-        }
+        },
+        "is_top_level": true,
+        "variables": {}
     },
     "com.phonegap.plugins.speech": {
         "source": {

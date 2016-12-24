@@ -94,7 +94,6 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
 
             $timeout(countUp, 60000);
         }, function(errors, status){
-            console.log('Failed to retrieve recipes');
             $scope.$parent.online = false;
             try {
                 $scope.recipes = JSON.parse(window.localStorage.getItem("recipes"));

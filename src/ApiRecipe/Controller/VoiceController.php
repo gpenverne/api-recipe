@@ -61,8 +61,8 @@ class VoiceController extends Controller
                     'targetState' => null,
                 ];
             }
-        }
-        */
+        }*/
+
         $recipes = $this->getRecipeManager()->getAll();
         foreach ($recipes as $recipeName => $recipe) {
             if (null === $recipe->voices) {
