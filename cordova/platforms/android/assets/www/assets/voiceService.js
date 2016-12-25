@@ -67,7 +67,7 @@ app.service('$voice', function($window, $http){
             }
             for (var i = event.resultIndex; i < event.results.length; ++i) {
                 var result = event.results[i];
-                console(result[0].transcript);
+                console.log(result[0].transcript);
                 self.onListened(result[0].transcript);
                 return true;
             }
@@ -102,7 +102,6 @@ app.service('$voice', function($window, $http){
                 var keyword = config.keywords[i].toLowerCase();
                 var trueText = txt.replace(keyword, '');
                 if (trueText != txt) {
-
                     return self.execVoice(trueText);
                 }
             }

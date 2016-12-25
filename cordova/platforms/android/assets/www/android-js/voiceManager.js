@@ -51,6 +51,7 @@ var customAndroidSpeechRecognition = {
             if (trueText != txt) {
                 var url = hostApi+'/voice/deduce?text='+encodeURI(trueText);
                 $.get(url);
+                return true;
             }
         }
             return false;
