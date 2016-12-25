@@ -15,6 +15,11 @@ class RecipeManager implements ManagerInterface
         'title' => null,
         'description' => null,
         'picture' => null,
+        'voices' => [
+            StateManager::STATE_ON => [],
+            StateManager::STATE_OFF => [],
+            StateManager::STATE_EACH_TIME => [],
+        ],
         'actions' => [
             StateManager::STATE_ON => [],
             StateManager::STATE_OFF => [],
@@ -56,7 +61,7 @@ class RecipeManager implements ManagerInterface
                     return $recipeInfos;
                 }
 
-                $recipes[] = $recipeInfos;
+                $recipes[str_replace('.yml', '', $f)] = $recipeInfos;
             }
         }
 
@@ -78,10 +83,12 @@ class RecipeManager implements ManagerInterface
      *
      * @return array
      */
-    public function exec($state = null)
+    public function exec($state = null, $loggerProvider = null)
     {
         $result = [];
-
+        if (null !== $loggerProvider) {
+            $loggerProvider->info(sprintf('Looking for %s recipe', $this->recipeName));
+        }
         if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {
                 $state = StateManager::STATE_OFF;
@@ -108,6 +115,34 @@ class RecipeManager implements ManagerInterface
         return [
             'actions' => $result,
         ];
+    }
+
+    /**
+     * @param string $state
+     *
+     * @return string|null
+     */
+    public function getVoiceMessage($state = null)
+    {
+        if (null === $state) {
+            $state = $this->getStateManager()->getRecipeState($this->recipeName);
+        }
+
+        if (isset($this->infos->voices[$state]) && null != $this->infos->voices[$state]) {
+            if (!isset($this->infos->voices[$state]['message'])) {
+                return null;
+            }
+            $messages = $this->infos->voices[$state]['message'];
+            if (!is_array($messages)) {
+                $messages = [$messages];
+            }
+
+            shuffle($messages);
+
+            return isset($messages[0]) ? $messages[0] : null;
+        }
+
+        return null;
     }
 
     /**
@@ -179,7 +214,14 @@ class RecipeManager implements ManagerInterface
      */
     protected function getIconFromPicture($picture = null)
     {
+        if (null === $picture) {
+            return;
+        }
+
         $localPicturePath = $this->getLocalCacheImage($picture);
+        if (null === $localPicturePath) {
+            return;
+        }
         $rawData = file_get_contents($localPicturePath);
 
         return base64_encode($rawData);

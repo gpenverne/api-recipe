@@ -1,3 +1,11 @@
+voices:
+    locale: fr-FR
+    keywords:
+        - abracadabra
+        - hé gogol
+        - et Google
+bot:
+    access_token: 0206d4d88d2240b5934bd747458a4351
 server:
     address: localhost
     port: 80

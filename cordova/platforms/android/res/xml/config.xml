@@ -17,6 +17,20 @@
     <feature name="ShortcutPlugin">
         <param name="android-package" value="com.plugins.shortcut.ShortcutPlugin" />
     </feature>
+    <feature name="SpeechRecognition">
+        <param name="android-package" value="org.apache.cordova.speech.SpeechRecognition" />
+    </feature>
+    <feature name="Whitelist">
+        <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
+        <param name="onload" value="true" />
+    </feature>
+    <feature name="ContinuousSpeechRecognizer">
+        <param name="android-package" value="com.latin.continuoussr.ContinuousSpeechRecognizer" />
+    </feature>
+    <feature name="TTS">
+        <param name="android-package" value="com.wordsbaking.cordova.tts.TTS" />
+        <param name="onload" value="true" />
+    </feature>
     <name>Homatisation</name>
     <icon src="icon.png" />
     <description>
@@ -27,6 +41,6 @@
     </author>
     <content src="index.html" />
     <access origin="*" />
-    <plugin name="com.plugins.shortcut" />
-    <plugin name="WebIntent" value="com.borismus.webintent.WebIntent" />
+    <allow-navigation href="*" />
+    <allow-intent href="*" />
 </widget>

@@ -28,22 +28,44 @@
         <i class="parametersBtnInside top fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"></i>
         <div class="row" style="padding-left: 10px; padding-right: 10px; ">
             <form>
-
                 <div class="input-field col s6">
                     <label for="hostname_field">Host url or ip</label>
                     <input id="hostname_field" type="text" ng-model="hostName" />
 
                 </div>
                 <div class="col s6">
-                    <input type="submit" class="btn btnHost" value="Save" ng-click="setHost(hostName)" />
+                    <input type="submit" class="btn btnHost" value="Save" ng-click="setHost(hostName)"/>
                 </div>
-
             </form>
         </div>
         <div class="row" style="padding-left: 10px; padding-right: 10px; " ng-if="$parent.tags.length > 1">
             <ul>
                 <li class="tag" ng-repeat="tag in $parent.tags" ng-click="currentTag.setCurrentTag(tag); close()"><i class="fa fa-hashtag"></i> {{ tag }}</li>
             </ul>
+        </div>
+        <div id="voiceManagerStatus" ng-click="toggleVoiceManager()" ng-if="$voice.isEnabled()">
+            <div ng-if="$voice && $voice.listening">
+                <div class="google-microphone">
+                    <div class="shadow listening">
+                        <div class="gn">
+                            <div class="fa fa-microphone"></div>
+                        </div>
+                    </div>
+                </div>
+                 <span>Listening ...<span>
+                 <i class="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></i>
+            </div>
+            <div ng-if="!$voice || !$voice.listening">
+                <div class="google-microphone">
+                    <div class="shadow ">
+                        <div class="gn">
+                            <div class="fa fa-microphone-slash"></div>
+                        </div>
+                    </div>
+                </div>
+                <span>Not listening</span>
+            </div>
+            <div id="error-connexion" ng-if="!$parent.online">Unable to join host.</div>
         </div>
         <i class="parametersBtnInside fa fa-arrow-left pull-left" aria-hidden="true" ng-class="{visible: $parent.parametersVisible}" ng-click="$parent.parametersVisible = 0"  ng-swipe-right="$parent.parametersVisible = 1" ng-swipe-left="$parent.parametersVisible = 0"></i>
     </div>
@@ -52,12 +74,14 @@
     <script src='assets/vendor/angular/angular.min.js'></script>
     <script src='assets/vendor/angular-touch/angular-touch.min.js'></script>
     <script src='assets/vendor/angular-long-press/dist/angular-long-press.min.js'></script>
+    <script src='assets/vars.js'></script>
+    <script src='android-js/shortcutManager.js'></script>
+    <script src="android-js/voiceManager.js"></script>
+    <script src='assets/voiceService.js'></script>
     <script src='assets/vendor/jquery/dist/jquery.min.js'></script>
     <script src='assets/vendor/bootstrap/dist/js/bootstrap.min.js'></script>
     <script src='assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
-    <script src='assets/app.js'></script>
+    <script src='assets/appController.js'></script>
     <script src='assets/parametersController.js'></script>
-    <script type="text/javascript" src="js/ShortcutPlugin.js"></script>
-    <script type="text/javascript" src="android-js/shortcutManager.js"></script>
 </body>
 </html>

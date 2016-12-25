@@ -12,6 +12,20 @@ description: To test recipes, it uses the logger provider
 #    - sample tag
 #    - tag2
 
+voices:
+    on:
+        triggers:
+            - '%test(.*?)on%'
+        message: 'Test on ok'
+    off:
+        triggers:
+            - '%test(.*?)off%'
+        message: 'Test off ok'
+    each_time:
+        triggers:
+            - '%test each%'
+        message: 'Test each ok'
+
 # all actions of the recipe
 actions:
     # Actions to do when passing to the on state

@@ -36,5 +36,67 @@
             "type": "registry",
             "id": "cordova-plugin-dialogs"
         }
+    },
+    "org.apache.cordova.speech.speechrecognition": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/macdonst/SpeechRecognitionPlugin",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "cordova-plugin-compat": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-compat"
+        }
+    },
+    "cordova-plugin-tts": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-tts"
+        }
+    },
+    "cordova-plugin-android-permissions": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-android-permissions"
+        }
+    },
+    "cordova-plugin-speechrecognizer": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/poiuytrez/SpeechRecognizer",
+            "subdir": "."
+        }
+    },
+    "com.latin.continuoussr": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/daao87/ContinuousSpeechRecognizer.git",
+            "subdir": "."
+        },
+        "is_top_level": true,
+        "variables": {}
+    },
+    "com.phonegap.plugins.speech": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jcsmesquita/cordova-speechrecognition",
+            "subdir": "."
+        }
+    },
+    "cordova-plugin-speechrecognition": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-speechrecognition"
+        }
+    },
+    "cordova-plugin-whitelist": {
+        "source": {
+            "type": "registry",
+            "id": "cordova-plugin-whitelist"
+        }
     }
 }

@@ -5,6 +5,7 @@ include sprintf('%s/../vendor/autoload.php', __DIR__);
 use ApiRecipe\Command\CreateRecipeCommand;
 use ApiRecipe\Command\ExecActionCommand;
 use ApiRecipe\Command\ExecRecipeCommand;
+use ApiRecipe\Command\DialogCommand;
 use ApiRecipe\Command\WebServerCommand;
 use ApiRecipe\Command\CreateDirsCommand;
 use Symfony\Component\Console\Application;
@@ -16,6 +17,7 @@ $commands = [
     ExecRecipeCommand::class,
     WebServerCommand::class,
     CreateDirsCommand::class,
+    DialogCommand::class,
 ];
 $input = new ArgvInput();
 

@@ -2,27 +2,41 @@
 
 namespace ApiRecipe\Controller;
 
-use ApiRecipe\Manager\RecipeManager;
-
-class RecipesController implements ControllerInterface
+class RecipesController extends Controller
 {
+    /**
+     * @return array
+     */
     public function indexAction()
     {
-        return $this->getRecipManager()->getAll();
+        $this->setResponseFormat('json');
+
+        return array_values($this->getRecipeManager()->getAll());
     }
 
+    /**
+     * @param null|string $recipeName
+     *
+     * @return \stdClass
+     */
     public function showAction($recipeName = null)
     {
-        return $this->getRecipManager()->get($recipeName);
+        $this->setResponseFormat('json');
+
+        return $this->getRecipeManager()->get($recipeName);
     }
 
+    /**
+     * @param string] $recipeName
+     *
+     * @return array
+     */
     public function execAction($recipeName)
     {
-        return $this->getRecipManager($recipeName)->exec();
-    }
+        $this->setResponseFormat('json');
 
-    private function getRecipManager($recipeName = null)
-    {
-        return new RecipeManager($recipeName);
+        $state = $this->request->get('state');
+
+        return $this->getRecipeManager($recipeName)->exec($state);
     }
 }

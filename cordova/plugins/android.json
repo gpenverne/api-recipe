@@ -27,6 +27,18 @@
                         {
                             "xml": "<feature name=\"ShortcutPlugin\"><param name=\"android-package\" value=\"com.plugins.shortcut.ShortcutPlugin\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SpeechRecognition\"><param name=\"android-package\" value=\"org.apache.cordova.speech.SpeechRecognition\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SpeechRecognition\"><param name=\"android-package\" value=\"com.pbakondy.SpeechRecognition\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Whitelist\"><param name=\"android-package\" value=\"org.apache.cordova.whitelist.WhitelistPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
                         }
                     ]
                 }
@@ -40,6 +52,21 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"com.android.launcher.permission.UNINSTALL_SHORTCUT\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+                            "count": 2
+                        }
+                    ],
+                    "/manifest": []
+                }
+            },
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"TTS\"><param name=\"android-package\" value=\"com.wordsbaking.cordova.tts.TTS\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -62,7 +89,26 @@
         },
         "com.plugins.shortcut": {
             "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-tts": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "org.apache.cordova.speech.speechrecognition": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-speechrecognition": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        },
+        "com.latin.continuoussr": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
         }
     },
-    "dependent_plugins": {}
+    "dependent_plugins": {
+        "cordova-plugin-compat": {
+            "PACKAGE_NAME": "com.gkdv.homatisation"
+        }
+    }
 }

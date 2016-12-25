@@ -2,15 +2,17 @@
 
 namespace ApiRecipe\Manager;
 
+use ApiRecipe\Controller\ErrorController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
-use ApiRecipe\Controller\ErrorController;
 
 class RoutingManager implements ManagerInterface
 {
     const FORMAT_JSON = 'json';
 
     const FORMAT_HTML = 'html';
+
+    const FORMAT_JS = 'javascript';
 
     /**
      * @var Request
@@ -39,7 +41,7 @@ class RoutingManager implements ManagerInterface
         }
 
         $method = sprintf('%sAction', $method);
-        $this->controller = $this->getController();
+        $this->controller = $this->getController($this->request);
 
         if (!method_exists($this->controller, $method)) {
             $this->controller = 'error';
@@ -70,12 +72,16 @@ class RoutingManager implements ManagerInterface
 
         switch ($request->getRequestFormat()) {
             case self::FORMAT_HTML:
-                header('Content-type: text/html');
+                header('Content-type: text/html; charset=utf-8');
                 echo $response;
             break;
             case self::FORMAT_JSON:
-                header('Content-type: application/json');
+                header('Content-type: application/json; charset=utf-8');
                 echo json_encode($response);
+            break;
+            case self::FORMAT_JAVASCRIPT:
+                header('Content-type: text/javascript; charset=utf-8');
+                echo $response;
             break;
             default:
                 die('This format is not supported. Supported formats are json, html.');
@@ -86,7 +92,7 @@ class RoutingManager implements ManagerInterface
     /**
      * @return ControllerInterface
      */
-    protected function getController()
+    protected function getController(Request $request)
     {
         if (!$this->controller) {
             $this->controller = 'default';
@@ -97,6 +103,6 @@ class RoutingManager implements ManagerInterface
             $className = ErrorController::class;
         }
 
-        return new $className();
+        return new $className($request);
     }
 }
