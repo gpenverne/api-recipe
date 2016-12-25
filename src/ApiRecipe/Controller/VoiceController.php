@@ -110,13 +110,11 @@ class VoiceController extends Controller
         foreach ($states as $state) {
             if (isset($recipeVoice[$state]) && isset($recipeVoice[$state]['triggers'])) {
                 foreach ($recipeVoice[$state]['triggers'] as $trigger) {
-                    $texts[strtolower($trigger)] = $state;
+                    if (preg_match($trigger, $text)) {
+                        return $state;
+                    }
                 }
             }
-        }
-
-        if (isset($texts[$text])) {
-            return $texts[$text];
         }
 
         return false;
