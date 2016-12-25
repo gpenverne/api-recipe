@@ -62,6 +62,10 @@ class VoiceController extends Controller
                 ];
             }
         }*/
+        $return = [
+            'recipe' => null,
+            'targetState' => null,
+        ];
 
         $recipes = $this->getRecipeManager()->getAll();
         foreach ($recipes as $recipeName => $recipe) {
@@ -76,7 +80,7 @@ class VoiceController extends Controller
 
                     $recipeManager->exec($state, $this->getProvider('logger'));
 
-                    return [
+                    $return = [
                         'recipe' => $recipe,
                         'targetState' => $state,
                         'voiceMessage' => $recipeManager->getVoiceMessage($state),
@@ -85,10 +89,7 @@ class VoiceController extends Controller
             }
         }
 
-        return [
-            'recipe' => null,
-            'targetState' => null,
-        ];
+        return $return;
     }
 
     /**
