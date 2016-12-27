@@ -57,6 +57,22 @@ class MilightProvider implements ProviderInterface
     }
 
     /**
+     * @param int $group
+     *
+     * @return $this
+     */
+    public function rgbwSetColorToOrange($group = null)
+    {
+        if (null !== $group) {
+            $this->getMilight()->setRgbwActiveGroup($group);
+        }
+
+        $this->getMilight()->rgbwSetColorToOrange();
+
+        return $this;
+    }
+
+    /**
      * @return MiLight
      */
     private function getMilight()

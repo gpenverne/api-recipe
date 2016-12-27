@@ -9,6 +9,8 @@ class ProviderManager implements ManagerInterface
 {
     use YmlParserTrait;
 
+    protected $providers = [];
+
     /**
      * @param string $providerName
      *
@@ -16,6 +18,11 @@ class ProviderManager implements ManagerInterface
      */
     public function getProvider($providerName)
     {
+        $knownProviderName = $providerName;
+        if (isset($this->providers[$knownProviderName])) {
+            return $this->providers[$knownProviderName];
+        }
+
         $providerName = Inflector::Camelize($providerName);
         $config = $this->getConfig($providerName);
         if (empty($config)) {
@@ -24,7 +31,9 @@ class ProviderManager implements ManagerInterface
         $providerName = $config['provider'];
         $expectedClass = sprintf('ApiRecipe\\Provider\\%sProvider', ucfirst($providerName));
 
-        return new $expectedClass($config);
+        $this->providers[$knownProviderName] = new $expectedClass($config);
+
+        return $this->providers[$knownProviderName];
     }
 
     /**
