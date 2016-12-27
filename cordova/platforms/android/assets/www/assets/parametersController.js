@@ -23,8 +23,14 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
         } else {
             if (manager.listener) {
                 manager.listener.start();
+            } else {
+                if (null != apiRecipeConfig) {
+                    $voice.setup(apiRecipeConfig);
+                } else {
+                    console.log('Unable to setup voice manager from empty params');
+                }
             }
-            manager.listening = $voice.listening =  true;
+            manager.listening =$voice.listening =  true;
         }
     }
 
@@ -47,16 +53,9 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
             apiRecipeConfig = r.data;
             $scope.$parent.online = true;
             window.localStorage.setItem("config", JSON.stringify(r.data));
-            $voice.setup(apiRecipeConfig);
-
         }, function(){
             $scope.$parent.online = false;
             apiRecipeConfig = JSON.parse(window.localStorage.getItem("config"));
-            if (null != apiRecipeConfig) {
-                $voice.setup(apiRecipeConfig);
-            } else {
-                console.log('Unable to setup voice manager from empty params');
-            }
         });
     };
 
