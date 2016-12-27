@@ -57,7 +57,7 @@ class MilightFireCommand extends Command
             $milight->rgbwBrightnessPercent($currLum - 1, $group);
             $milight->rgbwBrightnessPercent($currLum - 2, $group);
             $milight->rgbwBrightnessPercent($currLum + 3, $group);
-            sleep(4);
+            sleep(2);
         }
     }
 
