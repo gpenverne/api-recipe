@@ -50,16 +50,19 @@ class MilightFireCommand extends Command
             ++$i;
 
             if ($i % 2 && $maxLum > $currLum) {
-                $currLum += 10;
+                $currLum += rand(0, 20);
             } else {
-                $currLum -= 10;
+                $currLum -= rand(0, 20);
             }
 
             $io->comment(sprintf('Lum to %d', $currLum));
             $milight->rgbwBrightnessPercent($currLum, $group);
             $milight->rgbwBrightnessPercent($currLum - 1, $group);
-            $milight->rgbwBrightnessPercent($currLum - 2, $group);
-            $milight->rgbwBrightnessPercent($currLum + 3, $group);
+            $milight->rgbwBrightnessPercent($currLum - 1, $group);
+            $milight->rgbwBrightnessPercent($currLum - 1, $group);
+            $milight->rgbwBrightnessPercent($currLum + 1, $group);
+            $milight->rgbwBrightnessPercent($currLum + 1, $group);
+            $milight->rgbwBrightnessPercent($currLum + 1, $group);
             sleep(2);
         }
     }
