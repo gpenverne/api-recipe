@@ -7,7 +7,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use ApiRecipe\Manager\RecipeManager;
-use ApiRecipe\Manager\ActionManager;
 use ApiRecipe\Manager\ProviderManager;
 use Symfony\Component\Console\Input\InputArgument;
 
@@ -21,7 +20,7 @@ class MilightFireCommand extends Command
     /**
      * @var ProviderManager
      */
-    protected $providerManager;
+    protected $milightProvider;
 
     protected function configure()
     {
@@ -53,20 +52,12 @@ class MilightFireCommand extends Command
     /**
      * @return ProviderManager
      */
-    protected function getProviderManager()
+    protected function getMilightProvider()
     {
-        if (null === $this->providerManager) {
-            $this->providerManager = new ProviderManager();
+        if (null === $this->milightProvider) {
+            $this->milightProvider = new ProviderManager('milight');
         }
 
-        return $this->providerManager;
-    }
-
-    /**
-     * @return ActionManager
-     */
-    protected function getActionManager($providerName, $method, $argument = null)
-    {
-        return new ActionManager($providerName, $method, $argument);
+        return $this->milightProvider;
     }
 }
