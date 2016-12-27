@@ -129,3 +129,29 @@ Sample commands: milight:rgbwAllOn ; milight:rgbwAllOff
 #### Sleep
 Make a pause between actions  
 Sample commands: sleep:sleep:5  
+
+
+## Voice
+You can use voice recognition (on both html5 interface and android application).  
+For example, in a config recipe yml file:
+```
+voices:
+    on:
+        triggers:
+            # php regexp to match expression
+            - '%test(.*?)on%'
+        # the voice message return
+        message: 'Test on ok'
+    off:
+        triggers:
+            # php regexp to match expression
+            - '%test(.*?)off%'
+        # the voice message return
+        message: 'Test off ok'
+    each_time:
+        triggers:
+            # php regexp to match expression
+            - '%test each%'
+        # the voice message return
+        message: 'Test each ok'
+```
