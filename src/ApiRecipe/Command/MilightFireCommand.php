@@ -49,9 +49,11 @@ class MilightFireCommand extends Command
             ++$i;
 
             if ($i % 2) {
-                $futurLum += rand(10, 30);
+                $futurLum += rand(10, 20);
+                $milight->rgbwBrightnessPercent($currLum + 5, $group);
             } else {
-                $futurLum -= rand(10, 30);
+                $futurLum -= rand(10, 20);
+                $milight->rgbwBrightnessPercent($currLum - 5, $group);
             }
 
             if ($futurLum < 4) {
