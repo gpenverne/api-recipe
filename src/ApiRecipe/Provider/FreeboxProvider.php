@@ -4,7 +4,7 @@ namespace ApiRecipe\Provider;
 
 use ApiRecipe\Manager\RequestManager;
 
-class FreeboxProvider implements ProviderInterface, BotCompliantInterface
+class FreeboxProvider implements ProviderInterface
 {
     use HydratorTrait;
 
