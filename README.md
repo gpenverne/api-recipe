@@ -114,7 +114,7 @@ Sample commands: binary:command:arg ; binary:echo:arg
 ### CecClient
 Send command to [cec-client](http://manpages.ubuntu.com/manpages/trusty/man1/cec-client.1.html)  
 Parameters: binary, the full path to cec-client binary
-Sample commands: cec-client:command:as ; cec-client:command:standby 0 ; cec-client:command:on 0
+Sample commands: cec-client:command:as ; cec-client:command:standby 0 ; cec-client:command:on 0 ; cec-client:setActiveSource:freebox 
 #### Confirm
 It asks user to confirm the action launc   
 Sample commands: confirm:confirm:confirmation message  
