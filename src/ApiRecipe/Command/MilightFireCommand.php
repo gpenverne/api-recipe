@@ -44,15 +44,20 @@ class MilightFireCommand extends Command
         $milight->rgbwSetColorToOrange($group);
 
         $currLum = 50;
-        $maxLum = 90;
         $i = 0;
         while (true) {
             ++$i;
 
-            if ($i % 2 && $maxLum > $currLum) {
-                $currLum += rand(0, 20);
+            if ($i % 2) {
+                $currLum += rand(0, 10);
             } else {
-                $currLum -= rand(0, 20);
+                $currLum -= rand(0, 10);
+            }
+
+            if ($currLum < 4) {
+                $currLum = 4;
+            } elseif ($currLum > 96) {
+                $currLum = 96;
             }
 
             $io->comment(sprintf('Lum to %d', $currLum));
@@ -63,7 +68,6 @@ class MilightFireCommand extends Command
             $milight->rgbwBrightnessPercent($currLum + 1, $group);
             $milight->rgbwBrightnessPercent($currLum + 1, $group);
             $milight->rgbwBrightnessPercent($currLum + 1, $group);
-            sleep(2);
         }
     }
 
