@@ -55,6 +55,8 @@ class MilightFireCommand extends Command
             $io->comment(sprintf('Lum to %d', $currLum));
             $milight->rgbwBrightnessPercent($currLum, $group);
             $milight->rgbwBrightnessPercent($currLum - 1, $group);
+            $milight->rgbwBrightnessPercent($currLum - 2, $group);
+            $milight->rgbwBrightnessPercent($currLum + 3, $group);
             sleep(4);
         }
     }
