@@ -17,6 +17,8 @@ class ErrorController extends Controller
 
     public function notFoundAction()
     {
-        die('not found');
+        header('HTTP/1.1 404 Not Found');
+
+        return 'not found';
     }
 }

@@ -94,6 +94,11 @@ class WebServerCommand extends Command
         shell_exec($cmd);
     }
 
+    /**
+     * @param int $pid
+     *
+     * @return bool
+     */
     private function savePid($pid)
     {
         $pidFile = '/tmp/ApiRecipe.pid';
@@ -101,6 +106,9 @@ class WebServerCommand extends Command
         return file_put_contents($pidFile, $pid);
     }
 
+    /**
+     * @return int
+     */
     private function getPid()
     {
         $pidFile = '/tmp/ApiRecipe.pid';
