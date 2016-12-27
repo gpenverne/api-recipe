@@ -46,7 +46,7 @@ class MilightFireCommand extends Command
         $currLum = 50;
         $maxLum = 90;
         while (true) {
-            if (rand(1, 2) === 1 && $maxLum < $currLum) {
+            if (rand(1, 2) === 1 && $maxLum > $currLum) {
                 $currLum += 10;
             } else {
                 $currLum -= 10;
