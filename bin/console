@@ -8,6 +8,7 @@ use ApiRecipe\Command\ExecRecipeCommand;
 use ApiRecipe\Command\DialogCommand;
 use ApiRecipe\Command\WebServerCommand;
 use ApiRecipe\Command\CreateDirsCommand;
+use ApiRecipe\Command\MilightFireCommand;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 
@@ -18,6 +19,7 @@ $commands = [
     WebServerCommand::class,
     CreateDirsCommand::class,
     DialogCommand::class,
+    MilightFireCommand::class,
 ];
 $input = new ArgvInput();
 
