@@ -53,7 +53,6 @@ app.controller('parametersCtrl', function ($scope, $http, $timeout, $window, cur
             apiRecipeConfig = r.data;
             $scope.$parent.online = true;
             window.localStorage.setItem("config", JSON.stringify(r.data));
-
         }, function(){
             $scope.$parent.online = false;
             apiRecipeConfig = JSON.parse(window.localStorage.getItem("config"));
