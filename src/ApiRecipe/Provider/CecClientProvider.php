@@ -28,6 +28,6 @@ class CecClientProvider implements ProviderInterface
      */
     public function command($command)
     {
-        shell_exec('echo %s | %s -s -d 1', $command, $this->binary);
+        return shell_exec(sprintf('echo %s | %s -s -d 1', $command, $this->binary));
     }
 }
