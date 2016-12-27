@@ -29,6 +29,10 @@ class DialogCommand extends Command
             ->addArgument('access_token', InputArgument::OPTIONAL, 'Access token', $this->getAccessToken());
     }
 
+    /**
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $access_token = $input->getArgument('access_token');
