@@ -43,7 +43,7 @@ class MilightFireCommand extends Command
         $milight = $this->getMilightProvider();
         $milight->rgbwSetColorToOrange($group);
 
-        $currLum = 50;
+        $currLum = $futurLum = 50;
         $i = 0;
         while (true) {
             ++$i;
