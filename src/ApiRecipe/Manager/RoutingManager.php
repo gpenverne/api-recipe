@@ -45,7 +45,7 @@ class RoutingManager implements ManagerInterface
 
         if (!method_exists($this->controller, $method)) {
             $this->controller = 'error';
-            $this->controller = $this->getController();
+            $this->controller = $this->getController($this->request);
         }
 
         $result = $this->controller->$method($arg);
