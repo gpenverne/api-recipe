@@ -43,11 +43,18 @@ class MilightFireCommand extends Command
         $milight = $this->getMilightProvider();
         $milight->rgbwSetColorToOrange($group);
 
+        $currLum = 50;
+
         while (true) {
-            $lum = rand(30, 80);
-            $io->comment(sprintf('Lum to %d', $lum));
-            $milight->rgbwBrightnessPercent($lum, $group);
-            sleep(1);
+            if (rand(1, 2) === 1) {
+                $currLum += 5;
+            } else {
+                $currLum -= 5;
+            }
+
+            $io->comment(sprintf('Lum to %d', $currLum));
+            $milight->rgbwBrightnessPercent($currLum, $group);
+            sleep(4);
         }
     }
 
