@@ -43,6 +43,19 @@ class MilightProvider implements ProviderInterface
         ], $args);
     }
 
+    public function rgbwDiscoSlowerMode($group = 1)
+    {
+        $this->getMilight()->setRgbwActiveGroup($group);
+        $this->getMilight()->rgbwDiscoSlowerMode();
+
+        return $this;
+    }
+
+    public function rgbwBrightnessPercent($brightnessPercent, $group = null)
+    {
+        return $this->getMilight()->rgbwBrightnessPercent($brightnessPercent, $group);
+    }
+
     /**
      * @return MiLight
      */
@@ -55,13 +68,5 @@ class MilightProvider implements ProviderInterface
         $this->milight = new MiLight($this->host);
 
         return $this->milight;
-    }
-
-    public function rgbwDiscoSlowerMode($group = 1)
-    {
-        $this->getMilight()->setRgbwActiveGroup($group);
-        $this->getMilight()->rgbwDiscoSlowerMode();
-
-        return $this;
     }
 }
