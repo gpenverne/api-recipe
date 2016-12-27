@@ -40,7 +40,7 @@ class MilightFireCommand extends Command
         $group = $input->getArgument('group');
 
         $io = new SymfonyStyle($input, $output);
-        $milight = $this->getMilightProvider('milight');
+        $milight = $this->getMilightProvider();
         $milight->rgbwSetColorToOrange($group);
 
         while (true) {
@@ -55,7 +55,8 @@ class MilightFireCommand extends Command
     protected function getMilightProvider()
     {
         if (null === $this->milightProvider) {
-            $this->milightProvider = new ProviderManager('milight');
+            $providerManager = new ProviderManager('milight');
+            $this->milightProvider = $providerManager->getProvider('milight');
         }
 
         return $this->milightProvider;
