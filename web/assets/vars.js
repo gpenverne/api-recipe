@@ -38,6 +38,7 @@ if (typeof hostApi == 'undefined' || null == hostApi) {
 var app = angular.module('app', ['ngTouch', 'pr.longpress']).service('currentTag', function(){
     var currentTag = 'all';
     return {
+        doNotShowAllTags: false,
         getCurrentTag: function() {
             return currentTag;
         },

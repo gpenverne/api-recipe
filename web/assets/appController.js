@@ -50,8 +50,12 @@ app.controller('appCtrl', function ($scope, $http, $timeout, $window, currentTag
                     recipe.tags = new Array;
                 }
                 for (var j=0; j < recipe.tags.length; j++) {
-                    if (newTags.indexOf(recipe.tags[j]) < 0) {
-                        newTags.push(recipe.tags[j]);
+                    var tag = recipe.tags[j];
+                    if (newTags.indexOf(tag) < 0) {
+                        if (tag === 'all') {
+                            currentTag.doNotShowAllTags = true;
+                        }
+                        newTags.push(tag);
                     }
                 }
                 recipe.androidApp = null;
