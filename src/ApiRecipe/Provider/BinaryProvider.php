@@ -35,7 +35,7 @@ class BinaryProvider implements ProviderInterface
             $fullCommand = $this->binary;
         }
 
-        return (bool) shell_exec($fullCommand);
+        return (bool) exec($fullCommand);
     }
 
     /**

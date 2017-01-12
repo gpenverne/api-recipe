@@ -9,6 +9,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use ApiRecipe\Manager\RecipeManager;
 use ApiRecipe\Manager\ProviderManager;
 use Doctrine\Common\Inflector\Inflector;
+use Symfony\Component\Console\Question\Question;
 
 class CreateRecipeCommand extends Command
 {
@@ -86,10 +87,13 @@ class CreateRecipeCommand extends Command
             $method = $io->choice('Action call on this provider ?', $methods);
         }
 
-        $argument = $io->ask('Any argument ?');
+        $question = new Question(
+            'Any argument ?',
+            false
+        );
 
         $action = sprintf('%s:%s', $provider, $method);
-        if (null != $argument) {
+        if (false !== $argument = $io->askQuestion($question)) {
             $action .= sprintf(':%s', $argument);
         }
 
