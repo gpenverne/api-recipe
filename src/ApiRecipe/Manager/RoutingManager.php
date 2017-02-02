@@ -69,6 +69,27 @@ class RoutingManager implements ManagerInterface
         $this->sendResponse($result);
     }
 
+
+    /**
+     * @param  Container $container
+     *
+     * @return Container
+     */
+    public function injectServices(Container $container)
+    {
+        $services = [
+            'helper.file_reader' => new FileReaderHelper(),
+            'helper.header' => new HeaderHelper,
+            'request' => $this->request,
+        ];
+
+        foreach ($services as $serviceName => $serviceInstance) {
+            $container->set($serviceName, $serviceInstance);
+        }
+
+        return $container;
+    }
+
     /**
      * @param string $response
      *
@@ -122,25 +143,5 @@ class RoutingManager implements ManagerInterface
         $controller = new $className($this->container);
 
         return $controller;
-    }
-
-    /**
-     * @param  Container $container
-     *
-     * @return Container
-     */
-    public function injectServices(Container $container)
-    {
-        $services = [
-            'helper.file_reader' => new FileReaderHelper(),
-            'helper.header' => new HeaderHelper,
-            'request' => $this->request,
-        ];
-
-        foreach ($services as $serviceName => $serviceInstance) {
-            $container->set($serviceName, $serviceInstance);
-        }
-
-        return $container;
     }
 }
