@@ -6,6 +6,8 @@ use ApiRecipe\Converter\ArrayToStdClassConverter;
 
 class RecipeManager implements ManagerInterface
 {
+    const RECIPE_PREFIX = 'recipe';
+
     use YmlParserTrait;
 
     /**
@@ -101,7 +103,12 @@ class RecipeManager implements ManagerInterface
 
         foreach ($actions as $action) {
             $actionParameters = explode(':', $action);
-            if (2 === count($actionParameters)) {
+            // recipe:name:state
+            if (self::RECIPE_PREFIX === $actionParameters[0]) {
+                $recipe = new RecipeManager($actionParameters[1]);
+                $expectedState = isset($actionParameters[2]) ? $actionParameters[2] : null;
+                $result[$actionParameters[1]] = $recipe->exec($expectedState, $loggerProvider);
+            } elseif (2 === count($actionParameters)) {
                 list($provider, $method) = $actionParameters;
                 $result[$action] = $this->execAction($provider, $method);
             } else {
