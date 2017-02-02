@@ -63,6 +63,7 @@ class RoutingManager implements ManagerInterface
             $this->controller = $this->getController($this->request);
         }
 
+
         $result = $this->controller->$method($arg);
 
         $this->sendResponse($result);
@@ -88,7 +89,7 @@ class RoutingManager implements ManagerInterface
 
         return $container;
     }
-    
+
     /**
      * @param string $response
      *
