@@ -14,12 +14,12 @@ class ErrorController extends Controller
      */
     public function __call($method, $args = [])
     {
-        return call_user_func([$this, 'notFoundAction'], $args);
+        return $this->notFoundAction();
     }
 
     public function notFoundAction()
     {
-        $this->get('helper.header')->setHeader(self::ERROR_HEADER);
+        $this->container->get('helper.header')->setHeader(self::ERROR_HEADER);
 
         return 'not found';
     }
