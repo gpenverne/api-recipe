@@ -135,7 +135,7 @@ class RoutingManager implements ManagerInterface
         ];
 
         foreach ($services as $serviceName => $serviceInstance) {
-            $container->set($serviceName, new $serviceInstance());
+            $container->set($serviceName, $serviceInstance);
         }
 
         return $container;
