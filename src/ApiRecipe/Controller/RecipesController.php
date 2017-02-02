@@ -35,7 +35,7 @@ class RecipesController extends Controller
     {
         $this->setResponseFormat('json');
 
-        $state = $this->request->get('state');
+        $state = $this->get('request')->get('state');
 
         return $this->getRecipeManager($recipeName)->exec($state);
     }
