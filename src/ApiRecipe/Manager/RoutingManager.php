@@ -3,8 +3,11 @@
 namespace ApiRecipe\Manager;
 
 use ApiRecipe\Controller\ErrorController;
+use ApiRecipe\Helper\HeaderHelper;
+use ApiRecipe\Helper\FileReaderHelper;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\DependencyInjection\Container;
 
 class RoutingManager implements ManagerInterface
 {
@@ -20,19 +23,31 @@ class RoutingManager implements ManagerInterface
     protected $request;
 
     /**
+     * @var Container
+     */
+    protected $container;
+
+    /**
      * @var string|ControllerInterface
      */
     protected $controller;
 
-    public function __construct()
+    /**
+     * @param Container $container
+     */
+    public function __construct(Container $container = null)
     {
         ini_set('display_errors', E_ALL);
+
+        $this->container = $container ?? new Container();
         $this->request = Request::createFromGlobals();
         $context = new RequestContext();
         $context->fromRequest($this->request);
 
         $routeInfos = explode('/', $context->getPathInfo());
         $routeInfos = array_slice($routeInfos, 1);
+
+        $this->injectServices($this->container);
 
         @list($this->controller, $method, $arg) = $routeInfos;
 
@@ -41,12 +56,13 @@ class RoutingManager implements ManagerInterface
         }
 
         $method = sprintf('%sAction', $method);
-        $this->controller = $this->getController($this->request);
+        $this->controller = $this->getController();
 
         if (!method_exists($this->controller, $method)) {
             $this->controller = 'error';
             $this->controller = $this->getController($this->request);
         }
+
 
         $result = $this->controller->$method($arg);
 
@@ -92,7 +108,7 @@ class RoutingManager implements ManagerInterface
     /**
      * @return ControllerInterface
      */
-    protected function getController(Request $request)
+    protected function getController()
     {
         if (!$this->controller) {
             $this->controller = 'default';
@@ -103,6 +119,28 @@ class RoutingManager implements ManagerInterface
             $className = ErrorController::class;
         }
 
-        return new $className($request);
+        $controller = new $className($this->container);
+
+        return $controller;
+    }
+
+    /**
+     * @param  Container $container
+     *
+     * @return Container
+     */
+    public function injectServices(Container $container)
+    {
+        $services = [
+            'helper.file_reader' => new FileReaderHelper(),
+            'helper.header' => new HeaderHelper,
+            'request' => $this->request,
+        ];
+
+        foreach ($services as $serviceName => $serviceInstance) {
+            $container->set($serviceName, $serviceInstance);
+        }
+
+        return $container;
     }
 }
