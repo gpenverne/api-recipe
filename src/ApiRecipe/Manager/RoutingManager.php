@@ -32,11 +32,14 @@ class RoutingManager implements ManagerInterface
      */
     protected $controller;
 
-    public function __construct()
+    /**
+     * @param Container $container
+     */
+    public function __construct(Container $container = null)
     {
         ini_set('display_errors', E_ALL);
 
-        $this->container = new Container();
+        $this->container = $container ?? new Container();
         $this->request = Request::createFromGlobals();
         $context = new RequestContext();
         $context->fromRequest($this->request);
@@ -126,7 +129,7 @@ class RoutingManager implements ManagerInterface
      *
      * @return Container
      */
-    protected function injectServices(Container $container)
+    public function injectServices(Container $container)
     {
         $services = [
             'helper.file_reader' => new FileReaderHelper(),
