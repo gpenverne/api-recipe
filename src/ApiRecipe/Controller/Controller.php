@@ -86,15 +86,12 @@ class Controller implements ControllerInterface
     }
 
     /**
-     * @param  string $method
-     * @param  array $args
+     * @param  array $service
      *
      * @return mixed
      */
-    public function __call($method, $args = [])
+    public function get($service)
     {
-        if ('get' == $method) {
-            return $this->container->get($args[0]);
-        }
+        return $this->container->get($service);
     }
 }
