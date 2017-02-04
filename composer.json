@@ -3,7 +3,7 @@
     "description": "ApiRecipe",
     "homepage": "https://gpenverne.github.io/api-recipe/",
     "require": {
-        "symfony/symfony": "*",
+        "symfony/symfony": "^3.2",
         "doctrine/orm": "*",
         "doctrine/doctrine-bundle": "*",
         "symfony/console": "*",
@@ -15,11 +15,12 @@
         "symfony/routing": "^3.2",
         "j13k/yaml-lint": "^1.1",
         "benedya/api-ai-php-sdk": "dev-master",
-        "symfony/dependency-injection": "dev-master"
+        "symfony/dependency-injection": "dev-master",
+        "and/oauth": "^0.6.0"
     },
     "require-dev": {
         "phpspec/phpspec": "^3.0",
-        "fabpot/php-cs-fixer": "^2.0"
+        "friendsofphp/php-cs-fixer": "^2.0"
     },
     "config": {
         "bin-dir": "bin/"
