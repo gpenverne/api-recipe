@@ -3,6 +3,9 @@
     "description": "ApiRecipe",
     "homepage": "https://gpenverne.github.io/api-recipe/",
     "require": {
+        "symfony/symfony": "*",
+        "doctrine/orm": "*",
+        "doctrine/doctrine-bundle": "*",
         "symfony/console": "*",
         "symfony/yaml": "*",
         "doctrine/inflector": "*",
