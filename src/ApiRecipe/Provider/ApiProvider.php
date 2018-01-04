@@ -28,7 +28,7 @@ class ApiProvider implements ProviderInterface
      *
      * @return bool
      */
-    public function endPoint($endPoint)
+    public function sync($endPoint)
     {
         $url = $this->getUrl($endPoint);
 
