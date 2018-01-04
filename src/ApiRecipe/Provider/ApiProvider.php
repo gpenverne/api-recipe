@@ -36,16 +36,30 @@ class ApiProvider implements ProviderInterface
     }
 
     /**
-     * @param string $url
+     * @param string $key
      *
      * @return bool
      */
-    protected function request($url)
+    public function async($endPoint)
+    {
+        $url = $this->getUrl($endPoint);
+
+        return $this->request($url, true);
+    }
+
+    /**
+     * @param string $url
+     * @param bool $async
+     *
+     * @return bool
+     */
+    protected function request($url, $async = false)
     {
         $requestManager = new RequestManager();
 
-        return $requestManager->request($url);
+        return $requestManager->request($url, $async);
     }
+
     /**
      * @param string $key
      *

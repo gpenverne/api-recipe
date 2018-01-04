@@ -9,6 +9,27 @@ use Symfony\Component\HttpFoundation\Response;
 class RequestManager implements ManagerInterface
 {
     /**
+     * @param string $url
+     * @param bool $async
+     *
+     * @return bool
+     */
+    public function request($url, $async = false)
+    {
+        if ($async) {
+            $res = $this->asyncRequest(Request::METHOD_GET, $url);
+        } else {
+            $res = $this->syncRequest(Request::METHOD_GET, $url);
+        }
+
+        if (Response::HTTP_OK === $res->getStatusCode()) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * @return Client
      */
     protected function getClient()
@@ -16,18 +37,13 @@ class RequestManager implements ManagerInterface
         return new Client();
     }
 
-    /**
-     * @param string $url
-     *
-     * @return bool
-     */
-    public function request($url)
+    private function syncRequest($method, $url)
     {
-        $res = $this->getClient()->request(Request::METHOD_GET, $url);
-        if (Response::HTTP_OK === $res->getStatusCode()) {
-            return true;
-        }
+        return $this->getClient()->request(Request::METHOD_GET, $url);
+    }
 
-        return false;
+    private function asyncRequest($method, $url)
+    {
+        return $this->getAsync()->request(Request::METHOD_GET, $url);
     }
 }
