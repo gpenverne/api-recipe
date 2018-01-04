@@ -39,7 +39,7 @@ class RoutingManager implements ManagerInterface
     {
         ini_set('display_errors', E_ALL);
 
-        $this->container = $container ?? new Container();
+        $this->container = $container ? $container : new Container();
         $this->request = Request::createFromGlobals();
         $context = new RequestContext();
         $context->fromRequest($this->request);
