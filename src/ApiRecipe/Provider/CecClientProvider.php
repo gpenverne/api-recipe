@@ -36,7 +36,7 @@ class CecClientProvider implements ProviderInterface
     public function command($command, $device = null)
     {
         if (null === $device) {
-            return shell_exec(sprintf('echo %s | %s -s -d 1', $command, $this->binary));
+            return shell_exec(sprintf('echo %s | %s -s', $command, $this->binary));
         }
 
         $device = $this->getDevice($device);
@@ -101,9 +101,6 @@ class CecClientProvider implements ProviderInterface
      */
     private function getDevice($deviceName)
     {
-<<<<<<< HEAD
-        return shell_exec(sprintf('echo %s | %s -s -d 1', $command, $this->binary));
-=======
         $regexp = sprintf('/%s/', strtolower($deviceName));
         $devices = $this->getDevices();
         foreach ($devices as $device) {
@@ -143,6 +140,5 @@ class CecClientProvider implements ProviderInterface
         }
 
         return $returnDevices;
->>>>>>> c42f6d69c9c4c521aa47ece8cb19d593366b4641
     }
 }

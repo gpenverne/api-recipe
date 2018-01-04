@@ -20,6 +20,8 @@ class FreeboxProvider implements ProviderInterface
     {
         return [
             'key',
+            'turnOn',
+            'turnOff',
         ];
     }
 
@@ -33,6 +35,34 @@ class FreeboxProvider implements ProviderInterface
         $url = $this->getUrl($key);
 
         return $this->request($url);
+    }
+
+    /**
+     * @return bool
+     */
+    public function turnOn()
+    {
+        if (!$this->lock()) {
+            return false;
+        }
+
+        $this->key('power');
+
+        return $this->lock();
+    }
+
+    /**
+     * @return bool
+     */
+    public function turnOff()
+    {
+        if (!$this->unlock()) {
+            return false;
+        }
+
+        $this->key('power');
+
+        return $this->unlock();
     }
 
     public function handleParameters($parameters)
@@ -60,5 +90,35 @@ class FreeboxProvider implements ProviderInterface
     protected function getUrl($key)
     {
         return sprintf('http://hd1.freebox.fr/pub/remote_control?code=%s&key=%s', $this->remoteCode, $key);
+    }
+
+    /**
+     * @return bool
+     */
+    protected function lock()
+    {
+        $pidFile = '/tmp/freebox.pid';
+        if (is_file($pidFile)) {
+            return false;
+        }
+
+        touch($pidFile);
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function unlock()
+    {
+        $pidFile = '/tmp/freebox.pid';
+        if (!is_file($pidFile)) {
+            return false;
+        }
+
+        unlink($pidFile);
+
+        return true;
     }
 }

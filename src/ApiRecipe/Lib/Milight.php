@@ -34,85 +34,84 @@ class Milight
     private $command_repeats = 10;
     private $rgbwActiveGroup = 0; // 0 means all
     private $whiteActiveGroup = 0; // 0 means all
-    private $commandCodes = array(
+    private $commandCodes = [
         //RGBW Bulb commands
-        'rgbwAllOn' => array(0x42, 0x00),
-        'rgbwAllOff' => array(0x41, 0x00),
-    'rgbwGroup0Off' => array(0x41, 0x00),
-    'rgbwGroup0On' => array(0x42, 0x00),
-        'rgbwGroup1On' => array(0x45, 0x00),
-        'rgbwGroup2On' => array(0x47, 0x00),
-        'rgbwGroup3On' => array(0x49, 0x00),
-        'rgbwGroup4On' => array(0x4B, 0x00),
-        'rgbwGroup1Off' => array(0x46, 0x00),
-        'rgbwGroup2Off' => array(0x48, 0x00),
-        'rgbwGroup3Off' => array(0x4a, 0x00),
-        'rgbwGroup4Off' => array(0x4c, 0x00),
-        'rgbwAllNightMode' => array(0xC1, 0x00),
-        'rgbwGroup0NightMode' => array(0xC1, 0x00),
-        'rgbwGroup1NightMode' => array(0xC6, 0x00),
-        'rgbwGroup2NightMode' => array(0xC8, 0x00),
-        'rgbwGroup3NightMode' => array(0xCA, 0x00),
-        'rgbwGroup4NightMode' => array(0xCC, 0x00),
-        'rgbwBrightnessMax' => array(0x4e, 0x1b),
-        'rgbwBrightnessMin' => array(0x4e, 0x02),
-        'rgbwDiscoMode' => array(0x4d, 0x00),
-        'rgbwDiscoSlower' => array(0x43, 0x00),
-        'rgbwDiscoFaster' => array(0x44, 0x00),
-        'rgbwAllSetToWhite' => array(0xc2, 0x00),
-    'rgbwGroup0SetToWhite' => array(0xc2, 0x00),
-        'rgbwGroup1SetToWhite' => array(0xc5, 0x00),
-        'rgbwGroup2SetToWhite' => array(0xc7, 0x00),
-        'rgbwGroup3SetToWhite' => array(0xc9, 0x00),
-        'rgbwGroup4SetToWhite' => array(0xcb, 0x00),
-        'rgbwSetColorToViolet' => array(0x40, 0x00),
-        'rgbwSetColorToRoyalBlue' => array(0x40, 0x10),
-        'rgbwSetColorToBabyBlue' => array(0x40, 0x20),
-        'rgbwSetColorToAqua' => array(0x40, 0x30),
-        'rgbwSetColorToRoyalMint' => array(0x40, 0x40),
-        'rgbwSetColorToSeafoamGreen' => array(0x40, 0x50),
-        'rgbwSetColorToGreen' => array(0x40, 0x60),
-        'rgbwSetColorToLimeGreen' => array(0x40, 0x70),
-        'rgbwSetColorToYellow' => array(0x40, 0x80),
-        'rgbwSetColorToYellowOrange' => array(0x40, 0x90),
-        'rgbwSetColorToOrange' => array(0x40, 0xa0),
-        'rgbwSetColorToRed' => array(0x40, 0xb0),
-        'rgbwSetColorToPink' => array(0x40, 0xc0),
-        'rgbwSetColorToFusia' => array(0x40, 0xd0),
-        'rgbwSetColorToLilac' => array(0x40, 0xe0),
-        'rgbwSetColorToLavendar' => array(0x40, 0xf0),
+        'rgbwAllOn' => [0x42, 0x00],
+        'rgbwAllOff' => [0x41, 0x00],
+    'rgbwGroup0Off' => [0x41, 0x00],
+    'rgbwGroup0On' => [0x42, 0x00],
+        'rgbwGroup1On' => [0x45, 0x00],
+        'rgbwGroup2On' => [0x47, 0x00],
+        'rgbwGroup3On' => [0x49, 0x00],
+        'rgbwGroup4On' => [0x4B, 0x00],
+        'rgbwGroup1Off' => [0x46, 0x00],
+        'rgbwGroup2Off' => [0x48, 0x00],
+        'rgbwGroup3Off' => [0x4a, 0x00],
+        'rgbwGroup4Off' => [0x4c, 0x00],
+        'rgbwAllNightMode' => [0xC1, 0x00],
+        'rgbwGroup0NightMode' => [0xC1, 0x00],
+        'rgbwGroup1NightMode' => [0xC6, 0x00],
+        'rgbwGroup2NightMode' => [0xC8, 0x00],
+        'rgbwGroup3NightMode' => [0xCA, 0x00],
+        'rgbwGroup4NightMode' => [0xCC, 0x00],
+        'rgbwBrightnessMax' => [0x4e, 0x1b],
+        'rgbwBrightnessMin' => [0x4e, 0x02],
+        'rgbwDiscoMode' => [0x4d, 0x00],
+        'rgbwDiscoSlower' => [0x43, 0x00],
+        'rgbwDiscoFaster' => [0x44, 0x00],
+        'rgbwAllSetToWhite' => [0xc2, 0x00],
+        'rgbwGroup0SetToWhite' => [0xc2, 0x00],
+        'rgbwGroup1SetToWhite' => [0xc5, 0x00],
+        'rgbwGroup2SetToWhite' => [0xc7, 0x00],
+        'rgbwGroup3SetToWhite' => [0xc9, 0x00],
+        'rgbwGroup4SetToWhite' => [0xcb, 0x00],
+        'rgbwSetColorToViolet' => [0x40, 0x00],
+        'rgbwSetColorToRoyalBlue' => [0x40, 0x10],
+        'rgbwSetColorToBabyBlue' => [0x40, 0x20],
+        'rgbwSetColorToAqua' => [0x40, 0x30],
+        'rgbwSetColorToRoyalMint' => [0x40, 0x40],
+        'rgbwSetColorToSeafoamGreen' => [0x40, 0x50],
+        'rgbwSetColorToGreen' => [0x40, 0x60],
+        'rgbwSetColorToLimeGreen' => [0x40, 0x70],
+        'rgbwSetColorToYellow' => [0x40, 0x80],
+        'rgbwSetColorToYellowOrange' => [0x40, 0x90],
+        'rgbwSetColorToOrange' => [0x40, 0xa0],
+        'rgbwSetColorToRed' => [0x40, 0xb0],
+        'rgbwSetColorToPink' => [0x40, 0xc0],
+        'rgbwSetColorToFusia' => [0x40, 0xd0],
+        'rgbwSetColorToLilac' => [0x40, 0xe0],
+        'rgbwSetColorToLavendar' => [0x40, 0xf0],
 
         // White Bulb commands
-        'whiteAllOn' => array(0x35, 0x00),
-        'whiteAllOff' => array(0x39, 0x00),
-    'whiteGroup0On' => array(0x35, 0x00),
-    'whiteGroup0Off' => array(0x39, 0x00),
-        'whiteBrightnessUp' => array(0x3c, 0x00),
-        'whiteBrightnessDown' => array(0x34, 0x00),
-    'whiteGroup0BrightnessMax' => array(0xb5, 0x00),
-    'whiteGroup0NightMode' => array(0xbb, 0x00),
-        'whiteAllBrightnessMax' => array(0xb5, 0x00),
-        'whiteAllNightMode' => array(0xbb, 0x00),
-        'whiteWarmIncrease' => array(0x3e, 0x00),
-        'whiteCoolIncrease' => array(0x3f, 0x00),
-        'whiteGroup1On' => array(0x38, 0x00),
-        'whiteGroup1Off' => array(0x3b, 0x00),
-        'whiteGroup2On' => array(0x3d, 0x00),
-        'whiteGroup2Off' => array(0x33, 0x00),
-        'whiteGroup3On' => array(0x37, 0x00),
-        'whiteGroup3Off' => array(0x3a, 0x00),
-        'whiteGroup4On' => array(0x32, 0x00),
-        'whiteGroup4Off' => array(0x36, 0x00),
-        'whiteGroup1BrightnessMax' => array(0xb8, 0x00),
-        'whiteGroup2BrightnessMax' => array(0xbd, 0x00),
-        'whiteGroup3BrightnessMax' => array(0xb7, 0x00),
-        'whiteGroup4BrightnessMax' => array(0xb2, 0x00),
-        'whiteGroup1NightMode' => array(0xbb, 0x00),
-        'whiteGroup2NightMode' => array(0xb3, 0x00),
-        'whiteGroup3NightMode' => array(0xba, 0x00),
-        'whiteGroup4NightMode' => array(0xb6, 0x00),
-
-    );
+        'whiteAllOn' => [0x35, 0x00],
+        'whiteAllOff' => [0x39, 0x00],
+    'whiteGroup0On' => [0x35, 0x00],
+    'whiteGroup0Off' => [0x39, 0x00],
+        'whiteBrightnessUp' => [0x3c, 0x00],
+        'whiteBrightnessDown' => [0x34, 0x00],
+    'whiteGroup0BrightnessMax' => [0xb5, 0x00],
+    'whiteGroup0NightMode' => [0xbb, 0x00],
+        'whiteAllBrightnessMax' => [0xb5, 0x00],
+        'whiteAllNightMode' => [0xbb, 0x00],
+        'whiteWarmIncrease' => [0x3e, 0x00],
+        'whiteCoolIncrease' => [0x3f, 0x00],
+        'whiteGroup1On' => [0x38, 0x00],
+        'whiteGroup1Off' => [0x3b, 0x00],
+        'whiteGroup2On' => [0x3d, 0x00],
+        'whiteGroup2Off' => [0x33, 0x00],
+        'whiteGroup3On' => [0x37, 0x00],
+        'whiteGroup3Off' => [0x3a, 0x00],
+        'whiteGroup4On' => [0x32, 0x00],
+        'whiteGroup4Off' => [0x36, 0x00],
+        'whiteGroup1BrightnessMax' => [0xb8, 0x00],
+        'whiteGroup2BrightnessMax' => [0xbd, 0x00],
+        'whiteGroup3BrightnessMax' => [0xb7, 0x00],
+        'whiteGroup4BrightnessMax' => [0xb2, 0x00],
+        'whiteGroup1NightMode' => [0xbb, 0x00],
+        'whiteGroup2NightMode' => [0xb3, 0x00],
+        'whiteGroup3NightMode' => [0xba, 0x00],
+        'whiteGroup4NightMode' => [0xb6, 0x00],
+    ];
 
     /**
      * @param int $delay
@@ -155,11 +154,12 @@ class Milight
     }
 
     // Same as setRgbwActiveGroup. Exists just to make method invocation easier according to the convention
+
     /**
-    * @param int $rgbwActiveGroup
-    *
-    * @throws Exception
-    */
+     * @param int $rgbwActiveGroup
+     *
+     * @throws Exception
+     */
     public function rgbwSetActiveGroup($rgbwActiveGroup)
     {
         $this->setRgbwActiveGroup($rgbwActiveGroup);
@@ -186,11 +186,12 @@ class Milight
     }
 
     // Same as setWhiteActiveGroup. Exists just to make method invocation easier according to the convention
+
     /**
-    * @param int $whiteActiveGroup
-    *
-    * @throws Exception
-    */
+     * @param int $whiteActiveGroup
+     *
+     * @throws Exception
+     */
     public function whiteSetActiveGroup($whiteActiveGroup)
     {
         $this->setWhiteActiveGroup($whiteActiveGroup);
@@ -447,13 +448,66 @@ class Milight
 
     public function rgbwBrightnessPercent($brightnessPercent, $group = null)
     {
+        $realBrightnessPercent = $brightnessPercent;
         if ($brightnessPercent < 0 || $brightnessPercent > 100) {
             throw new \Exception('Brightness percent must be between 0 and 100');
         }
         $brightnessPercent = round(2 + (($brightnessPercent / 100) * 25));
         $group = isset($group) ? $group : $this->getRgbwActiveGroup();
         $this->rgbwSendOnToGroup($group);
-        $this->sendCommand(array(0x4e, $brightnessPercent));
+        $this->sendCommand([0x4e, $brightnessPercent]);
+
+        if (null !== $group) {
+            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            if (!is_file($file)) {
+                touch($file);
+            }
+            file_put_contents($file, $realBrightnessPercent);
+        }
+    }
+
+    public function rgbwBrightnessDown($group = null)
+    {
+        if (!$group) {
+            $groups = [1, 2, 3, 4];
+        } else {
+            $groups = [$group];
+        }
+
+        foreach ($groups as $group) {
+            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            if (!is_file($file)) {
+                $brightnessPercent = 99;
+            } else {
+                $brightnessPercent = (int) trim(file_get_contents($file)) - 20;
+            }
+
+            $this->rgbwBrightnessPercent($brightnessPercent, $group);
+        }
+    }
+
+    public function rgbwBrightnessUp($group = null)
+    {
+        if (null === $group) {
+            $groups = [1, 2, 3, 4];
+        } else {
+            $groups = [$group];
+        }
+
+        foreach ($groups as $group) {
+            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            if (!is_file($file)) {
+                $brightnessPercent = 100;
+            } else {
+                $brightnessPercent = (int) trim(file_get_contents($file)) + 20;
+            }
+
+            if ($brightnessPercent > 100) {
+                $brightnessPercent = 100;
+            }
+
+            $this->rgbwBrightnessPercent($brightnessPercent, $group);
+        }
     }
 
     public function rgbwDiscoMode()
@@ -501,19 +555,35 @@ class Milight
 
     public function rgbwSetColorToViolet()
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
+
         $this->command('rgbwSetColorToViolet');
     }
 
-    public function rgbwSetColorToRoyalBlue()
+    public function rgbwSetColorToRoyalBlue($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToRoyalBlue');
     }
 
-    public function rgbwSetColorToBabyBlue()
+    public function rgbwSetColorToBabyBlue($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToBabyBlue');
     }
 
@@ -530,81 +600,146 @@ class Milight
         $this->command('rgbwGroup'.strval($this->getActiveGroup()).'SetToWhite');
     }
 
-    public function rgbwSetColorToAqua()
+    public function rgbwSetColorToAqua($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToAqua');
     }
 
-    public function rgbwSetColorToRoyalMint()
+    public function rgbwSetColorToRoyalMint($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToRoyalMint');
     }
 
-    public function rgbwSetColorToSeafoamGreen()
+    public function rgbwSetColorToSeafoamGreen($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToSeafoamGreen');
     }
 
-    public function rgbwSetColorToGreen()
+    public function rgbwSetColorToGreen($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToGreen');
     }
 
-    public function rgbwSetColorToLimeGreen()
+    public function rgbwSetColorToLimeGreen($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToLimeGreen');
     }
 
-    public function rgbwSetColorToYellow()
+    public function rgbwSetColorToYellow($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToYellow');
     }
 
-    public function rgbwSetColorToYellowOrange()
+    public function rgbwSetColorToYellowOrange($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToYellowOrange');
     }
 
-    public function rgbwSetColorToOrange()
+    public function rgbwSetColorToOrange($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToOrange');
     }
 
-    public function rgbwSetColorToRed()
+    public function rgbwSetColorToRed($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToRed');
     }
 
-    public function rgbwSetColorToPink()
+    public function rgbwSetColorToPink($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToPink');
     }
 
-    public function rgbwSetColorToFusia()
+    public function rgbwSetColorToFusia($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToFusia');
     }
 
-    public function rgbwSetColorToLilac()
+    public function rgbwSetColorToLilac($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToLilac');
     }
 
-    public function rgbwSetColorToLavendar()
+    public function rgbwSetColorToLavendar($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if (null !== $group) {
+            $commandName = sprintf('rgbwGroup%dOn', (int) $group);
+            $this->$commandName();
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwSetColorToLavendar');
     }
 
@@ -782,7 +917,7 @@ class Milight
         $milightColor = $this->hslToMilightColor($hsvColor);
         $activeGroupOnCommand = 'rgbwGroup'.$this->getRgbwActiveGroup().'On';
         $this->command($activeGroupOnCommand);
-        $this->sendCommand(array(0x40, $milightColor));
+        $this->sendCommand([0x40, $milightColor]);
     }
 
     public function rgbwSetColorHexString($color)
@@ -791,7 +926,7 @@ class Milight
         $hsl = $this->rgbToHsl($rgb[0], $rgb[1], $rgb[2]);
         $milightColor = $this->hslToMilightColor($hsl);
         $this->rgbwSendOnToActiveGroup();
-        $this->sendCommand(array(0x40, $milightColor));
+        $this->sendCommand([0x40, $milightColor]);
     }
 
     public function rgbHexToIntArray($hexColor)
@@ -810,7 +945,7 @@ class Milight
                 throw new \Exception('Color cannot be black or white');
             }
 
-            return array($r, $g, $b);
+            return [$r, $g, $b];
         }
 
         $r = hexdec(substr($hexColor, 0, 2));
@@ -820,7 +955,7 @@ class Milight
             throw new \Exception('Color cannot be black or white');
         }
 
-        return array($r, $g, $b);
+        return [$r, $g, $b];
     }
 
     public function rgbToHsl($r, $g, $b)
@@ -857,7 +992,7 @@ class Milight
             }
         }
 
-        return array($h, $s, $l);
+        return [$h, $s, $l];
     }
 
     public function hslToMilightColor($hsl)
