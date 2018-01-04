@@ -31,7 +31,7 @@ class ProviderManager implements ManagerInterface
         $providerName = $config['provider'];
         $expectedClass = sprintf('ApiRecipe\\Provider\\%sProvider', ucfirst($providerName));
 
-        $this->providers[$knownProviderName] = new $expectedClass($config, $providerName);
+        $this->providers[$knownProviderName] = new $expectedClass($config, $knownProviderName);
 
         return $this->providers[$knownProviderName];
     }
