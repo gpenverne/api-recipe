@@ -22,7 +22,7 @@ class RequestManager implements ManagerInterface
             $res = $this->syncRequest(Request::METHOD_GET, $url);
         }
 
-        if (Response::HTTP_OK === $res->getStatusCode()) {
+        if ($async && Response::HTTP_OK === $res->getStatusCode()) {
             return true;
         }
 
