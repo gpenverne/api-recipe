@@ -33,6 +33,7 @@ actions:
         # Format of an action:
         # Provider:method:argument
         - logger:info:on
+        # - recipe:test-recipe:on
     # Actions to do when passing to the off state
     off:
         # Format of an action:

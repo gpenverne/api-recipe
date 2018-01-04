@@ -4,8 +4,8 @@ namespace ApiRecipe\Controller;
 
 use ApiRecipe\Manager\ProviderManager;
 use ApiRecipe\Manager\RecipeManager;
-use Symfony\Component\HttpFoundation\Request;
 use ApiRecipe\Manager\YmlParserTrait;
+use Symfony\Component\DependencyInjection\Container;
 
 class Controller implements ControllerInterface
 {
@@ -17,16 +17,16 @@ class Controller implements ControllerInterface
     protected $config;
 
     /**
-     * @var Request
+     * @var Container
      */
-    protected $request;
+    protected $container;
 
     /**
-     * @param Request $request
+     * @param Container $container
      */
-    public function __construct(Request $request)
+    public function __construct(Container $container)
     {
-        $this->request = $request;
+        $this->container = $container;
     }
 
     /**
@@ -46,7 +46,7 @@ class Controller implements ControllerInterface
      */
     protected function setResponseFormat($responseFormat)
     {
-        $this->request->query->set('format', $responseFormat);
+        $this->container->get('request')->query->set('format', $responseFormat);
 
         return $this;
     }
@@ -83,5 +83,15 @@ class Controller implements ControllerInterface
         }
 
         return $this->config;
+    }
+
+    /**
+     * @param  array $service
+     *
+     * @return mixed
+     */
+    public function get($service)
+    {
+        return $this->container->get($service);
     }
 }

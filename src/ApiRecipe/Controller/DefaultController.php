@@ -11,6 +11,6 @@ class DefaultController extends Controller
     {
         $indexHtmlFile = sprintf('%s/../../../web/index.html', __DIR__);
 
-        return file_get_contents($indexHtmlFile);
+        return $this->get('helper.file_reader')->readFile($indexHtmlFile);
     }
 }

@@ -91,6 +91,10 @@ class CecClientProvider implements ProviderInterface
      */
     public function setActiveSource($deviceName = null)
     {
+        if (null === $deviceName) {
+            return $this->command('as');
+        }
+
         return $this->command('spl', $deviceName);
     }
 
