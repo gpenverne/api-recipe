@@ -29,7 +29,7 @@ class ApiProvider implements ProviderInterface
      *
      * @return bool
      */
-    public function sync($endPoint)
+    public function sync($endPoint = null)
     {
         $url = $this->getUrl($endPoint);
 
@@ -41,7 +41,7 @@ class ApiProvider implements ProviderInterface
      *
      * @return bool
      */
-    public function async($endPoint)
+    public function async($endPoint = null)
     {
         $consolePath = realpath(sprintf('%s/../../../bin/console', __DIR__));
         $command = sprintf('%s actions:exec "%s:sync:%s"', $consolePath, $this->getProviderName(), $endPoint);
@@ -72,6 +72,6 @@ class ApiProvider implements ProviderInterface
      */
     protected function getUrl($endPoint)
     {
-        return sprintf('%s/%s', $this->baseUrl, $endPoint);
+        return sprintf('%s/%s', $this->baseUrl, $endPoint ? $endPoint : '');
     }
 }
