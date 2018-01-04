@@ -6,13 +6,21 @@ use Doctrine\Common\Inflector\Inflector;
 
 trait HydratorTrait
 {
+    protected $providerName;
+
     /**
       * @param array $properties
       */
-     public function __construct($params = [])
-     {
-         $this->hydrate($params);
-     }
+    public function __construct($params = [], $providerName = null)
+    {
+        $this->hydrate($params);
+        $this->providerName = $providerName;
+    }
+
+    public function getProviderName()
+    {
+        return $this->providerName;
+    }
 
     /**
      * @return $this

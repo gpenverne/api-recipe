@@ -44,6 +44,6 @@ class RequestManager implements ManagerInterface
 
     private function asyncRequest($method, $url)
     {
-        return $this->getClient()->getAsync($url);
+        return $this->getClient()->requestAsync(Request::METHOD_GET, $url);
     }
 }
