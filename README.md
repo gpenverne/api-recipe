@@ -116,7 +116,8 @@ Sample commands: android:openApp:com.google.android.music
 #### Api
 Allows to make network calls.  
 Parameters: base_url the base url to make the calls  
-Sample commands: api:endPoint:an-endpoint  
+Sample commands: api:sync:an-endpoint  
+Sample commands: api:async:an-endpoint  
 #### Binary
 Allows to call scripts (using php shell_exec command)  
 Parameters: binary , the full path to binary  

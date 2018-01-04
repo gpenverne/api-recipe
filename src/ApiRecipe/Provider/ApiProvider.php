@@ -19,7 +19,8 @@ class ApiProvider implements ProviderInterface
     public function getActions()
     {
         return [
-            'endPoint',
+            'async',
+            'sync',
         ];
     }
 
@@ -28,7 +29,7 @@ class ApiProvider implements ProviderInterface
      *
      * @return bool
      */
-    public function endPoint($endPoint)
+    public function sync($endPoint)
     {
         $url = $this->getUrl($endPoint);
 
@@ -36,16 +37,34 @@ class ApiProvider implements ProviderInterface
     }
 
     /**
-     * @param string $url
+     * @param string $key
      *
      * @return bool
      */
-    protected function request($url)
+    public function async($endPoint)
+    {
+        $consolePath = realpath(sprintf('%s/../../../bin/console', __DIR__));
+        $command = sprintf('%s actions:exec "%s:sync:%s"', $consolePath, $this->getProviderName(), $endPoint);
+        $fullCommand = sprintf('%s > /dev/null 2>/dev/null &', $command);
+
+        shell_exec($fullCommand);
+
+        return false;
+    }
+
+    /**
+     * @param string $url
+     * @param bool $async
+     *
+     * @return bool
+     */
+    protected function request($url, $async = false)
     {
         $requestManager = new RequestManager();
 
-        return $requestManager->request($url);
+        return $requestManager->request($url, $async);
     }
+
     /**
      * @param string $key
      *
