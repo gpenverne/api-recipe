@@ -45,7 +45,11 @@ class ApiProvider implements ProviderInterface
     {
         $consolePath = realpath(sprintf('%s/../../bin/console', __DIR__));
         $command = sprintf('%s actions:exec "%s:sync:%s"', $consolePath, $this->getProviderName(), $endPoint);
-        shell_exec(sprintf('%s > /dev/null 2>/dev/null &', $command));
+        $fullComand = sprintf('%s > /dev/null 2>/dev/null &', $command);
+
+        shell_exec($fullCommand);
+
+        return false;
     }
 
     /**
