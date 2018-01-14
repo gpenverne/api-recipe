@@ -105,9 +105,15 @@ class RecipeManager implements ManagerInterface
             $actionParameters = explode(':', $action);
             // recipe:name:state
             if (self::RECIPE_PREFIX === $actionParameters[0]) {
-                $recipe = new RecipeManager($actionParameters[1]);
-                $expectedState = isset($actionParameters[2]) ? $actionParameters[2] : null;
-                $result[$actionParameters[1]] = $recipe->exec($expectedState, $loggerProvider);
+                $consolePath = realpath(sprintf('%s/../../../bin/console', __DIR__));
+                $command = sprintf('%s recipes:exec %s %s', $consolePath, $actionParameters[1], isset($actionParameters[2]) ? $actionParameters[2] : null);
+                $fullCommand = sprintf('%s > /dev/null 2>/dev/null &', $command);
+
+                shell_exec($fullCommand);
+                $result[$action] = $fullCommand;
+                //$recipe = new RecipeManager($actionParameters[1]);
+                //$expectedState = isset($actionParameters[2]) ? $actionParameters[2] : null;
+                //$result[$actionParameters[1]] = $recipe->exec($expectedState, $loggerProvider);
             } elseif (2 === count($actionParameters)) {
                 list($provider, $method) = $actionParameters;
                 $result[$action] = $this->execAction($provider, $method);
@@ -118,7 +124,8 @@ class RecipeManager implements ManagerInterface
         }
 
         $this->getStateManager()->toggleRecipeState($this->recipeName);
-
+        $lastActionFile = '/tmp/last-recipe';
+        file_put_contents($lastActionFile, $this->recipeName);
         return [
             'actions' => $result,
         ];

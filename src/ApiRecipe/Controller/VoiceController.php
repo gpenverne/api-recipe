@@ -41,6 +41,7 @@ class VoiceController extends Controller
         $texts = explode(',', $rawText);
         $voicesConfig = $this->getConfig('voices');
         $activated = false;
+        file_put_contents('/tmp/last-deduced', $rawText);
         /*
         if (isset($voicesConfig['keywords'])) {
             $clearedTexts = [];
@@ -63,6 +64,7 @@ class VoiceController extends Controller
             }
         }*/
         $return = [
+            'command' => $rawText,
             'recipe' => null,
             'targetState' => null,
         ];
