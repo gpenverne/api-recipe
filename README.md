@@ -170,3 +170,6 @@ voices:
         # the voice message return
         message: 'Test each ok'
 ```
+
+## JARVIS
+You can link api-recipe with jarvis. Have a look on (https://github.com/gpenverne/api-recipe-jarvis-plugin)[https://github.com/gpenverne/api-recipe-jarvis-plugin]
