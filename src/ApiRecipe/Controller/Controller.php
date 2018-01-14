@@ -40,6 +40,16 @@ class Controller implements ControllerInterface
     }
 
     /**
+     * @param  string $providerName
+     * @return ProviderManager
+     */
+    public function getProviderManager($providerName = null)
+    {
+        return new ProviderManager($providerName);
+    }
+
+
+    /**
      * @param string $responseFormat
      *
      * @return $this

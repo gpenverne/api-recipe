@@ -20,7 +20,7 @@ class ActionManager implements ManagerInterface
     private $argument;
 
     /**
-     * @var ProviderMAnager
+     * @var ProviderManager
      */
     private $providerManager;
 

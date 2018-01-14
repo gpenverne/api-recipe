@@ -26,7 +26,7 @@ class ProviderManager implements ManagerInterface
         $providerName = Inflector::Camelize($providerName);
         $config = $this->getConfig($providerName);
         if (empty($config)) {
-            throw new \Exception(sprintf('Provider %s not found.', $providerName));
+            throw new \Exception(sprintf('Provider "%s" not found.', $providerName));
         }
         $providerName = $config['provider'];
         $expectedClass = sprintf('ApiRecipe\\Provider\\%sProvider', ucfirst($providerName));
