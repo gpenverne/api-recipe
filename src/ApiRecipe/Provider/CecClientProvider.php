@@ -35,8 +35,12 @@ class CecClientProvider implements ProviderInterface
      */
     public function command($command, $device = null)
     {
+        $command = str_replace('/', ':', $command);
         if (null === $device) {
-            return shell_exec(sprintf('echo %s | %s -s', $command, $this->binary));
+            $command = sprintf('echo %s | %s -s', $command, $this->binary);
+            file_put_contents('/tmp/cec.log', $command);
+
+            return shell_exec($command);
         }
 
         $device = $this->getDevice($device);
@@ -51,7 +55,7 @@ class CecClientProvider implements ProviderInterface
      */
     public function turnOn($deviceName = null)
     {
-        return $this->command('on', $deviceName);
+        return $this->command('on 0', $deviceName);
     }
 
     /**
@@ -61,7 +65,7 @@ class CecClientProvider implements ProviderInterface
      */
     public function turnOff($deviceName = null)
     {
-        return $this->command('standby', $deviceName);
+        return $this->command('standby 0', $deviceName);
     }
 
     /**

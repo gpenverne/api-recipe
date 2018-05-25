@@ -10,6 +10,8 @@ class RecipeManager implements ManagerInterface
 
     use YmlParserTrait;
 
+    private $recipeName;
+
     /**
      * @var array
      */
@@ -91,6 +93,9 @@ class RecipeManager implements ManagerInterface
         if (null !== $loggerProvider) {
             $loggerProvider->info(sprintf('Looking for %s recipe', $this->recipeName));
         }
+        if (null === $this->recipeName) {
+            return null;
+        }
         if ($state === null) {
             if ($this->getStateManager()->isOn($this->recipeName)) {
                 $state = StateManager::STATE_OFF;
@@ -110,24 +115,25 @@ class RecipeManager implements ManagerInterface
                 $fullCommand = sprintf('%s > /dev/null 2>/dev/null &', $command);
 
                 shell_exec($fullCommand);
-                $result[$action] = $fullCommand;
-                //$recipe = new RecipeManager($actionParameters[1]);
-                //$expectedState = isset($actionParameters[2]) ? $actionParameters[2] : null;
-                //$result[$actionParameters[1]] = $recipe->exec($expectedState, $loggerProvider);
+                $lastoutput = $result[$action] = $fullCommand;
             } elseif (2 === count($actionParameters)) {
                 list($provider, $method) = $actionParameters;
-                $result[$action] = $this->execAction($provider, $method);
+                $lastoutput = $result[$action] = $this->execAction($provider, $method);
             } else {
                 list($provider, $method, $argument) = $actionParameters;
-                $result[$action] = $this->execAction($provider, $method, $argument);
+                $lastoutput = $result[$action] = $this->execAction($provider, $method, $argument);
             }
         }
-
+        $speech = $this->getVoiceMessage($state);
+        if ("output" === $speech) {
+            $speech = $lastoutput;
+        }
         $this->getStateManager()->toggleRecipeState($this->recipeName);
         $lastActionFile = '/tmp/last-recipe';
         file_put_contents($lastActionFile, $this->recipeName);
         return [
             'actions' => $result,
+            'speech' => $speech
         ];
     }
 
@@ -142,6 +148,12 @@ class RecipeManager implements ManagerInterface
             $state = $this->getStateManager()->getRecipeState($this->recipeName);
         }
 
+        if (isset($this->infos->voices['each_time'])) {
+            if (!isset($this->infos->voices[$state])) {
+                $this->infos->voices[$state] = [];
+            }
+            $this->infos->voices[$state] = array_merge($this->infos->voices['each_time'], $this->infos->voices[$state]);
+        }
         if (isset($this->infos->voices[$state]) && null != $this->infos->voices[$state]) {
             if (!isset($this->infos->voices[$state]['message'])) {
                 return null;
@@ -199,7 +211,9 @@ class RecipeManager implements ManagerInterface
     protected function loadConfig($recipeName)
     {
         $expectedFile = sprintf('%s/../../../recipes/%s.yml', __DIR__, $recipeName);
-
+        if (!is_file($expectedFile)) {
+            throw new \Exception('Recipe file not found');
+        }
         $infos = array_merge($this->infos, $this->parseYmlFile($expectedFile));
         $infos = ArrayToStdClassConverter::convert($infos);
 

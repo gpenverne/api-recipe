@@ -41,28 +41,6 @@ class VoiceController extends Controller
         $texts = explode(',', $rawText);
         $voicesConfig = $this->getConfig('voices');
         $activated = false;
-        file_put_contents('/tmp/last-deduced', $rawText);
-        /*
-        if (isset($voicesConfig['keywords'])) {
-            $clearedTexts = [];
-            foreach ($voicesConfig['keywords'] as $keyword) {
-                $keyword = strtolower($keyword);
-                foreach ($texts as $text) {
-                    $text = strtolower($text);
-                    if (false !== strpos($text, $keyword)) {
-                        $activated = true;
-                    }
-                    $clearedTexts[] = trim(str_replace(trim($keyword), '', $text));
-                }
-                $texts = $clearedTexts;
-            }
-            if (false === $activated) {
-                return [
-                    'recipe' => null,
-                    'targetState' => null,
-                ];
-            }
-        }*/
         $return = [
             'command' => $rawText,
             'recipe' => null,
@@ -109,7 +87,9 @@ class VoiceController extends Controller
             StateManager::STATE_OFF,
             StateManager::STATE_EACH_TIME,
         ];
-
+        if (isset($_GET['state'])) {
+            return $_GET['state'];
+        }
         foreach ($states as $state) {
             if (isset($recipeVoice[$state]) && isset($recipeVoice[$state]['triggers'])) {
                 foreach ($recipeVoice[$state]['triggers'] as $trigger) {

@@ -50,6 +50,6 @@ class ActionManager implements ManagerInterface
             return (bool) $provider->$method();
         }
 
-        return (bool) call_user_func_array([$provider, $method], explode(',', $argument));
+        return call_user_func_array([$provider, $method], explode(',', $argument));
     }
 }

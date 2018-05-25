@@ -18,8 +18,17 @@ class BinaryProvider implements ProviderInterface
     {
         return [
             'command',
+            'escapeCommand',
             'echoUsingCommand',
         ];
+    }
+
+    public function escapeCommand($command = null)
+    {
+        if (null === $command || "null" === $command) {
+            $command = $_GET['args'];
+        }
+        return $this->command('"'.$command.'"');
     }
 
     /**
@@ -34,8 +43,11 @@ class BinaryProvider implements ProviderInterface
         } else {
             $fullCommand = $this->binary;
         }
+        file_put_contents('/dev/shm/binary-input', $fullCommand);
+        $lastResult = exec($fullCommand);
 
-        return (bool) exec($fullCommand);
+        file_put_contents('/dev/shm/binary-output', $lastResult);
+        return (bool) $lastResult;
     }
 
     /**

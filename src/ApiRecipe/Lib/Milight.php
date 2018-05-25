@@ -449,8 +449,11 @@ class Milight
     public function rgbwBrightnessPercent($brightnessPercent, $group = null)
     {
         $realBrightnessPercent = $brightnessPercent;
-        if ($brightnessPercent < 0 || $brightnessPercent > 100) {
-            throw new \Exception('Brightness percent must be between 0 and 100');
+        if ($brightnessPercent < 10) {
+            $brightnessPercent = 10;
+        }
+        if ($brightnessPercent > 100) {
+            $brightnessPercent = 100;
         }
         $brightnessPercent = round(2 + (($brightnessPercent / 100) * 25));
         $group = isset($group) ? $group : $this->getRgbwActiveGroup();
@@ -458,7 +461,7 @@ class Milight
         $this->sendCommand([0x4e, $brightnessPercent]);
 
         if (null !== $group) {
-            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            $file = sprintf('/dev/shm/milight-brightness-%d', $group);
             if (!is_file($file)) {
                 touch($file);
             }
@@ -475,11 +478,11 @@ class Milight
         }
 
         foreach ($groups as $group) {
-            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            $file = sprintf('/dev/shm/milight-brightness-%d', $group);
             if (!is_file($file)) {
                 $brightnessPercent = 99;
             } else {
-                $brightnessPercent = (int) trim(file_get_contents($file)) - 20;
+                $brightnessPercent = (int) trim(file_get_contents($file)) - 5;
             }
 
             $this->rgbwBrightnessPercent($brightnessPercent, $group);
@@ -495,11 +498,11 @@ class Milight
         }
 
         foreach ($groups as $group) {
-            $file = sprintf('/tmp/milight-brightness-%d', $group);
+            $file = sprintf('/dev/shm/milight-brightness-%d', $group);
             if (!is_file($file)) {
                 $brightnessPercent = 100;
             } else {
-                $brightnessPercent = (int) trim(file_get_contents($file)) + 20;
+                $brightnessPercent = (int) trim(file_get_contents($file)) + 5;
             }
 
             if ($brightnessPercent > 100) {
@@ -510,21 +513,36 @@ class Milight
         }
     }
 
-    public function rgbwDiscoMode()
+    public function rgbwDiscoMode($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if ($group) {
+            $this->setRgbwActiveGroup($group);
+            $this->rgbwSendOnToGroup($group);
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwDiscoMode');
     }
 
-    public function rgbwDiscoSlower()
+    public function rgbwDiscoSlower($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if ($group) {
+            $this->setRgbwActiveGroup($group);
+            $this->rgbwSendOnToGroup($group);
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwDiscoSlower');
     }
 
-    public function rgbwDiscoFaster()
+    public function rgbwDiscoFaster($group = null)
     {
-        $this->rgbwSendOnToActiveGroup();
+        if ($group) {
+            $this->setRgbwActiveGroup($group);
+            $this->rgbwSendOnToGroup($group);
+        } else {
+            $this->rgbwSendOnToActiveGroup();
+        }
         $this->command('rgbwDiscoFaster');
     }
 
@@ -753,14 +771,20 @@ class Milight
         $this->command('whiteAllOff');
     }
 
-    public function whiteBrightnessUp()
+    public function whiteBrightnessUp($group = null)
     {
+        if (null !== $group) {
+            $this->whiteSetActiveGroup($group);
+        }
         $this->whiteSendOnToActiveGroup();
         $this->command('whiteBrightnessUp');
     }
 
-    public function whiteBrightnessDown()
+    public function whiteBrightnessDown($group = null)
     {
+        if (null !== $group) {
+            $this->whiteSetActiveGroup($group);
+        }
         $this->whiteSendOnToActiveGroup();
         $this->command('whiteBrightnessDown');
     }
